@@ -3,10 +3,12 @@ import Router from "@koa/router";
 import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
+import { initSocketIo } from "./io";
 
 const app = new Koa();
 const router = new Router();
 const httpServer = createServer(app.callback());
+initSocketIo(httpServer);
 
 app.use(cors()); // TODO: configure for production
 app.use(serveStatic(`./public`, {}));
