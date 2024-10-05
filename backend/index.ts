@@ -26,6 +26,6 @@ router.get("/", (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-httpServer.listen(3000, () => {
-  console.log(`Server running`);
+httpServer.listen(process.env.PORT, () => {
+  console.log(`Server running on ${process.env.HOST}:${process.env.PORT}`);
 });

@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts",
-    "dev": "tsx watch index.ts"
+    "start": "tsx --env-file=.env.development index.ts",
+    "dev": "tsx watch --env-file=.env.development index.ts"
   },
   "author": "",
   "license": "ISC",
