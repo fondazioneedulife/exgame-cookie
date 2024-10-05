@@ -1,5 +1,7 @@
 import { Server } from "socket.io";
 
+// Follow https://socket.io/docs/v4/server-application-structure/ for organizing handlers
+
 export const initSocketIo = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
