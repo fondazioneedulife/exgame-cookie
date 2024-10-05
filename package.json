@@ -1,0 +1,33 @@
+{
+  "name": "exgame",
+  "version": "0.0.0",
+  "description": "School is fun",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fondazioneedulife/exgame-cookie.git"
+  },
+  "author": "ITS Last Verona - cookies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fondazioneedulife/exgame-cookie/issues"
+  },
+  "homepage": "https://github.com/fondazioneedulife/exgame-cookie#readme",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "website"
+  ],
+  "engines": {
+    "node": "20.18.0"
+  },
+  "volta": {
+    "node": "20.18.0"
+  }
+}
