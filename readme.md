@@ -16,3 +16,21 @@ Questo progetto è un ["monorepo"](https://docs.npmjs.com/cli/v7/using-npm/works
 - **website**: sito web di presentazione del progetto, realizzato utilizzando [Next.js](https://nextjs.org/)
 
 L'installazione di tutte le dipendenze si effettua lanciando il comando: `npm install` dalla directory principale del progetto.
+
+## Flusso di lavoro
+
+![](./doc/assets/flusso-di-lavoro.png)
+
+### Setup iniziale
+
+- esegui in fork del progetto dal repository di Fondazione Edulife
+- lavora sul tuo fork personale
+
+### Daily routine
+
+- all'inizio di ogni lezione:
+  - scaricati il master dal repository di Fondazione Edulife
+  - crea un nuovo branch di lavoro sul tuo repo e svolgi gli esercizi su questo branch
+- alla fine della lezione: 
+  - fai push del tuo branch
+  - crea una Pull Request sul repository di Fondazione Edulife
