@@ -26,6 +26,8 @@ Come Docente voglio:
   - impostare il numero di "copie" ammesse per ogni studente
   - impostare il numero di "blocco copia" ammesso per ogni studente
   - configurare il numero di azioni di disturbo ammesse per ogni studente
+  - permettere allo studente di farsi suggerire le risposte esatte dal sistema (configurabile nel numero di volte che lo studente può utilizzare questa opzione, anche zero è ammesso)
+  - descrivere domande "aperte", senza Answer, a cui lo studente risponderà inserendo un testo libero. Queste domande saranno escluse dal calcolo automatico del voto, e permetteranno al docente di "correggere" la valutazione automatica
 - Iniziare e terminare una sessione di esame
 - Durante lo svolgimento, voglio poter rispondere alle domande degli studenti
 - Visualizzare i risultati di ogni singolo studente
@@ -41,6 +43,8 @@ Come studente voglio:
   - Attivare la funzione "blocca copia" (bloccherà solo alcuni studenti random)
   - Disturbare la classe (eventualmente scegliendo tra diversi tipi di disturbo)
   - Fare domande al docente
+  - Chiedere al sistema di suggerire la risposta corretta
+  - Mandare un bigliettino a un compagno. I bigliettini rischieranno però di essere "intercettati" dal sistema. Ogni bigliettino intercettato comporta una penalizzazione per lo studente che lo invia
 - Visualizzare l'esito della mia prova
 
 ### Diagramma degli use cases
