@@ -1,4 +1,4 @@
-import { Teacher } from "../../api-types/teacher";
+import { Teacher } from "api-types";
 
 const DB: Teacher[] = [];
 
