@@ -1,3 +1,4 @@
+import { bodyParser } from "@koa/bodyparser";
 import cors from "@koa/cors";
 import Router from "@koa/router";
 import { createServer } from "http";
@@ -11,6 +12,7 @@ const httpServer = createServer(app.callback());
 initSocketIo(httpServer);
 
 app.use(cors()); // TODO: configure for production
+app.use(bodyParser());
 app.use(serveStatic(`./public`, {}));
 
 app.use((ctx, next) => {
