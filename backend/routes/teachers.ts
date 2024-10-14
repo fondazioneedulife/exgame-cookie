@@ -28,9 +28,8 @@ router.post("/", async (ctx) => {
 // PUT edit a teachers
 router.put("/:id", async (ctx) => {
   ctx.accepts("application/json");
-  const teacher = ctx.request.body as Teacher;
-  const updatedTeacher = await edit(ctx.params.id, teacher);
-  ctx.body = updatedTeacher;
+  edit(ctx.params.id, ctx.request.body as Teacher);
+  ctx.response.body = ctx.request.body;
 });
 
 // DELETE a teacher
