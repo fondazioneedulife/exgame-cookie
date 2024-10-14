@@ -15,16 +15,19 @@ export const add = (teacher: Teacher) => {
 };
 
 export const edit = (teacher: Teacher) => {
+  // Find document
   const document = DB.find((el) => el._id === teacher._id);
   if (!document) {
     throw new Error(`Can't find teacher by id: ${teacher._id}`);
   }
 
-  const updatedDOcument = { ...document, ...teacher };
+  // Create updated document
+  const updatedDocument = { ...document, ...teacher };
 
+  // Insert the new document in the database
   DB.forEach((el, i) => {
-    if (el._id === updatedDOcument._id) {
-      DB[i] = updatedDOcument;
+    if (el._id === updatedDocument._id) {
+      DB[i] = updatedDocument;
     }
   });
 };

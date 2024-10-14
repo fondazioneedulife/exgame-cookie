@@ -16,7 +16,7 @@ router.get("/:id", (ctx) => {
   ctx.body = view(ctx.params.id);
 });
 
-// ADd a new Teacher
+// Add a new Teacher
 router.post("/", (ctx) => {
   ctx.accepts("json");
   add(ctx.request.body as Teacher);
