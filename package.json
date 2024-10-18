@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/fondazioneedulife/exgame-cookie#readme",
   "workspaces": [
-    "api-types",
     "backend",
     "frontend",
     "website"

@@ -1,14 +1,13 @@
 import Router from "@koa/router";
-import { Teacher } from "../../api-types";
-import { add, index, view } from "../services/teacher";
-
+import { Teacher } from "api-types";
+import { add, edit, index, remove, view } from "../services/teacher"
 
 const router = new Router({
     prefix: "/teachers",
 });
 
-// All teachers
-router.get("/",(ctx) => {
+// ALL teachers
+router.get("/", (ctx) => {
     ctx.body = index();
 });
 
@@ -21,18 +20,20 @@ router.get("/:id", (ctx) => {
 router.post("/", (ctx) => {
     ctx.accepts("json");
     add(ctx.request.body as Teacher);
-    ctx.response.body = ctx.request.
-    body;
+    ctx.response.body = ctx.request.body;
 });
 
 // Edit teacher
 router.put("/:id", (ctx) => {
-
+    ctx.accepts("json");
+    edit(ctx.request.body as Teacher);
+    ctx.response.body = ctx.request.body;
 });
 
 // Delete teacher
 router.delete("/:id", (ctx) => {
-
+    remove(ctx.params.id);
+    ctx.body = "dato eliminato"
 });
 
 export default router;

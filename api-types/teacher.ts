@@ -4,6 +4,6 @@ export type Teacher = {
     lastName: string;
     username: string;
     password: string;
-    courses?: string[];
-    image?: string;
+    courses?: string[];                // [] perchè è un array
+    image?: string;                    // ? vuol dire che è opzionale, indipendentemente da dove lo metti (qualsiasi dato)
 }

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                // O una versione più bassa se necessario
+    "module": "ESNext",                // Usa ESNext per il supporto dei moduli ES
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true                      // Opzionale: abilita controlli più rigorosi
+  },
+  "include": ["**/*.ts"],              // Includi tutti i file TypeScript
+  "exclude": ["node_modules"]          // Escludi la cartella node_modules
+}
