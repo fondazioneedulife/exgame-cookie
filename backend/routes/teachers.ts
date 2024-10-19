@@ -32,7 +32,7 @@ router.put("/:id" , (ctx) =>{
 
 // Delete a teacher
 router.delete("/:id" , (ctx) =>{
-
+    ctx.body = remove(ctx.params.id);
 });
 
 export default router;
