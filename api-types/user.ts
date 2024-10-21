@@ -40,7 +40,7 @@ export type User = {
    * - teacher
    * - student
    */
-  role: "admin" | "teacher" | "student";
+  role: Role;
 
   /**
    * Optional, image of the user
@@ -62,3 +62,5 @@ export type User = {
    */
   student_class?: string;
 };
+
+export type Role = "admin" | "teacher" | "student";

@@ -1,5 +1,5 @@
 import Router from "@koa/router";
-import { User } from "../../api-types";
+import { Role, User } from "../../api-types";
 import {
   add,
   edit,
@@ -19,7 +19,7 @@ router.get("/", (ctx) => {
 });
 
 router.get("/role/:role", (ctx) => {
-  ctx.body = getUsersByRole(ctx.params.role);
+  ctx.body = getUsersByRole(ctx.params.role as Role);
 });
 
 // Find a teacher

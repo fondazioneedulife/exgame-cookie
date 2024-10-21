@@ -1,4 +1,4 @@
-import { User } from "../../api-types";
+import { Role, User } from "../../api-types";
 
 const DB: User[] = [];
 
@@ -6,7 +6,7 @@ export const index = () => {
   return DB;
 };
 
-export const getUsersByRole = (role: string) => {
+export const getUsersByRole = (role: Role) => {
   return DB.filter((el) => el.role === role);
 };
 
