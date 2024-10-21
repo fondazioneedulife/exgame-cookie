@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-import { add, index } from "../services/user";
+import { add, edit, index, remove, view } from "../services/user";
 
 const router = new Router({
   prefix: "/users",
@@ -16,10 +16,18 @@ router.get("/", async (ctx) => {
 //   ctx.body = getUsersByRole(ctx.params.role as Role);
 // });
 
-// // Find a teacher
-// router.get("/:id", (ctx) => {
-//   ctx.body = view(ctx.params.id);
-// });
+// Find a user
+router.get("/:id", async (ctx) => {
+  const user = await view(ctx.params.id);
+
+  if (!user) {
+    // User not found
+    ctx.status = 404;
+    return;
+  }
+
+  ctx.body = user;
+});
 
 // Add a user
 router.post("/", async (ctx) => {
@@ -28,16 +36,16 @@ router.post("/", async (ctx) => {
   ctx.response.body = user;
 });
 
-// // Find a teacher
-// router.put("/:id", (ctx) => {
-//   ctx.accepts("json");
-//   edit(ctx.request.body as User);
-//   ctx.response.body = ctx.request.body;
-// });
+// Edit a user
+router.put("/:id", async (ctx) => {
+  ctx.accepts("json");
+  const response = await edit(ctx.params.id, ctx.request.body as User);
+  ctx.response.body = response;
+});
 
-// // Delete a teacher
-// router.delete("/:id", (ctx) => {
-//   ctx.body = remove(ctx.params.id);
-// });
+// Delete a user
+router.delete("/:id", async (ctx) => {
+  ctx.body = await remove(ctx.params.id);
+});
 
 export default router;
