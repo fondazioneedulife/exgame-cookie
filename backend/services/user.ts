@@ -1,4 +1,4 @@
-import { User, User as UserModel } from "../../api-types";
+import { Role, User, User as UserModel } from "../../api-types";
 import DB from "./db";
 
 // const DB: User[] = [];
@@ -19,9 +19,9 @@ export const index = async () => {
   return UserModel.find({});
 };
 
-// export const getUsersByRole = (role: Role) => {
-//   return DB.filter((el) => el.role === role);
-// };
+export const getUsersByRole = async (role: Role) => {
+  return UserModel.find({ role });
+};
 
 export const view = async (id: string) => {
   return UserModel.findById(id);

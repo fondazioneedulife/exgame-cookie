@@ -1,6 +1,13 @@
 import Router from "@koa/router";
-import { User } from "../../api-types";
-import { add, edit, index, remove, view } from "../services/user";
+import { Role, User } from "../../api-types";
+import {
+  add,
+  edit,
+  getUsersByRole,
+  index,
+  remove,
+  view,
+} from "../services/user";
 
 const router = new Router({
   prefix: "/users",
@@ -12,9 +19,9 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-// router.get("/role/:role", (ctx) => {
-//   ctx.body = getUsersByRole(ctx.params.role as Role);
-// });
+router.get("/role/:role", async (ctx) => {
+  ctx.body = await getUsersByRole(ctx.params.role as Role);
+});
 
 // Find a user
 router.get("/:id", async (ctx) => {
