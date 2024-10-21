@@ -1,6 +1,6 @@
-import { Teacher } from "../../api-types";
+import { User } from "../../api-types";
 
-const DB: Teacher[] = [];
+const DB: User[] = [];
 
 export const index = () => {
     return DB;
@@ -10,18 +10,18 @@ export const view = (id: string) => {
     return DB.find((el) => el._id === id);
 };
 
-export const add = (teacher: Teacher) => {
-    DB.push(teacher);
+export const add = (user: User) => {
+    DB.push(user);
 };
 
-export const edit = (teacher: Teacher) => {
-    const document = DB.find((el) => el._id === teacher._id);
+export const edit = (user: User) => {
+    const document = DB.find((el) => el._id === user._id);
     
     if(!document){
-        throw new Error(`Can't find teacher by id: ${teacher._id}`);
+        throw new Error(`Can't find user by id: ${user._id}`);
     }
 
-    const updateDocument = { ...document, ...teacher };
+    const updateDocument = { ...document, ...user };
 
     DB.find((el, i) => {
         if(el._id === updateDocument._id){
