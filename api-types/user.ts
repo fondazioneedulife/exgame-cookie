@@ -22,7 +22,7 @@ export type User = {
    * - student
    * - teacher
    */
-  role: "admin" | "teacher" | "student";
+  role: Role;
 
   created_at: string;
   updated_at: string;
@@ -50,3 +50,5 @@ export type User = {
    */
   image?: string;
 };
+
+export type Role = "admin" | "teacher" | "student";
