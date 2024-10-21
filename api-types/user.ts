@@ -2,7 +2,6 @@ export type User = {
   _id: string;
   first_name: string;
   last_name: string;
-  username: string;
   email: string;
   password: string;
   /**
@@ -11,7 +10,7 @@ export type User = {
    * - student
    * - teacher
    */
-  role: string;
+  role: "admin" | "teacher" | "student";
   created_at: string;
   modified_at: string;
   /**
