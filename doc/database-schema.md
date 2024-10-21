@@ -8,8 +8,7 @@
 {
     "_id": ObjectId("1"),
     "first_name": "Name",
-    "second_name": "Surname",
-    "username": "NameSurname",
+    "last_name": "Surname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
@@ -25,8 +24,7 @@
 {
     "_id": ObjectId("2"),
     "first_name": "Name",
-    "second_name": "Surname",
-    "username": "NameSurname",
+    "last_name": "Surname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
@@ -44,8 +42,7 @@
 {
     "_id": ObjectId("3"),
     "first_name": "Name",
-    "second_name": "Surname",
-    "username": "NameSurname",
+    "last_name": "Surname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
