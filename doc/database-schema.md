@@ -107,7 +107,7 @@
         question_id: ObjectId("..."),
         options: [
           {
-            answer_id: "10",
+            response_id: ObjectId("..."),
           },
         ],
       },
