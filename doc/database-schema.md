@@ -73,18 +73,18 @@
         _id: ObjectId("..."),
         text: "Qual è il risultato di 5 + 5?",
         type: "multiple_choice",
-        options: [
-          { answer: "10", isCorrect: true },
-          { answer: "2", isCorrect: false },
+        answers: [
+          { _id: ObjectId("..."), answer: "10", isCorrect: true },
+          { _id: ObjectId("..."), answer: "2", isCorrect: false },
         ],
       },
       {
         _id: ObjectId("..."),
         text: "Quanto fa 10 / 2 ?",
         type: "multiple_choice",
-        options: [
-          { answer: "10", isCorrect: false },
-          { answer: "5", isCorrect: true },
+        answers: [
+          { _id: ObjectId("..."), answer: "10", isCorrect: false },
+          { _id: ObjectId("..."), answer: "5", isCorrect: true },
         ],
       },
     ],
@@ -107,7 +107,7 @@
         question_id: ObjectId("..."),
         options: [
           {
-            result: "10",
+            answer_id: "10",
           },
         ],
       },
