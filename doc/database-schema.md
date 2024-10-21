@@ -9,7 +9,6 @@
     "_id": ObjectId("1"),
     "first_name": "Name",
     "second_name": "Surname",
-    "username": "NameSurname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
@@ -26,7 +25,6 @@
     "_id": ObjectId("2"),
     "first_name": "Name",
     "second_name": "Surname",
-    "username": "NameSurname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
@@ -45,14 +43,13 @@
     "_id": ObjectId("3"),
     "first_name": "Name",
     "second_name": "Surname",
-    "username": "NameSurname",
     "email": "example@gmail.com",
     "password": "HashedPassword",
     "image"?: 1010101010110,
     "created_at": ISODate("2024-01-01T14:30:00Z"),
     "updated_at"?: ISODate("2024-01-01T14:30:00Z"),
     "role": "student",
-    "class"?: "Cookie"
+    "student_class"?: "Cookie"
 }
 ```
 
