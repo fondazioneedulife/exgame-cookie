@@ -1,6 +1,6 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-import { add, edit, index, remove, view } from "../services/user";
+import { add, edit, getUsersByRole, index, remove, view } from "../services/user";
 
 const router = new Router({
     prefix: "/users",
@@ -9,6 +9,11 @@ const router = new Router({
 // All routes
 router.get("/", (ctx) => {
     ctx.body = index();
+});
+
+//Find all users with a determinated role
+router.get("/role/:role" , (ctx) =>{
+    ctx.body = getUsersByRole(ctx.params.role);
 });
 
 // Find a user

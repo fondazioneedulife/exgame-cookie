@@ -6,6 +6,10 @@ export const index = () => {
     return DB;
 };
 
+export const getUsersByRole = (role: string) => {
+    return DB.filter((el) => el.role === role);
+}
+
 export const view = (id: string) => {
     return DB.find((el) => el._id === id);
 };
