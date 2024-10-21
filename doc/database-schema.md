@@ -52,7 +52,7 @@
     "created_at": ISODate("2024-01-01T14:30:00Z"),
     "updated_at"?: ISODate("2024-01-01T14:30:00Z"),
     "role": "student",
-    "class"?: "Cookie"
+    "student_class"?: "Cookie"
 }
 ```
 
