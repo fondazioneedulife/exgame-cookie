@@ -1,43 +1,49 @@
 import { Role, User } from "../../api-types";
+import DB from "./db";
 
-const DB: User[] = [];
+const userSchema = new DB.Schema({
+  firstName: String,
+  lastName: String,
+  email: String,
+  password: String,
+  created_at: String,
+  updated_at: String,
+  role: { type: String, enum: ["admin", "teacher", "student"], required: true },
+  image: String,
+  subjects: [String],
+  classes: [String],
+});
 
-export const index = () => {
-  return DB;
+const User = DB.model("User", userSchema);
+
+export const index = async () => {
+  return User.find({});
 };
 
-export const getUsersByRole = (role: Role) => {
-  return DB.filter((el) => el.role === role);
+export const getUsersByRole = async (role: Role) => {
+  return User.find({ role });
 };
 
-export const view = (id: string) => {
-  return DB.find((el) => el._id === id);
+export const view = async (id: string) => {
+  return User.findById(id);
 };
 
-export const add = (teacher: User) => {
-  DB.push(teacher);
+export const add = async (teacher: User) => {
+  const newUser = new User(teacher);
+  return newUser.save();
 };
 
-export const edit = (teacher: User) => {
-  const document = DB.find((el) => el._id === teacher._id);
+export const edit = async (teacher: User) => {
+  const document = await User.findById(teacher._id);
 
   if (!document) {
     throw new Error(`Can't find teacher by id: ${teacher._id}`);
   }
 
-  const updateDocument = { ...document, ...teacher };
-
-  DB.find((el, i) => {
-    if (el._id === updateDocument._id) {
-      DB[i] = updateDocument;
-    }
-  });
+  Object.assign(document, teacher);
+  return document.save();
 };
 
-export const remove = (id: string) => {
-  DB.forEach((el, i) => {
-    if (el._id === id) {
-      DB.splice(i, 1);
-    }
-  });
+export const remove = async (id: string) => {
+  return User.findByIdAndDelete(id);
 };
