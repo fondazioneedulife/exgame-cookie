@@ -1,0 +1,42 @@
+import Router from "@koa/router";
+import { Role, User } from "../../api-types";
+import { add, edit, index, remove, view, getUserByRole } from "../services/user";
+
+const router = new Router({
+    prefix: "/users",
+});
+
+// All routes
+router.get("/", (ctx) => {
+    ctx.body = index();
+});
+
+router.get("/role/{:role}", (ctx) => {
+    ctx.body = getUserByRole(ctx.params.role as Role);
+});
+
+// Find a User
+router.get("/:id" , (ctx) =>{
+    ctx.body = view(ctx.params.id);
+});
+
+// Add a User
+router.post("/" , async (ctx) =>{
+    ctx.accepts("json");
+    await add(ctx.request.body as User);
+    ctx.response.body = ctx.request.body;
+});
+
+// // Find a User
+// router.put("/:id" , (ctx) =>{
+//     ctx.accepts("json");
+//     edit(ctx.request.body as User);
+//     ctx.response.body = ctx.request.body;
+// });
+
+// // Delete a User
+// router.delete("/:id" , (ctx) =>{
+//     ctx.body = remove(ctx.params.id);
+// });
+
+export default router;
