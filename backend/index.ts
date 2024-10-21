@@ -5,7 +5,7 @@ import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
-import teacherRoutes from "./routes/teachers";
+import teacherRoutes from "./routes/users"
 
 const app = new Koa();
 const router = new Router();
