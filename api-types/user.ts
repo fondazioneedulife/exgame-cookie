@@ -15,11 +15,6 @@ export type User = {
   lastName: string;
 
   /**
-   * Username of the user
-   */
-  username: string;
-
-  /**
    * Email of the user
    */
   email: string;
