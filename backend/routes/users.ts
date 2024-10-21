@@ -1,14 +1,25 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-import { add, edit, index, remove, view } from "../services/user";
+import {
+  add,
+  edit,
+  getUsersByRole,
+  index,
+  remove,
+  view,
+} from "../services/user";
 
 const router = new Router({
-  prefix: "/teachers",
+  prefix: "/users",
 });
 
 // All routes
 router.get("/", (ctx) => {
   ctx.body = index();
+});
+
+router.get("/role/:role", (ctx) => {
+  ctx.body = getUsersByRole(ctx.params.role);
 });
 
 // Find a teacher
