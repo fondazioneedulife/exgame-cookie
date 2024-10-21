@@ -105,9 +105,9 @@
     questions: [
       {
         question_id: ObjectId("..."),
-        options: [
+        responses: [
           {
-            response_id: ObjectId("..."),
+            answer_id: ObjectId("..."),
           },
         ],
       },
