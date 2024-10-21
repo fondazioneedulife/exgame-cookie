@@ -18,7 +18,7 @@ export type User = {
    * - teacher
    * - student
    */
-  role: string;
+  role: "admin" | "teacher" | "student";
 
   image?: string;
 
