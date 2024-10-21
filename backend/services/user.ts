@@ -1,43 +1,63 @@
 import { User, Role} from "../../api-types";
+import DB from "./db";
 
-const DB: User[] = [];
+// const DB: User[] = [];
+const userSchema = new DB.Schema({
+  first_name: String,
+  last_name: String,
+  email: String,
+  password: String,
+  role: String,
+  created_at: String,
+  updated_at: String,
+  subject: [String],
+  classes: [String],
+  student_class: String,
+  image: String,
+})
 
-export const index = () => {
-    return DB;
+const UserModel = DB.model("users", userSchema);
+
+export const index = async() => {
+    return UserModel.find({});
 };
 
-export const getUsersByRole = (role: Role) => {
-    return DB.filter((el) => el.role === role);
-}
+// export const add = (user: User) => {
+//     DB.push(user);
+// };
 
-export const view = (id: string) => {
-    return DB.find((el) => el._id === id);
-};
+// export const getUsersByRole = (role: Role) => {
+//     return DB.filter((el) => el.role === role);
+// }
 
-export const add = (user: User) => {
-    DB.push(user);
-};
+// export const view = (id: string) => {
+//     return DB.find((el) => el._id === id);
+// };
 
-export const edit = (user: User) => {
-    const document = DB.find((el) => el._id === user._id);
+// export const add = (user: User) => {
+//     DB.push(user);
+// };
+
+// export const edit = (user: User) => {
+//     const document = DB.find((el) => el._id === user._id);
     
-    if(!document){
-        throw new Error(`Can't find user by id: ${user._id}`);
-    }
+//     if(!document){
+//         throw new Error(`Can't find user by id: ${user._id}`);
+//     }
 
-    const updateDocument = { ...document, ...user };
+//     const updateDocument = { ...document, ...user };
 
-    DB.find((el, i) => {
-        if(el._id === updateDocument._id){
-            DB[i] = updateDocument;
-        }
-    });
-};
+//     DB.find((el, i) => {
+//         if(el._id === updateDocument._id){
+//             DB[i] = updateDocument;
+//         }
+//     });
+// };
 
-export const remove = (id: string) => {
-    DB.forEach((el, i) => {
-        if(el._id === id){
-            DB.splice(i, 1);
-        }
-    });
-};
+// export const remove = (id: string) => {
+//     DB.forEach((el, i) => {
+//         if(el._id === id){
+//             DB.splice(i, 1);
+//         }
+//     });
+// };
