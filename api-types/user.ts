@@ -4,12 +4,39 @@ export type User = {
    */
   _id: string;
 
+  /**
+   * Name of the user
+   */
   firstName: string;
+
+  /**
+   * Surname of the user
+   */
   lastName: string;
+
+  /**
+   * Username of the user
+   */
   username: string;
+
+  /**
+   * Email of the user
+   */
   email: string;
+
+  /**
+   * Hashed password of the user
+   */
   password: string;
+
+  /**
+   * Date of user creation
+   */
   created_at: string;
+
+  /**
+   * Date of user update
+   */
   updated_at: string;
 
   /**
@@ -20,20 +47,23 @@ export type User = {
    */
   role: "admin" | "teacher" | "student";
 
+  /**
+   * Optional, image of the user
+   */
   image?: string;
 
   /**
-   * Rappresent the subjects that a user with role 'teacher' can teach
+   * Rappresent the subjects that only a user with role 'teacher' can teach
    */
   subjects?: string[];
 
   /**
-   * Rappresent the classes that a user with role 'teacher' can teach
+   * Rappresent the classes that only a user with role 'teacher' can teach
    */
   classes?: string[];
 
   /**
-   * Rappresent the class that a user with role 'student' is attending
+   * Rappresent the class that only a user with role 'student' is attending
    */
-  student_class: string;
+  student_class?: string;
 };
