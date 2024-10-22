@@ -52,6 +52,6 @@ export const edit = async (user: User) => {
 
 export const remove = async (id: string) => {
     const user = await User.findById(id);
-    const deleted = await User.deleteOne({_id: id})
+    await User.deleteOne({_id: id})
     return `User deleted ${user}`
 };
