@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import { User , Role } from "../../api-types";
-import {  edit, add, getUsersByRole, index, getUsersWithoutClass } from "../services/user";
-// import { remove, view } from "../services/user";
+import {  edit, add, getUsersByRole, index, getUsersWithoutClass, remove, view } from "../services/user";
+// import {   } from "../services/user";
 
 const router = new Router({
     prefix: "/users",
@@ -13,14 +13,19 @@ router.get("/", async(ctx) => {
     ctx.body = all;
 });
 
-//Find all users with a determinated role
+// Find all users with a determinated role
 router.get("/role/:role" , async(ctx) =>{
-    ctx.body = await getUsersByRole(ctx.params.id as Role);
+    ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
-//Find all studens without a class
+// Find all studens without a class
 router.get("/students-without-class" , async(ctx) =>{
     ctx.body = await getUsersWithoutClass();
+});
+
+// Find a single user
+router.get("/:id" , async(ctx) =>{
+    ctx.body = await view(ctx.params.id);
 });
 
 // Add a user
@@ -30,11 +35,6 @@ router.post("/" , async(ctx)=> {
     ctx.response.body = body;
 })
 
-// // Get a user
-// router.get("/:id" , (ctx) =>{
-//     ctx.body = view(ctx.params.id);
-// });
-
 // Modify a user
 router.put("/:id" , async(ctx) =>{
     ctx.accepts("json");
@@ -42,9 +42,9 @@ router.put("/:id" , async(ctx) =>{
     ctx.response.body = response;
 });
 
-// // Delete a user
-// router.delete("/:id" , (ctx) =>{
-//     ctx.body = remove(ctx.params.id);
-// });
+// Delete a user
+router.delete("/:id", async (ctx) => {
+    ctx.body = await remove(ctx.params.id);
+});
 
 export default router;
