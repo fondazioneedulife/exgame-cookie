@@ -22,39 +22,36 @@ const User = DB.model('user', userSchema)
 export const index = async () => {
     return User.find({});
 };
-// export const getUsersByRole = (role: Role) => {
-//     return DB.filter((el) => el.role === role);
-// };
 
-// export const view = (id: string) => {
-//     return DB.find((el) => el._id === id);
-// };
+export const getUsersByRole = async (role: Role) => {
+    return User.find({role: role});
+};
+
+export const view = (id: string) => {
+    return User.find({_id: id});
+};
 
 export const add = async (teacher: User) => {
     const newUser = new User(teacher);
     await newUser.save();
 };
 
-// export const edit = (teacher: User) => {
-//     const document = DB.find((el) => el._id === teacher._id);
-    
-//     if(!document){
-//         throw new Error(`Can't find teacher by id: ${teacher._id}`);
-//     }
+export const edit = async (user: User) => {
+    const document = await User.findById(user._id);
+    if (!document) {
+        throw new Error(`Can't find user by id: ${user._id}`);
+    }
 
-//     const updateDocument = { ...document, ...teacher };
+    const updatedDocument = await User.findByIdAndUpdate(
+        user._id,       
+        { $set: user },  
+        { new: true }     
+    );
+    return updatedDocument; 
+};
 
-//     DB.find((el, i) => {
-//         if(el._id === updateDocument._id){
-//             DB[i] = updateDocument;
-//         }
-//     });
-// };
-
-// export const remove = (id: string) => {
-//     DB.forEach((el, i) => {
-//         if(el._id === id){
-//             DB.splice(i, 1);
-//         }
-//     });
-// };
+export const remove = async (id: string) => {
+    const user = await User.findById(id);
+    const deleted = await User.deleteOne({_id: id})
+    return `User deleted ${user}`
+};
