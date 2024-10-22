@@ -2,16 +2,16 @@ import { Role, User } from "../../api-types";
 import DB from "./db";
 
 const userSchema = new DB.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
-  created_at: String,
-  updated_at: String,
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
   role: { type: String, enum: ["admin", "teacher", "student"], required: true },
-  image: String,
-  subjects: [String],
-  classes: [String],
+  image: { type: Buffer, required: false }, // Binary data
+  subjects: { type: [String], required: false },
+  classes: { type: [String], required: false },
 });
 
 const User = DB.model("User", userSchema);
