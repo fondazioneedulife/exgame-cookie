@@ -16,11 +16,11 @@ app.use(cors()); // TODO: configure for production
 app.use(bodyParser());
 app.use(serveStatic(`./public`, {}));
 
-app.use((ctx, next) => {
+app.use( async (ctx, next) => {
   console.log("Incoming HTTP request");
   // ctx.status = 200;
   // ctx.body = "Hello Koa";
-  next();
+  await next();
 });
 
 router.get("/", (ctx) => {

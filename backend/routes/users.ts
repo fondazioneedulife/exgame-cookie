@@ -1,45 +1,58 @@
 import Router from "@koa/router";
-import { User, Role } from "../../api-types";
-// import { add, edit, index, remove, view, getUserByRoles } from "../services/user";
-import { index, add } from "../services/user";
+import { Role, User } from "../../api-types";
+import {
+  add,
+  edit,
+  getUsersByRole,
+  index,
+  remove,
+  view,
+} from "../services/user";
 
 const router = new Router({
-    prefix: "/users",
+  prefix: "/users",
 });
 
 // All routes
 router.get("/", async (ctx) => {
-    const all = await index();
-    ctx.response.body = all;
+  const all = await index();
+  ctx.response.body = all;
 });
 
-// // login
-// router.get("/role/:role", (ctx) => {
-//     ctx.body = getUserByRoles(ctx.params.role as Role);
-// });
+router.get("/role/:role", async (ctx) => {
+  ctx.body = await getUsersByRole(ctx.params.role as Role);
+});
 
-// // Find a user
-// router.get("/:id" , (ctx) => {
-//     ctx.body = view(ctx.params.id);
-// });
+// Find a user
+router.get("/:id", async (ctx) => {
+  const user = await view(ctx.params.id);
+
+  if (!user) {
+    // User not found
+    ctx.status = 404;
+    return;
+  }
+
+  ctx.body = user;
+});
 
 // Add a user
-router.post("/" , (ctx) => { 
-    ctx.accepts("json");
-    add(ctx.request.body as User);
-    ctx.response.body = ctx.request.body;
-});
+// router.post("/", async (ctx) => {
+//   ctx.accepts("json");
+//   const user = await add(ctx.request.body as User);
+//   ctx.response.body = user;
+// });
 
-// // Find a user
-// router.put("/:id" , (ctx) =>{ 
-//     ctx.accepts("json");
-//     edit(ctx.request.body as User);
-//     ctx.response.body = ctx.request.body;
+// // Edit a user
+// router.put("/:id", async (ctx) => {
+//   ctx.accepts("json");
+//   const response = await edit(ctx.params.id, ctx.request.body as User);
+//   ctx.response.body = response;
 // });
 
 // // Delete a user
-// router.delete("/:id" , (ctx) => { 
-//     ctx.body = remove(ctx.params.id);
+// router.delete("/:id", async (ctx) => {
+//   ctx.body = await remove(ctx.params.id);
 // });
 
 export default router;

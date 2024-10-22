@@ -1,56 +1,48 @@
-import { Role, User } from "../../api-types";
+import { Role, User, User as UserModel } from "../../api-types";
 import DB from "./db";
 
 // const DB: User[] = [];
-const userSchema = new DB.Schema({
-    first_name: String,
-    last_name: String,
-    email: String,
-    password: String,
-    created_at: String,
-    updated_at: String,
-    role: String,
+
+const userSchema = new DB.Schema<User>({
+  first_name: String,
+  last_name: String,
+  email: String,
+  password: String,
+  created_at: String,
+  updated_at: String,
+  role: String,
 });
 
 const UserModel = DB.model("user", userSchema);
 
 export const index = async () => {
-    return UserModel.find();
+  return UserModel.find({});
 };
 
-// export const getUserByRoles = (role: Role) => {
-//    return DB.filter((el) => el.role === role);
-// };
-
-// export const view = (id: string) => {
-//     return DB.find((el) => el._id === id);
-// };
-
-export const add = (user: User) => {
-    const UserData = new UserModel(user);
-    
+export const getUsersByRole = async (role: Role) => {
+  return UserModel.find({ role });
 };
 
-// export const edit = (user: User) => {
-//     const document = DB.find((el) => el._id === user._id);
-    
-//     if(!document){
-//         throw new Error(`Can't find user by id: ${user._id}`);
-//     }
+export const view = async (id: string) => {
+  return UserModel.findById(id);
+};
 
-//     const updateDocument = { ...document, ...user };
+export const add = async (user: User) => {
+  const UserData = new UserModel(user);
+  return UserData.save();
+};
 
-//     DB.find((el, i) => {
-//         if(el._id === updateDocument._id){
-//             DB[i] = updateDocument;
-//         }
-//     });
-// };
+export const edit = async (id, user: User) => {
+  const UserDocument = await UserModel.findById(id);
 
-// export const remove = (id: string) => {
-//     DB.forEach((el, i) => {
-//         if(el._id === id){
-//             DB.splice(i, 1);
-//         }
-//     });
-// };
+  if (!UserDocument) {
+    throw new Error(`Can't find user by id: ${user._id}`);
+  }
+
+  UserDocument.set(user);
+  return UserDocument.save();
+};
+
+export const remove = async (id: string) => {
+  return UserModel.deleteOne({ _id: id });
+};
