@@ -1,20 +1,33 @@
 import { User, Role} from "../../api-types";
 import DB from "./db";
 
-// const DB: User[] = [];
 const userSchema = new DB.Schema({
-  first_name: String,
-  last_name: String,
-  email: String,
-  password: String,
-  role: String,
-  created_at: String,
-  updated_at: String,
-  subject: [String],
-  classes: [String],
-  student_class: String,
-  image: String,
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  role: {type: String , enum:[ "admin", "teacher", "student" ], required: true},
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+  subject: {type: [String], required: false},
+  classes: {type: [String], required: false},
+  student_class: { type: String, required: false },
+  image: { type: String, required: false },
 })
+
+// const userSchema = new DB.Schema({
+//   first_name: String, 
+//   last_name: String,
+//   email: String, 
+//   password: String,
+//   role: String,
+//   created_at: String,
+//   updated_at: String,
+//   subject: [String],
+//   classes: [String],
+//   student_class: String,
+//   image: String,
+// })
 
 const UserModel = DB.model("users", userSchema);
 
@@ -22,42 +35,32 @@ export const index = async() => {
     return UserModel.find({});
 };
 
-// export const add = (user: User) => {
-//     DB.push(user);
-// };
+export const getUsersByRole = async(role: Role) => {
+  return UserModel.find({ role });
+}
 
-// export const getUsersByRole = (role: Role) => {
-//     return DB.filter((el) => el.role === role);
-// }
+export const getUsersWithoutClass = async() => {
+  return UserModel.find({ role: "student", student_class: null });  
+}
 
-// export const view = (id: string) => {
-//     return DB.find((el) => el._id === id);
-// };
+export const add = async(user: User) => {
+    const newUser = new UserModel(user);
+    return newUser.save();
+};
 
-// export const add = (user: User) => {
-//     DB.push(user);
-// };
+export const view = async(id: string) => {
+    return UserModel.findById({ id });
+};
 
-// export const edit = (user: User) => {
-//     const document = DB.find((el) => el._id === user._id);
-    
-//     if(!document){
-//         throw new Error(`Can't find user by id: ${user._id}`);
-//     }
+export const edit = async(id, user: User) => {
+    console.log(id, user);
+    // const document = UserModel.findOneAndUpdate({ _id: id }, {user}, {new: true});
+  
+    // if(!document){
+    //     throw new Error(`Can't find user by id: ${user._id}`);
+    // }
+};
 
-//     const updateDocument = { ...document, ...user };
-
-//     DB.find((el, i) => {
-//         if(el._id === updateDocument._id){
-//             DB[i] = updateDocument;
-//         }
-//     });
-// };
-
-// export const remove = (id: string) => {
-//     DB.forEach((el, i) => {
-//         if(el._id === id){
-//             DB.splice(i, 1);
-//         }
-//     });
-// };
+export const remove = async(id: string) => {
+    return UserModel.deleteOne({id})
+};
