@@ -1,7 +1,7 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
 // import { add, edit, index, remove, view , getUserByRoles} from "../services/user";
-import {index} from  "../services/user"
+import {index} from  "../services/user";
 
 const router = new Router({
     prefix: "/users",
