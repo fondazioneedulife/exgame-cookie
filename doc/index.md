@@ -18,7 +18,7 @@ Gli attori del sistema sono docenti e studenti. I primi fungono da amministrator
 Come Docente voglio:
 
 - Creare gli account per gli studenti
-- Registrare gli studenti agli esami, inmodo che possano partecipare agli esami che ho preparato per loro
+- Registrare gli studenti agli esami, in modo che possano partecipare agli esami che ho preparato per loro
 - Creare nuovi esami e modificarli:
   - aggiungere domande
   - aggiungere risposte
@@ -50,6 +50,12 @@ Come studente voglio:
 ### Diagramma degli use cases
 
 ![use cases](./assets/exgame%20-%20use%20cases.png)
+
+### Wireframes
+
+![](./assets/wireframes.png)
+
+Puoi visualizzarli (e modificarli) anche usando [Excalidraw](https://excalidraw.com/), trovi il file sorgente [negli assets](./assets/wireframes.excalidraw).
 
 ## Requisiti tecnici
 
