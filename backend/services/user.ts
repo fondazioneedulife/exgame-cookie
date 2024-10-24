@@ -42,17 +42,20 @@ export const add = async( user: User ) => {
 
 //UPDATE
 export const edit = async( id, user: User ) => {
-
-  user.updated_at = Date.now();
   
+  user.updated_at = Date.now();
   const opt = { new: true, runValidators: true };
-  const userDocument = await UserModel.findByIdAndUpdate( id, { $set: user }, opt );
+  
+  try {
 
-  if (!userDocument) {
-    throw new Error(`Can't find user by id: ${ id }`);
+    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: user }, opt);
+    return userDocument;
+
+  } catch (error) {
+    
+      console.error("Errore durante l'aggiornamento dell'utente:", error);
+      throw new Error(`Errore nell'aggiornamento dell'utente: ${error.message}`);
   }
-
-  return userDocument;
 };
 
 //DELETE

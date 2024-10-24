@@ -29,16 +29,24 @@ router.get("/:id" , async(ctx) =>{
 });
 
 // Add a user
-router.post("/" , async(ctx)=> {
-    ctx.accepts("json");
-    const body = await add(ctx.body as User);
-    ctx.response.body = body;
-})
+router.post("/", async(ctx) => {
+    try {
+        ctx.accepts("json");
+        const body = await add(ctx.request.body as User);
+        ctx.response.body = body;
+    } catch (error) {
+        ctx.response.status = 500;
+        ctx.response.body = {
+            message: "Si è verificato un errore",
+            error: error.message
+        };
+    }
+});
 
 // Modify a user
 router.put("/:id" , async(ctx) =>{
     ctx.accepts("json");
-    const response = await edit(ctx.params.id, ctx.body as User);
+    const response = await edit(ctx.params.id, ctx.request.body as User);
     ctx.response.body = response;
 });
 
