@@ -17,6 +17,7 @@
     "@types/koa-static": "^4.0.4",
     "koa": "^2.15.3",
     "koa-static": "^5.0.0",
+    "mongoose": "^8.7.2",
     "socket.io": "^4.8.0",
     "tsx": "^4.19.1"
   },
