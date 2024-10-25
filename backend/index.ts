@@ -6,7 +6,6 @@ import Koa from "koa";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import userRoutes from "./routes/users";
-import DB from "./services/db";
 
 const app = new Koa();
 const router = new Router();
@@ -35,14 +34,15 @@ httpServer.listen(process.env.PORT, () => {
   console.log(`Server running on ${process.env.HOST}:${process.env.PORT}`);
 });
 
-const serverOnclose = () => {
-  httpServer.close();
-  DB.connection.close();
-  console.info("Server closed");
-};
+// TODO: check
+// const serverOnclose = () => {
+//   httpServer.close();
+//   DB.connection.close();
+//   console.info("Server closed");
+// };
 
-process.on("SIGTERM", serverOnclose);
+// process.on("SIGTERM", serverOnclose);
 
-process.on("SIGKILL", serverOnclose);
+// process.on("SIGKILL", serverOnclose);
 
-process.on("SIGINT", serverOnclose);
+// process.on("SIGINT", serverOnclose);
