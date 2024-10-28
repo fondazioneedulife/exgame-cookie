@@ -4,7 +4,7 @@ import DB from "./db";
 const userSchema = new DB.Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: {type: String , enum:[ "admin", "teacher", "student" ], required: true},
   created_at: { type: Number, default: Date.now() },
@@ -54,7 +54,7 @@ export const edit = async( id, user: User ) => {
   } catch (error) {
     
       console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(`Errore nell'aggiornamento dell'utente: ${error.message}`);
+      throw new Error(error.message);
   }
 };
 
