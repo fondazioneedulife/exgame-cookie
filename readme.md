@@ -17,6 +17,12 @@ Questo progetto è un ["monorepo"](https://docs.npmjs.com/cli/v7/using-npm/works
 
 L'installazione di tutte le dipendenze si effettua lanciando il comando: `npm install` dalla directory principale del progetto.
 
+### Connessione al database
+
+Se hai un database Mongo attivo sulla tua macchina, usa quello. La connessione è impostata sui parametri di default `mongodb://localhost:27017/exgame`.
+
+Se invece non hai un database attivo, ma hai Docker installato, puoi lanciare `docker compose up` da questa cartella.
+
 ## Flusso di lavoro
 
 ![](./doc/assets/flusso-di-lavoro.png)
@@ -31,6 +37,6 @@ L'installazione di tutte le dipendenze si effettua lanciando il comando: `npm in
 - all'inizio di ogni lezione:
   - scaricati il master dal repository di Fondazione Edulife
   - crea un nuovo branch di lavoro sul tuo repo e svolgi gli esercizi su questo branch
-- alla fine della lezione: 
+- alla fine della lezione:
   - fai push del tuo branch
   - crea una Pull Request sul repository di Fondazione Edulife
