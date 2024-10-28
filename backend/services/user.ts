@@ -23,6 +23,10 @@ export const getUsersByRole = async (role: Role) => {
   return UserModel.find({ role });
 };
 
+export const getUserWithoutClass = async () => {
+  return UserModel.find({ class: null });
+}
+
 export const view = async (id: string) => {
   return UserModel.findById(id);
 };

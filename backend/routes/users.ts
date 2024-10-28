@@ -7,6 +7,7 @@ import {
   index,
   remove,
   view,
+  getUserWithoutClass,
 } from "../services/user";
 
 const router = new Router({
@@ -23,6 +24,12 @@ router.get("/role/:role", async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
+// find students with out class (if this route is before "find a user", its doesnt't work)
+router.get("/with-out-class", async (ctx) => {
+  const userWithoutClass = await getUserWithoutClass();
+  ctx.response.body = userWithoutClass;
+});
+
 // Find a user
 router.get("/:id", async (ctx) => {
   const user = await view(ctx.params.id);
@@ -36,7 +43,8 @@ router.get("/:id", async (ctx) => {
   ctx.body = user;
 });
 
-// Add a user
+
+// // Add a user
 // router.post("/", async (ctx) => {
 //   ctx.accepts("json");
 //   const user = await add(ctx.request.body as User);
