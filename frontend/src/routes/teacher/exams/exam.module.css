@@ -1,0 +1,11 @@
+.headerLayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.buttonsLayout {
+  gap: 1rem;
+  display: flex;
+}
