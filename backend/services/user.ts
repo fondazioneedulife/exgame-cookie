@@ -1,48 +1,66 @@
-import { Role, User, User as UserModel } from "../../api-types";
+import { User, Role} from "../../api-types";
 import DB from "./db";
 
-// const DB: User[] = [];
+const timestamp = Date.now();
 
-const userSchema = new DB.Schema<User>({
-  first_name: String,
-  last_name: String,
-  email: String,
-  password: String,
-  created_at: String,
-  updated_at: String,
-  role: String,
-});
+const userSchema = new DB.Schema({
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: {type: String , enum:[ "admin", "teacher", "student" ], required: true},
+  created_at: { type: Number, default: timestamp },
+  updated_at: { type: Number, default: timestamp },
+  subject: {type: [String], required: false},
+  classes: {type: [String], required: false},
+  student_class: { type: String, required: false },
+  image: { type: String, required: false },
+})
 
-const UserModel = DB.model("user", userSchema);
+const UserModel = DB.model("users", userSchema);
 
-export const index = async () => {
-  return UserModel.find({});
+//READ
+export const index = async() => {
+    return UserModel.find({});
 };
 
-export const getUsersByRole = async (role: Role) => {
+export const getUsersByRole = async(role: Role) => {
   return UserModel.find({ role });
+}
+
+export const getUsersWithoutClass = async() => {
+  return UserModel.find({ role: "student", student_class: null });  
+}
+
+export const view = async( id: string ) => {
+    return UserModel.findById({ id });
 };
 
-export const view = async (id: string) => {
-  return UserModel.findById(id);
+//CREATE
+export const add = async( user: User ) => {
+  const newUser = new UserModel(user);
+  return newUser.save();
 };
 
-export const add = async (user: User) => {
-  const UserData = new UserModel(user);
-  return UserData.save();
-};
+//UPDATE
+export const edit = async( id, user: User ) => {
+  
+  user.updated_at = timestamp;
+  const opt = { new: true, runValidators: true };
+  
+  try {
 
-export const edit = async (id, user: User) => {
-  const UserDocument = await UserModel.findById(id);
+    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: user }, opt);
+    return userDocument;
 
-  if (!UserDocument) {
-    throw new Error(`Can't find user by id: ${user._id}`);
+  } catch (error) {
+    
+      console.error("Errore durante l'aggiornamento dell'utente:", error);
+      throw new Error(error.message);
   }
-
-  UserDocument.set(user);
-  return UserDocument.save();
 };
 
-export const remove = async (id: string) => {
-  return UserModel.deleteOne({ _id: id });
+//DELETE
+export const remove = async(id: string) => {
+  return UserModel.deleteOne({ _id: id })
 };
