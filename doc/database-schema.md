@@ -89,6 +89,19 @@
 ];
 ```
 
+## Sessions
+```ts
+[
+  {
+    _id: ObjectId(""),
+    exam_id: ObjectId(""),
+    student_class: "",
+    start_date: ISODate("2024-01-20T10:00:00Z"),
+    start_time: ISODate("2024-01-20T10:00:00Z")
+  }
+]
+```
+
 ## Subscriptions
 
 ```ts
