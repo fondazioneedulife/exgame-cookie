@@ -96,9 +96,7 @@
   {
     _id: ObjectId(""),
     student_id: ObjectId(""),
-    exam_id: ObjectId(""),
-    start_time: ISODate("2024-01-20T10:00:00Z"),
-    end_time: ISODate("2024-01-20T10:00:00Z"),
+    session_id: ObjectId(""),
     questions: [
       {
         question_id: ObjectId("..."),
