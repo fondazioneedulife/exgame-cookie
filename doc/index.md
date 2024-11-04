@@ -11,7 +11,7 @@ Si intende realizzare un'applicazione web per svolgere esami o quiz, simulando l
 
 ## Requisiti funzionali
 
-Gli attori del sistema sono docenti e studenti. I primi fungono da amministratori e i secondi da utenti registrati.
+Gli attori del sistema sono docenti, studenti e admin. I primi fungono da amministratori e i secondi da utenti registrati. Admin è un utente con tutti i diritti di un docente, più la possibilità di gestire tutte le entità del sistema. L'admin può anche registrare nuovi utenti e "promuovere" uno studente al ruolo di docente (questo perché tutti gli utenti che si registrano autonomamente vengono inizialmente inseriti come studenti).
 
 ### User stories
 
