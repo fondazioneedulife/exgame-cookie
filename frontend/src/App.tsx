@@ -13,6 +13,7 @@ import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
+import { Classes } from "./routes/teacher/classes/classes";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
           {/* Teacher */}
           <Route path="teacher" element={<TeacherGuard />}>
+            <Route path="classes" element={<Classes />}></Route>
             <Route index element={<Exams />} />
             <Route path="exam" element={<AddExam />} />
             <Route path="exam/:id" element={<EditExam />} />

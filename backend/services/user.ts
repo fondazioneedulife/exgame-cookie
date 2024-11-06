@@ -1,4 +1,4 @@
-import { Role, User, User as UserModel } from "../../api-types";
+import { Role, User } from "../../api-types";
 import DB from "./db";
 
 // const DB: User[] = [];
