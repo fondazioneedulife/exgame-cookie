@@ -1,65 +1,67 @@
-import Router from "@koa/router";
-import { Role, User } from "../../api-types";
-import {
-  add,
-  edit,
-  getUsersByRole,
-  index,
-  remove,
-  view,
-} from "../services/user";
+import Router from '@koa/router';
+import { User, User as UserModel } from "../../api-types";
+import { index, add, edit, remove, view } from '../services/user';
+import { isAdmin, isStudent } from '../mock/mockLoggedUser'; // Assicurati di importare correttamente la funzione isAdmin
 
-const router = new Router({
-  prefix: "/users",
-});
+const router = new Router();
 
-// All routes
-router.get("/", async (ctx) => {
+const isAdminMiddleware = async (ctx, next) => {
+  const is_admin = isAdmin();
+  if (is_admin) {
+    await next();
+  } else {
+    ctx.status = 401;
+    ctx.response.body = "user non autorizzato";
+  }
+};
+
+// Get all users
+router.get("/", isAdminMiddleware, async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
 
-router.get("/role/:role", async (ctx) => {
-  ctx.body = await getUsersByRole(ctx.params.role as Role);
-});
-
-// Find a user
+// Get a user by ID
 router.get("/:id", async (ctx) => {
-
-  const user = await view(ctx.params.id);
-  // const token = await getUrlToken();  // da implementare
-  // const userByToken = await getUserByToken(token); // da implementare
-  
+  const loggedUser = getmockLoggedUser()
+  console.log(loggedUser.role)
+  let user;
+  switch(loggedUser.role){
+    case "admin":
+       user = await viewForAdmin(ctx.params.id);
+      break
+    case "teacher":
+      user = await viewForTeacher(ctx.params.id);
+      break
+    case "student":
+      user = await viewForStudent(ctx.params.id);
+      break
+  }
   if (!user) {
     // User not found
     ctx.status = 404;
     return;
   }
 
-  // if(userByToken._id != user._id){
-  //   // User id search doesn't match with autenticated user
-  //   ctx.status = 500;
-  // }
-
   ctx.body = user;
 });
 
 // Add a user
-router.post("/", async (ctx) => {
+router.post("/", isAdminMiddleware, async (ctx) => {
   ctx.accepts("json");
   const user = await add(ctx.request.body as User);
   ctx.response.body = user;
 });
 
 // Edit a user
-router.put("/:id", async (ctx) => {
+router.put("/:id", isAdminMiddleware, async (ctx) => {
   ctx.accepts("json");
   const response = await edit(ctx.params.id, ctx.request.body as User);
   ctx.response.body = response;
 });
 
 // Delete a user
-router.delete("/:id", async (ctx) => {
+router.delete("/:id", isAdminMiddleware, async (ctx) => {
   ctx.body = await remove(ctx.params.id);
 });
 
