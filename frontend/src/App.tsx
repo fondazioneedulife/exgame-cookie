@@ -6,6 +6,7 @@ import { Root } from "./routes/Root";
 import { StudentGuard } from "./routes/student/StudentGuard";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
+import { UserProfile } from './routes/student/UserProfile';
 import { AddExam } from "./routes/teacher/exams/AddExam";
 import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
@@ -40,6 +41,7 @@ function App() {
           <Route path="student" element={<StudentGuard />}>
             <Route index element={<MySubscriptions />} />
             <Route path="subscribe/:id" element={<Subscribe />} />
+            <Route path=":id/profile/details" element={<UserProfile />} />
             <Route
               path="subscriptions/:date/:id"
               element={<SubscriptionReport />}
