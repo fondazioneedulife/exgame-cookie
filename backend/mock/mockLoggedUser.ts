@@ -1,4 +1,4 @@
-import { Role, User } from "../../api-types";
+import { User } from "../../api-types";
 
 export const getmockLoggedUser = (): User => {
   return {
@@ -8,8 +8,8 @@ export const getmockLoggedUser = (): User => {
     email: "email@gmail.com",
     password: "hashedPasswoord",
     role: "teacher",
-    created_at: "1729766635269",
-    updated_at: "1729767105639",
+    created_at: 1729766635269,
+    updated_at: 1729767105639,
     classes: ["suse", "cookie"],
   } as User;
 };
@@ -23,7 +23,7 @@ export const isAdmin = (): boolean => {
 
 export const isTeacher = (): boolean => {
   const role = getmockLoggedUser().role;
-  if (role == "admin") {
+  if (role == "teacher") {
     return true;
   }
   return false;
