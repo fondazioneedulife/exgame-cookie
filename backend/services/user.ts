@@ -23,7 +23,9 @@ export const getUsersByRole = async (role: Role) => {
   return UserModel.find({ role });
 };
 
-export const view = async (id: string) => {
+
+//---------------VIEW BY ID------------------------
+export const viewForAdmin = async (id: string) => {
   return UserModel.findById(id);
 };
 
@@ -44,5 +46,23 @@ export const edit = async (id, user: User) => {
 };
 
 export const remove = async (id: string) => {
-  return UserModel.deleteOne({ _id: id });
+  
+  try {
+    const userToDelete = await UserModel.findById(id);
+
+    if (!userToDelete) {
+      return { success: false, message: "Utente non trovato" };
+    }
+
+    if (userToDelete.role === "admin") {
+      return { success: false, message: "Non puoi eliminare un altro admin" };
+    }
+
+    const result = await UserModel.deleteOne({ _id: id });
+    return { success: true, message: "Utente eliminato correttamente", result };
+    
+  } catch (error) {
+    console.error("Errore durante l'eliminazione dell'utente:", error);
+    return { success: false, message: "Errore durante l'eliminazione dell'utente" };
+  }
 };

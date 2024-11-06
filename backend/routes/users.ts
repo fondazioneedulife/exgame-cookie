@@ -1,17 +1,28 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
+import { isAdmin, getmockLoggedUser } from "../mock/mockLoggedUser";
 import {
   add,
   edit,
   getUsersByRole,
   index,
   remove,
-  view,
+  viewForAdmin,
 } from "../services/user";
 
 const router = new Router({
   prefix: "/users",
 });
+
+const isAdminMiddleware = async (ctx, next) => {
+  const is_admin = isAdmin();
+  if (is_admin) {
+    await next();
+  } else {
+    ctx.status = 401;
+    ctx.response.body = "user non autorizzato";
+  }
+};
 
 // All routes
 router.get("/", async (ctx) => {
@@ -19,14 +30,25 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-router.get("/role/:role", async (ctx) => {
+router.get("/role/:role",isAdminMiddleware, async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
 // Find a user
 router.get("/:id", async (ctx) => {
-  const user = await view(ctx.params.id);
-
+  const loggedUser = getmockLoggedUser()
+  let user;
+  switch(loggedUser.role){
+    case "admin":
+       user = await viewForAdmin(ctx.params.id);
+      break
+      case "teacher":
+      user = await viewForTeacher(ctx.params.id);
+      break
+    case "student":
+      user = await viewForStudent(ctx.params.id);
+      break 
+  }
   if (!user) {
     // User not found
     ctx.status = 404;
@@ -51,7 +73,7 @@ router.put("/:id", async (ctx) => {
 });
 
 // Delete a user
-router.delete("/:id", async (ctx) => {
+router.delete("/:id",isAdminMiddleware, async (ctx) => {
   ctx.body = await remove(ctx.params.id);
 });
 
