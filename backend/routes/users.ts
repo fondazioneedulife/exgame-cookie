@@ -42,12 +42,12 @@ router.get("/:id", async (ctx) => {
     case "admin":
        user = await viewForAdmin(ctx.params.id);
       break
-      case "teacher":
+/*       case "teacher":
       user = await viewForTeacher(ctx.params.id);
       break
     case "student":
       user = await viewForStudent(ctx.params.id);
-      break 
+      break  */
   }
   if (!user) {
     // User not found
