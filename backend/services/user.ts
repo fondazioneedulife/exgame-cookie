@@ -36,7 +36,7 @@ export const view = async( id: string ) => {
   return UserModel.findById({ id });
 };
 
-export const getMyStudets = async(classes: string[]) => {
+export const getMyStudents = async(classes: string[]) => {
   return UserModel.find({class: { $in: classes}});
 }
 
