@@ -3,14 +3,19 @@ import DB from "./db";
 
 // const DB: User[] = [];
 
-const userSchema = new DB.Schema<User>({
-  first_name: String,
-  last_name: String,
-  email: String,
-  password: String,
-  created_at: String,
-  updated_at: String,
-  role: String,
+const userSchema = new DB.Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+  role: { type: String, enum: ["admin", "teacher", "student"], required: true },
+  image: { type: Buffer, required: false }, // Binary data
+  subjects: { type: [String], required: false },
+  classes: { type: [String], required: false },
+  class: { type: String, required: false },
+  token: { type: String, required: false, default: null },
 });
 
 const UserModel = DB.model("user", userSchema);
@@ -46,3 +51,22 @@ export const edit = async (id, user: User) => {
 export const remove = async (id: string) => {
   return UserModel.deleteOne({ _id: id });
 };
+
+export const getUrlToken = async (id: string) => {
+  
+  try {
+    const user = await UserModel.findById(id);
+
+    if (user && user.token) {
+      return user.token;
+    } else {
+      console.log("Utente non trovato o campo token mancante");
+      return null;
+    }
+    
+  } catch (error) {
+    console.error("Errore nella ricerca dell'utente:", error);
+    return null;
+  }
+  
+}; 

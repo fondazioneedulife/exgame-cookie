@@ -25,13 +25,21 @@ router.get("/role/:role", async (ctx) => {
 
 // Find a user
 router.get("/:id", async (ctx) => {
-  const user = await view(ctx.params.id);
 
+  const user = await view(ctx.params.id);
+  // const token = await getUrlToken();  // da implementare
+  // const userByToken = await getUserByToken(token); // da implementare
+  
   if (!user) {
     // User not found
     ctx.status = 404;
     return;
   }
+
+  // if(userByToken._id != user._id){
+  //   // User id search doesn't match with autenticated user
+  //   ctx.status = 500;
+  // }
 
   ctx.body = user;
 });
