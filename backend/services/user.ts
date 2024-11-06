@@ -17,7 +17,7 @@ const userSchema = new DB.Schema({
   image: { type: String, required: false },
 })
 
-const UserModel = DB.model("users", userSchema);
+export const UserModel = DB.model("users", userSchema);
 
 //READ
 export const index = async() => {
@@ -33,8 +33,12 @@ export const getUsersWithoutClass = async() => {
 }
 
 export const view = async( id: string ) => {
-    return UserModel.findById({ id });
+  return UserModel.findById({ id });
 };
+
+export const getMyStudets = async(classes: string[]) => {
+  return UserModel.find({class: { $in: classes}});
+}
 
 //CREATE
 export const add = async( user: User ) => {
@@ -64,3 +68,14 @@ export const edit = async( id, user: User ) => {
 export const remove = async(id: string) => {
   return UserModel.deleteOne({ _id: id })
 };
+
+//-------------------------------- CLASS ---------------------------------
+
+//READ
+export const getAllClasses = async() => {
+  return UserModel.find({});
+};
+
+export const getStudentsOfClass = async(theClass: string) => {
+  return UserModel.find({role: "student", class: theClass});
+};  3

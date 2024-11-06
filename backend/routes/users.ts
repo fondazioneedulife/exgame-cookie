@@ -1,11 +1,21 @@
 import Router from "@koa/router";
 import { User , Role } from "../../api-types";
-import {  edit, add, getUsersByRole, index, getUsersWithoutClass, remove, view } from "../services/user";
+import { getmockLoggedUser, isAdmin, isTeacher, isAdminOrTeacher } from "../mock/mockLoggedUser";
+import {  edit, add, getUsersByRole, index, getUsersWithoutClass, getMyStudets, remove, view } from "../services/user";
 // import {   } from "../services/user";
 
 const router = new Router({
     prefix: "/users",
 });
+
+const isAdminOrTeacherMiddleware = async (ctx, next) => {
+    if (isAdminOrTeacher()) {
+        await next();
+    } else {
+        ctx.status = 401;
+        ctx.response.body = "user non autorizzato";
+    }
+};
 
 // All routes
 router.get("/", async(ctx) => {
@@ -40,6 +50,17 @@ router.post("/", async(ctx) => {
             message: "Si è verificato un errore",
             error: error.message
         };
+    }
+});
+
+//find all the students in the classes taught by a teacher.
+router.get("/my-students", isAdminOrTeacherMiddleware, async(ctx) =>{
+    const classes = getmockLoggedUser().classes;
+    if (classes && classes.length !== 0) {
+        ctx.body = await getMyStudets(classes);
+    } else {
+        ctx.status = 400;
+        ctx.response.body = { message: "Non hai assegnato nessuna classe." };
     }
 });
 
