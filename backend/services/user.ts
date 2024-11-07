@@ -1,7 +1,5 @@
-import { Role, User, User as UserModel } from "../../api-types";
+import { Role, User } from "../../api-types";
 import DB from "./db";
-
-// const DB: User[] = [];
 
 const userSchema = new DB.Schema<User>({
   first_name: String,
@@ -32,7 +30,7 @@ export const add = async (user: User) => {
   return UserData.save();
 };
 
-export const edit = async (id, user: User) => {
+export const edit = async (id: string, user: User) => {
   const UserDocument = await UserModel.findById(id);
 
   if (!UserDocument) {
@@ -45,4 +43,9 @@ export const edit = async (id, user: User) => {
 
 export const remove = async (id: string) => {
   return UserModel.deleteOne({ _id: id });
+};
+
+// Find user by email and password
+export const findByEmailAndPassword = async (email: string, password: string) => {
+  return UserModel.findOne({ email, password });
 };

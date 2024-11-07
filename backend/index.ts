@@ -1,11 +1,11 @@
-import { bodyParser } from "@koa/bodyparser";
+import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
 import Router from "@koa/router";
 import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
-import { initSocketIo } from "./io";
-import userRoutes from "./routes/users";
+import initSocketIo from "./io";
+import { userRoutes } from "./routes/users";
 
 const app = new Koa();
 const router = new Router();
@@ -13,13 +13,11 @@ const httpServer = createServer(app.callback());
 initSocketIo(httpServer);
 
 app.use(cors()); // TODO: configure for production
-app.use(bodyParser());
+app.use(bodyParser()); // Usa il parser del corpo corretto
 app.use(serveStatic(`./public`, {}));
 
 app.use(async (ctx, next) => {
   console.log("Incoming HTTP request");
-  // ctx.status = 200;
-  // ctx.body = "Hello Koa";
   await next();
 });
 
