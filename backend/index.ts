@@ -3,8 +3,10 @@ import cors from "@koa/cors";
 import Router from "@koa/router";
 import { createServer } from "http";
 import Koa from "koa";
+import session from "koa-session";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
+import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
 
 const app = new Koa();
@@ -16,18 +18,15 @@ app.use(cors()); // TODO: configure for production
 app.use(bodyParser());
 app.use(serveStatic(`./public`, {}));
 
-app.use(async (ctx, next) => {
-  console.log("Incoming HTTP request");
-  // ctx.status = 200;
-  // ctx.body = "Hello Koa";
-  await next();
-});
+app.keys = ["secret-ln9mLhYTd/kK(o.-inir"];
+app.use(session({ key: "session" }, app));
 
 router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
 });
 
 app.use(router.routes()).use(router.allowedMethods());
+app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
 
 httpServer.listen(process.env.PORT, () => {
