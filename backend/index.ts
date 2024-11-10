@@ -3,6 +3,7 @@ import cors from "@koa/cors";
 import Router from "@koa/router";
 import { createServer } from "http";
 import Koa from "koa";
+import passport from "koa-passport";
 import session from "koa-session";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
@@ -20,6 +21,8 @@ app.use(serveStatic(`./public`, {}));
 
 app.keys = ["secret-ln9mLhYTd/kK(o.-inir"];
 app.use(session({ key: "session" }, app));
+app.use(passport.initialize());
+app.use(passport.session());
 
 router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
