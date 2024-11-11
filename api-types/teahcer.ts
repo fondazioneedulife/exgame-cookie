@@ -6,5 +6,4 @@ export type Teacher = {
     password: string;
     courses?: string[];
     image?: string;
-
 };

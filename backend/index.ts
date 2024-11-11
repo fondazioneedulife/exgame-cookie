@@ -6,6 +6,7 @@ import Koa from "koa";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import userRoutes from "./routes/users";
+import examRoutes from "./routes/users";
 
 const app = new Koa();
 const router = new Router();
