@@ -1,30 +1,22 @@
-import Router from "@koa/router";
-import { Role, User } from "../../../api-types";
+import {User } from "../../../api-types";
 import { isAdmin, getmockLoggedUser } from "../../mock/mockLoggedUser";
-import {  editForAdmin, editForStudent, editForTeacher } from "../../services/user";
+import {  edit, editYorself } from "../../services/user";
 
 
 export const editHandler = async (ctx) => {
    
     const loggedUser = await getmockLoggedUser();
-    console.log(loggedUser.role);
-    let edit;
+    let userEdit;
 
     switch(loggedUser.role){
         case "admin":
-            edit =  await editForAdmin(ctx.params.id, ctx.request.body as User)
+            userEdit =  await edit(ctx.params.id, ctx.request.body as User)
             break;
         case "teacher":
-            const classes = loggedUser.classes;
-            if (classes && classes.length !== 0) {
-                ctx.body = await editForTeacher(ctx.params.id, ctx.request.body as User);
-            } else {
-                ctx.status = 400;
-                ctx.response.body = { message: "Non hai nessuno studente assegnato alle tue classi." };
-            }
+            userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
             break;
         case "student":
-            edit = await editForStudent(ctx.params.id, ctx.request.body as User)
+            userEdit = await editYorself(loggedUser._id, ctx.request.body as User)
             break;
 
         default:
@@ -33,7 +25,7 @@ export const editHandler = async (ctx) => {
             break;
     }
 
-    return edit;
+    return userEdit;
 
   };
 

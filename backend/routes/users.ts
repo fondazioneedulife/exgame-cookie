@@ -8,9 +8,8 @@ import {
   getUsersByRole,
   index,
   remove,
-  viewForAdmin,
   getUsersWithoutClass,
-  getMyStudents,
+  assignClass,
 } from "../services/user";
 
 const router = new Router({
@@ -33,44 +32,32 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-router.get("/role/:role",isAdminMiddleware, async (ctx) => {
+router.get("/role/:role", isAdminMiddleware, async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
-});
-
-// Find a user
-router.get("/:id", async (ctx) => {
- const viewUser = viewHandler(ctx.params.id);
-  ctx.body = viewUser;
 });
 
 // Find all students without a class
 router.get("/students-without-class" , async(ctx) =>{
     const loggedUser = await getmockLoggedUser();
-    console.log(loggedUser.role);
 
-    switch(loggedUser.role){
-        case "admin":
-            ctx.body = await getUsersWithoutClass();
-            break;
-        case "teacher":
-            ctx.body = await getUsersWithoutClass();
-            break;
-        case "student":
-            ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
-            break;
-        default:
-            ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
-            break;
-    }
+  switch(loggedUser.role){
+      case "admin":
+          ctx.body = await getUsersWithoutClass();
+          break;
+      case "teacher":
+          ctx.body = await getUsersWithoutClass();
+          break;
+      case "student":
+      default:
+          ctx.status = 401;
+          ctx.response.body = "utente non autorizzato";
+          break;
+  }
 });
 
 //find all the students in the classes taught by a teacher.
 router.get("/my-students", async(ctx) =>{
-    
     const loggedUser = await getmockLoggedUser();
-    console.log(loggedUser.role);
 
     switch(loggedUser.role){
         case "admin":
@@ -80,6 +67,7 @@ router.get("/my-students", async(ctx) =>{
 
         case "teacher":
             const classes = loggedUser.classes;
+            // TODO: tipo da assegnare
             if (classes && classes.length !== 0) {
              /*    ctx.body = await getMyStudents(classes); */
             } else {
@@ -89,10 +77,6 @@ router.get("/my-students", async(ctx) =>{
             break;
 
         case "student":
-            ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
-            break;
-
         default:
             ctx.status = 401;
             ctx.response.body = "utente non autorizzato";
@@ -107,6 +91,27 @@ router.post("/", async (ctx) => {
   ctx.response.body = user;
 });
 
+router.put("/assign-class/:id", async(ctx) =>{
+  const loggedUser = await getmockLoggedUser();
+
+  const currentClass = ctx.request.body.class;
+
+  switch(loggedUser.role){
+      case "admin":
+          ctx.body = await assignClass(ctx.params.id, currentClass);
+          break;
+      case "teacher":
+
+          ctx.body = await assignClass(ctx.params.id, currentClass);
+          break;
+      case "student":
+      default:
+          ctx.status = 401;
+          ctx.response.body = "utente non autorizzato";
+          break;
+  }
+})
+
 // Edit a user
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
@@ -115,71 +120,14 @@ router.put("/:id", async (ctx) => {
 });
 
 // Delete a user
-router.delete("/:id",isAdminMiddleware, async (ctx) => {
+router.delete("/:id", isAdminMiddleware, async (ctx) => {
   ctx.body = await remove(ctx.params.id);
 });
 
+// Find a user
+router.get("/:id", async (ctx) => {
+  const viewUser = await viewHandler(ctx);
+  ctx.body = viewUser;
+});
+
 export default router;
-
-
-
-
-/* #ADMIN
-GET /users
-mostra l'elenco di tutti gli utenti (admin, studenti e insegnanti)
-
-GET /users/{id}
-ottiene i dettagli di un singolo utente
-
-GET /users/role/{role}
-mostra l'elenco di tutti gli utenti con un determinato ruolo
-
-GET /users/students-without-class
-mostra la lista di tutti gli student senza una class assegnata
-
-PUT /users/{id}
-modifica i dati di un'utente
-
-DELETE /users/{id}
-elimina un'utente
-
---bonus--
-
-GET /classes
-mostra la lista di tutte le classi
-
-GET /classes/{class}
-mostra la lista di tutti gli studenti presenti in una determinata classe
-
-
-
-#TEACHER
-GET /users/my-students 
-un teacher ottiene tutti gli studenti delle classi in cui lui insegna
-
-GET /users/{id}
-può accedere al profilo di tutti gli studenti delle classi in cui lui insegna
-
-GET /users/students-without-class
-mostra la lista di tutti gli student senza una class assegnata
-
-GET /classes
-mostra la lista di tutte le classi del teacher
-
-GET /classes/{class}
-mostra la lista di tutti gli studenti presenti in quella classe
-
-PUT /users/{id}
-un teacher può modificare i suoi dati ed assegnare la classe ad uno student
-
-
-
-#STUDENTS
-GET /users/class-mates
-ottiene i compagni di classe di uno studente
-
-GET /users/{id}
-ottiene i dettagli del proprio profilo
-
-PUT /users/{id}
-modifica i dettagli del proprio profilo */

@@ -7,7 +7,7 @@ export const getmockLoggedUser = async (): Promise<User> => {
     last_name: "Falezza",
     email: "email@gmail.com",
     password: "hashedPasswoord",
-    role: "student",
+    role: "admin",
     created_at: 1729766635269,
     updated_at: 1729767105639,
     classes: ["suse", "cookie"],

@@ -1,6 +1,4 @@
-import Router from "@koa/router";
-import { Role, User } from "../../../api-types";
-import { isAdmin, getmockLoggedUser } from "../../mock/mockLoggedUser";
+import { getmockLoggedUser } from "../../mock/mockLoggedUser";
 import {  viewForAdmin, viewForStudent, viewForTeacher } from "../../services/user";
 
 
@@ -13,7 +11,13 @@ export const viewHandler = async (ctx) => {
          user = await viewForAdmin(ctx.params.id);
         break
         case "teacher":
-        user = await viewForTeacher(ctx.params.id);
+          const classes = loggedUser.classes;
+          if(classes && classes.length !== 0){
+            user = await viewForTeacher(ctx.params.id, classes);
+          }else{
+            ctx.status = 400;
+            ctx.response.body = {message: "Non hai nessuna classe assegnata"};
+          }
         break
       case "student":
         user = await viewForStudent(ctx.params.id);
@@ -24,7 +28,6 @@ export const viewHandler = async (ctx) => {
       ctx.status = 404;
       return;
     }
-
     return user;
 
   };

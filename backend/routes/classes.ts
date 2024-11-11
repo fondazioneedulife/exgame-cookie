@@ -9,7 +9,7 @@ const router = new Router({
 
 //get all classes / if teacher get your classes
 router.get("/", async(ctx) =>{
-    const loggedUser = getmockLoggedUser();
+    const loggedUser = await getmockLoggedUser();
     console.log(loggedUser.role);
 
     switch(loggedUser.role){
@@ -20,9 +20,6 @@ router.get("/", async(ctx) =>{
             ctx.body = loggedUser.classes;
             break;
         case "student":
-            ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
-            break;
         default:
             ctx.status = 401;
             ctx.response.body = "utente non autorizzato";
@@ -32,7 +29,7 @@ router.get("/", async(ctx) =>{
 
 //view all student of a class
 router.get("/:class", async(ctx) =>{
-    const loggedUser = getmockLoggedUser();
+    const loggedUser = await getmockLoggedUser();
     console.log(loggedUser.role);
 
     switch(loggedUser.role){
@@ -43,9 +40,6 @@ router.get("/:class", async(ctx) =>{
             ctx.body = await getStudentsOfClass(ctx.params.class);
             break;
         case "student":
-            ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
-            break;
         default:
             ctx.status = 401;
             ctx.response.body = "utente non autorizzato";
