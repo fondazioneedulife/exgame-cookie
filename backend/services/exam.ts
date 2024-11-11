@@ -1,16 +1,27 @@
 import { Exam} from "../../api-types/exam";
 import DB from './db';
 
+const domandeSchema=new DB.Schema({
+    testo:String,
+    tipo:String,
+    opzioni:[{}]
+})
 const examSchema = new DB.Schema<Exam>({
-        _id: String,
+        // _id: String,
         name: String,
-        created_at: Date,
-        updated_at: Date,
         created_by: String,
         classes: [String],
         max_time: String,
-        domande:[{}]
-})
+        domande:[domandeSchema],
+},
+{
+    timestamps:{
+        createdAt:'created_at',
+        updatedAt:'updated_at',
+    }
+}
+)
+
 
 const ExamModel = DB.model("exam", examSchema);
 
