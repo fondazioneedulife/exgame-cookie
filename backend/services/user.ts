@@ -35,6 +35,11 @@ export const viewForAdmin = async (id: string) => {
   return UserModel.findById(id);
 };
 
+export const viewForTeacher = async (id: string, classes: string[]) => {
+  return UserModel.findById({_id: id, class: { $in: classes}});
+};
+
+
 export const add = async (user: User) => {
   const UserData = new UserModel(user);
   return UserData.save();
@@ -81,6 +86,7 @@ export const remove = async (id: string) => {
 };
 
 export const getUsersWithoutClass = async() => {
+  console.log("getUsersWithoutClass function is running");
   return UserModel.find({ role: "student", student_class: null });  
 }
 

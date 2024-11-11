@@ -10,6 +10,7 @@ import {
   viewForAdmin,
   getUsersWithoutClass,
   getMyStudents,
+  viewForTeacher,
 } from "../services/user";
 
 const router = new Router({
@@ -32,7 +33,7 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-router.get("/role/:role",isAdminMiddleware, async (ctx) => {
+router.get("/role/:role", isAdminMiddleware, async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
@@ -40,21 +41,29 @@ router.get("/role/:role",isAdminMiddleware, async (ctx) => {
 router.get("/:id", async (ctx) => {
   const loggedUser = getmockLoggedUser()
   let user;
+  
   switch(loggedUser.role){
     case "admin":
-       user = await viewForAdmin(ctx.params.id);
+      user = await viewForAdmin(ctx.params.id);
       break
-/*       case "teacher":
-      user = await viewForTeacher(ctx.params.id);
-      break
-    case "student":
-      user = await viewForStudent(ctx.params.id);
-      break  */
+    
+    case "teacher":
+      const classes = loggedUser.classes;
+      if (classes && classes.length !== 0) {
+        user = await viewForTeacher(ctx.params.id, classes);
+      } else {
+        ctx.status = 400;
+        ctx.response.body = { message: "Non hai nessuno studente assegnato alle tue classi." };
+      }
+      break;
+
+    // case "student":
+    //   user = await viewForStudent(ctx.params.id);
+    //   break 
   }
   if (!user) {
     // User not found
     ctx.status = 404;
-    return;
   }
 
   ctx.body = user;
@@ -70,6 +79,7 @@ router.get("/students-without-class" , async(ctx) =>{
             ctx.body = await getUsersWithoutClass();
             break;
         case "teacher":
+          console.log("siamo quiii");
             ctx.body = await getUsersWithoutClass();
             break;
         case "student":
