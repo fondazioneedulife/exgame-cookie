@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
 import { login, registerStudent } from "../services/auth";
+=======
 
 const authRoutes = new Router({
   prefix: "/auth",
