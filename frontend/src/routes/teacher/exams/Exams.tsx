@@ -1,17 +1,22 @@
 import Table from '@mui/joy/Table';
 import Stack from '@mui/joy/Stack';
 import Button from '@mui/joy/Button';
+import { useNavigate } from 'react-router';
 
 
 
 export const Exams: React.FC = () => {
+  const navigate=useNavigate();
+
   return (
-        <Table aria-label="basic table">
+    <div>
+      <Button onClick={()=>navigate('/teacher/exam')}>Aggiungi esame</Button>
+      <Table aria-label="basic table">
           <thead>
             <tr>
               <th style={{ width: '40%' }}>Esame</th>
               <th>Classe</th>
-              <th>Modifica</th>
+              <th>Gestione esame</th>
             </tr>
           </thead>
           <tbody>
@@ -22,8 +27,8 @@ export const Exams: React.FC = () => {
                 <Button>Modifica</Button>
                 <Button
                   sx={{
-                    backgroundColor: 'success.outlinedColor',
-                    "&:hover":{backgroundColor: 'success.outlinedColor'}
+                    backgroundColor: 'green',
+                    '&:hover': {backgroundColor: 'darkgreen',},
                   }}>Sessioni</Button>
             </Stack></td>
             </tr>
@@ -34,8 +39,8 @@ export const Exams: React.FC = () => {
                 <Button>Modifica</Button>
                 <Button
                   sx={{
-                    backgroundColor: 'success.outlinedColor',
-                    "&:hover":{backgroundColor: 'success.outlinedColor'}
+                    backgroundColor: 'green',
+                    '&:hover': {backgroundColor: 'darkgreen',},
                   }}>Sessioni</Button>
             </Stack></td>
             </tr>
@@ -46,12 +51,13 @@ export const Exams: React.FC = () => {
                 <Button>Modifica</Button>
                 <Button
                   sx={{
-                    backgroundColor: 'success.outlinedColor',
-                    "&:hover":{backgroundColor: 'success.outlinedColor'}
+                    backgroundColor: 'green',
+                    '&:hover': {backgroundColor: 'darkgreen',},
                   }}>Sessioni</Button>
             </Stack></td>
             </tr>
           </tbody>
         </Table>
-      );
-    }
+        </div>
+      );
+    }
