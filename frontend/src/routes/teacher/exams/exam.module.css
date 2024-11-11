@@ -9,3 +9,8 @@
   gap: 1rem;
   display: flex;
 }
+
+.buttonsGap{
+  gap:1rem;
+  display: flex;
+}

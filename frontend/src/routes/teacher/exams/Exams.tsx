@@ -3,6 +3,7 @@ import { EditButton } from "./examsButtons/EditButton";
 import { SessionsButton } from "./examsButtons/SessionsButton";
 import classes from "./exam.module.css";
 import { AddButton } from "./examsButtons/AddButton";
+import { ExamRow } from "./examRow";
 
 export const Exams: React.FC = () => {
   return (
@@ -20,36 +21,13 @@ export const Exams: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>React</td>
-            <td>Pixel</td>
-            <td>
-              <div className={classes.buttonsLayout}>
-                <EditButton />
-                <SessionsButton />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Node.js</td>
-            <td>Suse</td>
-            <td>
-              <div className={classes.buttonsLayout}>
-                <EditButton />
-                <SessionsButton />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Mongo</td>
-            <td>Cookie</td>
-            <td>
-              <div className={classes.buttonsLayout}>
-                <EditButton />
-                <SessionsButton />
-              </div>
-            </td>
-          </tr>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
+ 
         </tbody>
       </Table>
     </>
