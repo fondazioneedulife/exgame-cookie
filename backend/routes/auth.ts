@@ -1,11 +1,7 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-<<<<<<< Updated upstream
 import { login, registerStudent } from "../services/auth";
-=======
-import { login, registerStudent} from "../services/auth";
 import { findByEmailAndPassword } from "../services/auth";
->>>>>>> Stashed changes
 
 const authRoutes = new Router({
   prefix: "/auth",
@@ -28,7 +24,6 @@ authRoutes.get("/sign-in", async (ctx) => {
   ctx.body = user;
 });
 
-<<<<<<< Updated upstream
 // Register student
 authRoutes.post("/sign-up/student", async (ctx) => {
   ctx.accepts("json");
@@ -38,7 +33,7 @@ authRoutes.post("/sign-up/student", async (ctx) => {
 });
 
 export { authRoutes };
-=======
+
 // Login a user
 authRoutes.post("/login", async (ctx) => {
   ctx.accepts("json");
@@ -61,5 +56,4 @@ authRoutes.post("/login", async (ctx) => {
   ctx.body = { user };
 });
 
-export default router;
->>>>>>> Stashed changes
+export default Router;

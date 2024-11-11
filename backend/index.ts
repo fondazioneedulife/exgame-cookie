@@ -5,20 +5,9 @@ import Session from "koa-session";
 import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
-<<<<<<< Updated upstream
-import initSocketIo from "./io";
 import { userRoutes } from "./routes/users";
-=======
-<<<<<<< Updated upstream
 import { initSocketIo } from "./io";
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/users";
-=======
-import initSocketIo from "./io";
-import { userRoutes } from "./routes/users";
 import { authRoutes } from "./routes/auth";
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 const app = new Koa();
 const router = new Router();

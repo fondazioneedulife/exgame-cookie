@@ -49,11 +49,8 @@ export const registerStudent = async (data: Partial<User>) => {
   const student = new UserModel(newStudent);
   return student.save();
 };
-<<<<<<< Updated upstream
-=======
 
 // Find user by email and password
 export const findByEmailAndPassword = async (email: string, password: string) => {
   return UserModel.findOne({ email, password });
 };
->>>>>>> Stashed changes
