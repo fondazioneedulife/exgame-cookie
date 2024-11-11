@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
 import { isAdmin, getmockLoggedUser } from "../mock/mockLoggedUser";
+import { editHandler } from "./handlers/editHanndler";
+import { viewHandler } from "./handlers/viewHandler";
 import {
   add,
-  edit,
   getUsersByRole,
   index,
   remove,
@@ -17,7 +18,7 @@ const router = new Router({
 });
 
 const isAdminMiddleware = async (ctx, next) => {
-  const is_admin = isAdmin();
+  const is_admin = await isAdmin();
   if (is_admin) {
     await next();
   } else {
@@ -38,31 +39,13 @@ router.get("/role/:role",isAdminMiddleware, async (ctx) => {
 
 // Find a user
 router.get("/:id", async (ctx) => {
-  const loggedUser = getmockLoggedUser()
-  let user;
-  switch(loggedUser.role){
-    case "admin":
-       user = await viewForAdmin(ctx.params.id);
-      break
-/*       case "teacher":
-      user = await viewForTeacher(ctx.params.id);
-      break
-    case "student":
-      user = await viewForStudent(ctx.params.id);
-      break  */
-  }
-  if (!user) {
-    // User not found
-    ctx.status = 404;
-    return;
-  }
-
-  ctx.body = user;
+ const viewUser = viewHandler(ctx.params.id);
+  ctx.body = viewUser;
 });
 
 // Find all students without a class
 router.get("/students-without-class" , async(ctx) =>{
-    const loggedUser = getmockLoggedUser();
+    const loggedUser = await getmockLoggedUser();
     console.log(loggedUser.role);
 
     switch(loggedUser.role){
@@ -86,7 +69,7 @@ router.get("/students-without-class" , async(ctx) =>{
 //find all the students in the classes taught by a teacher.
 router.get("/my-students", async(ctx) =>{
     
-    const loggedUser = getmockLoggedUser();
+    const loggedUser = await getmockLoggedUser();
     console.log(loggedUser.role);
 
     switch(loggedUser.role){
@@ -98,7 +81,7 @@ router.get("/my-students", async(ctx) =>{
         case "teacher":
             const classes = loggedUser.classes;
             if (classes && classes.length !== 0) {
-                ctx.body = await getMyStudents(classes);
+             /*    ctx.body = await getMyStudents(classes); */
             } else {
                 ctx.status = 400;
                 ctx.response.body = { message: "Non hai nessuno studente assegnato alle tue classi." };
@@ -127,8 +110,8 @@ router.post("/", async (ctx) => {
 // Edit a user
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
-  const response = await edit(ctx.params.id, ctx.request.body as User);
-  ctx.response.body = response;
+  const editUser = await editHandler(ctx);
+  ctx.response.body = editUser;
 });
 
 // Delete a user
@@ -137,3 +120,66 @@ router.delete("/:id",isAdminMiddleware, async (ctx) => {
 });
 
 export default router;
+
+
+
+
+/* #ADMIN
+GET /users
+mostra l'elenco di tutti gli utenti (admin, studenti e insegnanti)
+
+GET /users/{id}
+ottiene i dettagli di un singolo utente
+
+GET /users/role/{role}
+mostra l'elenco di tutti gli utenti con un determinato ruolo
+
+GET /users/students-without-class
+mostra la lista di tutti gli student senza una class assegnata
+
+PUT /users/{id}
+modifica i dati di un'utente
+
+DELETE /users/{id}
+elimina un'utente
+
+--bonus--
+
+GET /classes
+mostra la lista di tutte le classi
+
+GET /classes/{class}
+mostra la lista di tutti gli studenti presenti in una determinata classe
+
+
+
+#TEACHER
+GET /users/my-students 
+un teacher ottiene tutti gli studenti delle classi in cui lui insegna
+
+GET /users/{id}
+può accedere al profilo di tutti gli studenti delle classi in cui lui insegna
+
+GET /users/students-without-class
+mostra la lista di tutti gli student senza una class assegnata
+
+GET /classes
+mostra la lista di tutte le classi del teacher
+
+GET /classes/{class}
+mostra la lista di tutti gli studenti presenti in quella classe
+
+PUT /users/{id}
+un teacher può modificare i suoi dati ed assegnare la classe ad uno student
+
+
+
+#STUDENTS
+GET /users/class-mates
+ottiene i compagni di classe di uno studente
+
+GET /users/{id}
+ottiene i dettagli del proprio profilo
+
+PUT /users/{id}
+modifica i dettagli del proprio profilo */

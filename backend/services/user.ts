@@ -1,22 +1,20 @@
-import { Role, User } from "../../api-types";
+import { Role, User, User as UserModel } from "../../api-types";
+import { getmockLoggedUser } from "../mock/mockLoggedUser";
 import DB from "./db";
 
 // const DB: User[] = [];
 
-const timestamp = Date.now();
-
 const userSchema = new DB.Schema({
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true },
   password: { type: String, required: true },
-  role: {type: String , enum:[ "admin", "teacher", "student" ], required: true},
-  created_at: { type: Number, default: timestamp },
-  updated_at: { type: Number, default: timestamp },
-  subject: {type: [String], required: false},
-  classes: {type: [String], required: false},
-  student_class: { type: String, required: false },
-  image: { type: String, required: false },
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+  role: { type: String, enum: ["admin", "teacher", "student"], required: true },
+  image: { type: Buffer, required: false }, // Binary data
+  subjects: { type: [String], required: false },
+  classes: { type: [String], required: false },
+  class: { type: String, required: false },
+  token: { type: String, required: false, default: null },
 });
 
 const UserModel = DB.model("user", userSchema);
@@ -29,35 +27,54 @@ export const getUsersByRole = async (role: Role) => {
   return UserModel.find({ role });
 };
 
+export const getUsersWithoutClass = async() => {
+  return UserModel.find({ role: "student", student_class: {$exists: false} });  
+}
+
+export const getMyStudents = async(classes: string[]) => {
+  return UserModel.find({class: { $in: classes}});
+}
 
 //---------------VIEW BY ID------------------------
 export const viewForAdmin = async (id: string) => {
   return UserModel.findById(id);
 };
 
+export const viewForTeacher = async (id: string) => {
+  return UserModel.findById(id);
+};
+
+export const viewForStudent = async (id: string) => {
+  return UserModel.findById(id);
+};
+
+
+
+//---------------ADD USER------------------------
 export const add = async (user: User) => {
   const UserData = new UserModel(user);
   return UserData.save();
 };
 
-//UPDATE
-export const edit = async( id, user: User ) => {
-  
-  user.updated_at = timestamp;
-  const opt = { new: true, runValidators: true };
-  
-  try {
+//---------------EDIT USER------------------------
+export const editForAdmin = async (id, user: User) => {
+  const UserDocument = await UserModel.findById(id);
 
-    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: user }, opt);
-    return userDocument;
-
-  } catch (error) {
-    
-      console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(error.message);
+  if (!UserDocument) {
+    throw new Error(`Can't find user by id: ${user._id}`);
   }
+
+  if(UserDocument.role === "admin"){
+    return {success: false, message: "Non puoi modificare un altro admin"};
+  }
+
+  UserDocument.set(user);
+  const result =  await UserDocument.save();
+  console.log(result)
+  return { success: true, message: "Utente modificato correttamente", result };
 };
 
+//---------------REMOVE USER------------------------
 export const remove = async (id: string) => {
   
   try {
@@ -79,14 +96,6 @@ export const remove = async (id: string) => {
     return { success: false, message: "Errore durante l'eliminazione dell'utente" };
   }
 };
-
-export const getUsersWithoutClass = async() => {
-  return UserModel.find({ role: "student", student_class: null });  
-}
-
-export const getMyStudents = async(classes: string[]) => {
-  return UserModel.find({class: { $in: classes}});
-}
 
 //-------------------------------- CLASS ---------------------------------
 
