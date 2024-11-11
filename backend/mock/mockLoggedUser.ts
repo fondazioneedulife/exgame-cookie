@@ -10,7 +10,7 @@ export const getmockLoggedUser = async (): Promise<User> => {
     role: "admin",
     created_at: 1729766635269,
     updated_at: 1729767105639,
-    classes: ["suse", "cookie"],
+    teacher_classes: ["suse", "cookie"],
   } as User;
 };
 

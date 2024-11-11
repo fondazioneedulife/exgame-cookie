@@ -14,7 +14,7 @@ const userSchema = new DB.Schema({
   role: { type: String, enum: ["admin", "teacher", "student"], required: true },
   image: { type: Buffer, required: false }, // Binary data
   subjects: { type: [String], required: false },
-  classes: { type: [String], required: false },
+  teacher_classes: { type: [String], required: false },
   class: { type: String, required: false },
   token: { type: String, required: false, default: null },
 });
@@ -31,19 +31,17 @@ export const getUsersByRole = async (role: Role) => {
 
 //---------------VIEW BY ID------------------------
 export const viewForAdmin = async (id: string) => {
-  let user = await UserModel.findById(id)
+  let user = await UserModel.findById(id);
   return user;
 };
 
-export const viewForTeacher = async (id: string, classes: string[]) => {
-  return UserModel.find({_id: id, student_class: { $in: classes}});
+export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
+  return UserModel.find({ _id: id, student_class: { $in: teacher_classes } });
 };
 
 export const viewForStudent = async (id: string) => {
   return UserModel.findById(id);
 };
-
-
 
 //---------------ADD USER------------------------
 export const add = async (user: User) => {
@@ -52,70 +50,78 @@ export const add = async (user: User) => {
 };
 
 //UPDATE
-export const edit = async( id, user: User ) => {
+export const edit = async (id, user: User) => {
   user.updated_at = timestamp;
   const opt = { new: true, runValidators: true };
-  
+
   try {
-
-    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: user }, opt);
+    const userDocument = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: user },
+      opt,
+    );
     return userDocument;
-
   } catch (error) {
-    
-      console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(error.message);
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
   }
 };
 
-export const editYorself = async( id, user: User ) => {
-
-  const allowedUpdates = ["first_name", "second_name", "email", "image", "subject", "classes"];
+export const editYorself = async (id, user: User) => {
+  const allowedUpdates = [
+    "first_name",
+    "second_name",
+    "email",
+    "image",
+    "subject",
+    "teacher_classes",
+  ];
   const updates = {};
 
-  allowedUpdates.forEach(field => {
+  allowedUpdates.forEach((field) => {
     if (user[field] !== undefined) {
       updates[field] = user[field];
     }
   });
-  
-  console.log(updates)
+
+  console.log(updates);
   user.updated_at = timestamp;
   const opt = { new: true, runValidators: true };
-  
+
   try {
-
-    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: updates }, opt);
+    const userDocument = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      opt,
+    );
     return userDocument;
-
   } catch (error) {
-    
-      console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(error.message);
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
   }
 };
 
-export const assignClass = async ( id, currentClass ) => {
+export const assignClass = async (id, currentClass) => {
   const user = {};
   user["student_class"] = currentClass;
   user["updated_at"] = timestamp;
-  
+
   const opt = { new: true, runValidators: true };
-  
+
   try {
-
-    const userDocument = await UserModel.find({_id: id, student_class: null}, { $set: user }, opt);
+    const userDocument = await UserModel.find(
+      { _id: id, student_class: null },
+      { $set: user },
+      opt,
+    );
     return userDocument;
-
   } catch (error) {
-    
-      console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(error.message);
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
   }
 };
 
 export const remove = async (id: string) => {
-  
   try {
     const userToDelete = await UserModel.findById(id);
 
@@ -129,28 +135,30 @@ export const remove = async (id: string) => {
 
     const result = await UserModel.deleteOne({ _id: id });
     return { success: true, message: "Utente eliminato correttamente", result };
-    
   } catch (error) {
     console.error("Errore durante l'eliminazione dell'utente:", error);
-    return { success: false, message: "Errore durante l'eliminazione dell'utente" };
+    return {
+      success: false,
+      message: "Errore durante l'eliminazione dell'utente",
+    };
   }
 };
 
 //-------------------------------- CLASS ---------------------------------
 
 //READ
-export const getAllClasses = async() => {
+export const getAllClasses = async () => {
   return UserModel.find({});
 };
 
-export const getStudentsOfClass = async(theClass: string) => {
-  return UserModel.find({role: "student", student_class: theClass});
-}; 
+export const getStudentsOfClass = async (theClass: string) => {
+  return UserModel.find({ role: "student", student_class: theClass });
+};
 
-export const getUsersWithoutClass = async() => {
-  return UserModel.find({ role: "student", student_class: null });  
-}
+export const getUsersWithoutClass = async () => {
+  return UserModel.find({ role: "student", student_class: null });
+};
 
-export const getMyStudents = async(classes: string[]) => {
-  return UserModel.find({class: { $in: classes}});
-}
+export const getMyStudents = async (teacher_classes: string[]) => {
+  return UserModel.find({ class: { $in: teacher_classes } });
+};
