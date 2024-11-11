@@ -35,8 +35,9 @@ router.get("/:id", async (ctx) => {
 // Add a user
 router.post("/", async (ctx) => {
   ctx.accepts("json");
-  const user = await add(ctx.body as Exam);
-  ctx.response.body = user;
+  console.log(ctx.body);
+  const exam = await add(ctx.request.body as Exam);
+  ctx.response.body = exam;
 });
 
 // // Edit a user
