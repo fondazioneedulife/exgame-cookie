@@ -10,6 +10,11 @@
     margin-top: 2rem;
 }
 
+.container_navbar{
+    display: flex;
+    justify-content: space-between;
+}
+
 .add_question{
     display: flex;
     align-items: center;
@@ -18,7 +23,6 @@
     margin-bottom: 2rem;
 
 }
-
 
 /* QuestionComponent */
 .confirm_btn{

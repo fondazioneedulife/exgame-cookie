@@ -4,7 +4,7 @@ import Button from '@mui/joy/Button';
 import { Divider, Table } from '@mui/joy';
 import Input from '@mui/joy/Input';
 import Autocomplete from '@mui/joy/Autocomplete';
-import classes from '../exams.module.css'
+import classes from './exams.module.css'
 import QuestionComponent from './examComponents/QuestionComponent';
 
 
@@ -37,10 +37,18 @@ const AddExam: React.FC = () => {
     <>
       <div className={classes.container}>
         <div className={classes.container_box}>
-          <div className={classes.container_table}>
-            <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
-              Annulla
-            </Button>
+          <div className={classes.container_navbar}>
+            <div>
+              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
+                Annulla
+              </Button>
+            </div>
+            <div>
+              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
+                Carica esame
+              </Button>
+            </div>
+
           </div>
 
           <div className={classes.container_table}>
