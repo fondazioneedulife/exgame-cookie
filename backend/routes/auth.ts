@@ -2,10 +2,15 @@ import Router from "@koa/router";
 
 const router = new Router();
 
-// TODO: assign to method "post"
+// TODO: questo metodo diventa "post"
 router.get("/login", (ctx) => {
+  // 1- prendo user e password dal ctx.body (= mi è sato passato dall'api)
+  // 2- verifico sul DB che ci sia un utente corrispondente
+  // 3 - se l'utente esiste:
   ctx.session.authenticated = true; // TODO: implement authentication logic
   ctx.response.status = 200;
+
+  // 4- se l'utente non esiste, ritorna un 401
 });
 
 router.get("/logout", (ctx) => {
