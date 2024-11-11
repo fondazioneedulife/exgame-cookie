@@ -19,11 +19,25 @@
     "@types/koa-static": "^4.0.4",
     "bcrypt": "^5.1.1",
     "koa": "^2.15.3",
+<<<<<<< Updated upstream
     "koa-bodyparser": "^4.4.1",
+=======
+<<<<<<< Updated upstream
+    "koa-session": "^6.4.0",
+>>>>>>> Stashed changes
     "koa-static": "^5.0.0",
     "mongoose": "^8.8.0",
     "socket.io": "^4.8.1",
     "tsx": "^4.19.1"
+=======
+    "koa-bodyparser": "^4.4.1",
+    "koa-session": "^6.4.0",
+    "koa-static": "^5.0.0",
+    "mongoose": "^8.8.0",
+    "socket.io": "^4.8.1",
+    "tsx": "^4.19.1",
+    "uuid": "^11.0.3"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",

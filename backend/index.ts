@@ -1,11 +1,24 @@
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
 import Router from "@koa/router";
+import Session from "koa-session";
 import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
+<<<<<<< Updated upstream
 import initSocketIo from "./io";
 import { userRoutes } from "./routes/users";
+=======
+<<<<<<< Updated upstream
+import { initSocketIo } from "./io";
+import authRoutes from "./routes/auth";
+import userRoutes from "./routes/users";
+=======
+import initSocketIo from "./io";
+import { userRoutes } from "./routes/users";
+import { authRoutes } from "./routes/auth";
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 const app = new Koa();
 const router = new Router();
@@ -25,6 +38,7 @@ router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
 });
 
+app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
 

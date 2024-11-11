@@ -83,6 +83,7 @@ userRoutes.delete("/:id", async (ctx) => {
   ctx.body = await remove(id);
 });
 
+<<<<<<< Updated upstream
 // Login a user
 userRoutes.post("/login", async (ctx) => {
   ctx.accepts("json");
@@ -106,3 +107,12 @@ userRoutes.post("/login", async (ctx) => {
 });
 
 export { userRoutes };
+=======
+<<<<<<< Updated upstream
+export default router;
+=======
+
+
+export { userRoutes };
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
