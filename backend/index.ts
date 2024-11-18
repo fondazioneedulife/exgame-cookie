@@ -6,6 +6,7 @@ import Koa from "koa";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import userRoutes from "./routes/users";
+import classRoutes from "./routes/classes";
 
 const app = new Koa();
 const router = new Router();
@@ -29,6 +30,7 @@ router.get("/", (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
+app.use(classRoutes.routes()).use(classRoutes.allowedMethods());
 
 httpServer.listen(process.env.PORT, () => {
   console.log(`Server running on ${process.env.HOST}:${process.env.PORT}`);

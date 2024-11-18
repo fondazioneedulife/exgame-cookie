@@ -1,39 +1,92 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
+import { isAdmin, getmockLoggedUser } from "../mock/mockLoggedUser";
+import { editHandler } from "./handlers/editHanndler";
+import { viewHandler } from "./handlers/viewHandler";
 import {
   add,
-  edit,
   getUsersByRole,
   index,
   remove,
-  view,
+  getUsersWithoutClass,
+  assignClass,
+  getMyStudents,
 } from "../services/user";
 
 const router = new Router({
   prefix: "/users",
 });
 
+const isAdminMiddleware = async (ctx, next) => {
+  const is_admin = await isAdmin();
+  if (is_admin) {
+    await next();
+  } else {
+    ctx.status = 401;
+    ctx.response.body = "user non autorizzato";
+  }
+};
+
 // All routes
-router.get("/", async (ctx) => {
+router.get("/", isAdminMiddleware , async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
 
-router.get("/role/:role", async (ctx) => {
+router.get("/role/:role", isAdminMiddleware, async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
-// Find a user
-router.get("/:id", async (ctx) => {
-  const user = await view(ctx.params.id);
+// Find all students without a class
+router.get("/students-without-class", async (ctx) => {
+  const loggedUser = await getmockLoggedUser();
 
-  if (!user) {
-    // User not found
-    ctx.status = 404;
-    return;
+  switch (loggedUser.role) {
+    case "admin":
+      ctx.body = await getUsersWithoutClass();
+      break;
+    case "teacher":
+      ctx.body = await getUsersWithoutClass();
+      break;
+    case "student":
+    default:
+      ctx.status = 401;
+      ctx.response.body = "utente non autorizzato";
+      break;
   }
+});
 
-  ctx.body = user;
+//find all the students in the classes taught by a teacher.
+router.get("/my-students", async (ctx) => {
+  const loggedUser = await getmockLoggedUser();
+
+  switch (loggedUser.role) {
+    case "admin":
+      ctx.status = 400;
+      ctx.response.body = {
+        message: "Non hai nessuno studente assegnato alle tue classi.",
+      };
+      break;
+
+    case "teacher":
+      const classes: string[] | undefined = loggedUser.teacher_classes;
+      // TODO: tipo da assegnare
+      if (classes && classes.length !== 0) {
+        ctx.body = await getMyStudents(classes);
+      } else {
+        ctx.status = 400;
+        ctx.response.body = {
+          message: "Non hai nessuno studente assegnato alle tue classi.",
+        };
+      }
+      break;
+
+    case "student":
+    default:
+      ctx.status = 401;
+      ctx.response.body = "utente non autorizzato";
+      break;
+  }
 });
 
 // Add a user
@@ -43,16 +96,47 @@ router.post("/", async (ctx) => {
   ctx.response.body = user;
 });
 
+router.put("/assign-class/:id", async (ctx) => {
+  const loggedUser = await getmockLoggedUser();
+
+  const currentClass = ctx.request.body.class;
+
+  switch (loggedUser.role) {
+    case "admin":
+      ctx.body = await assignClass(ctx.params.id, currentClass);
+      break;
+    case "teacher":
+      if(ctx.params.id == loggedUser._id){
+        ctx.body = await assignClass(ctx.params.id, currentClass);
+      }else{
+        ctx.status = 400;
+        ctx.response.body = "non puoi modificare un'altro utente";
+      }
+      break;
+    case "student":
+    default:
+      ctx.status = 401;
+      ctx.response.body = "utente non autorizzato";
+      break;
+  }
+});
+
 // Edit a user
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
-  const response = await edit(ctx.params.id, ctx.request.body as User);
-  ctx.response.body = response;
+  const editUser = await editHandler(ctx);
+  ctx.response.body = editUser;
 });
 
 // Delete a user
-router.delete("/:id", async (ctx) => {
+router.delete("/:id", isAdminMiddleware, async (ctx) => {
   ctx.body = await remove(ctx.params.id);
+});
+
+// Find a user
+router.get("/:id", async (ctx) => {
+  const viewUser = await viewHandler(ctx);
+  ctx.body = viewUser;
 });
 
 export default router;

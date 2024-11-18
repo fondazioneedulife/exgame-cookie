@@ -32,7 +32,7 @@
     "updated_at"?: ISODate("2024-01-01T14:30:00Z"),
     "role": "teacher",
     "subjects"?: ["Node_JS", "Testing", "React"],
-    "classes"?: ["Cookie", "Suse"],
+    "teacher_classes"?: ["Cookie", "Suse"],
 }
 ```
 
