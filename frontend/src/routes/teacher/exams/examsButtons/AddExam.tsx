@@ -1,6 +1,6 @@
 import { Button } from "@mui/joy";
 
-export const AddButton = () => {
+export const AddExam = () => {
   return (
     <Button onClick={function () {}} variant="soft">
       Nuovo Esame
