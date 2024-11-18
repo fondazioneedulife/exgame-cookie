@@ -109,13 +109,18 @@ export const assignClass = async (id, currentClass) => {
 
   const opt = { new: true, runValidators: true };
 
+  console.log(user)
   try {
-    const userDocument = await UserModel.find(
-      { _id: id, student_class: null },
+    const userDocument = await UserModel.updateOne(
+      { _id: id, student_class: null }, 
       { $set: user },
-      opt,
+      opt
     );
-    return userDocument;
+    return {
+      success: true,
+      message: `Assegnazione della classe ${user.student_class} avvenuta correttamente.`,
+    };
+    
   } catch (error) {
     console.error("Errore durante l'aggiornamento dell'utente:", error);
     throw new Error(error.message);
