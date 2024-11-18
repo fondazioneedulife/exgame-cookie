@@ -2,6 +2,7 @@ import { Stack, Table } from "@mui/joy";
 import classes from "./sessions.module.css";
 import { Pagination, Button } from "@mui/material";
 import { SessionRow } from "./sessionComponents/SessionRow";
+import {SessionsDone} from "./sessionComponents/SessionsDone";
 
 export const Sessions: React.FC = () => {
   return (
@@ -16,9 +17,21 @@ export const Sessions: React.FC = () => {
           <SessionRow teacherClass="Pixel" date="12 ottobre 2025"></SessionRow>
         </tbody>
       </Table>
-      {/* <Stack spacing={2}>
+    
+      <Stack spacing={2}>
         <Pagination count={10} variant="outlined" />
-      </Stack> */}
+      </Stack> 
+      <Table aria-label="basic table">
+     <h2>Sessioni svolte</h2>
+        <tbody>
+          <SessionsDone teacherClass="Pixel" date="12 ottobre 2025"></SessionsDone>
+        </tbody>
+      </Table>
+    
+      <Stack spacing={2}>
+        <Pagination count={10} variant="outlined" />
+      </Stack> 
+    
     </>
   );
 };
