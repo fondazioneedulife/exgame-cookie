@@ -1,15 +1,13 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-import { login, registerStudent, logOff } from "../services/auth";
+import { login, registerStudent } from "../services/auth";
 
 const authRoutes = new Router({
   prefix: "/auth",
 });
 
-authRoutes.post('/logoff', logOff);
-
 // Register student
-authRoutes.post("/register/student", async (ctx) => {
+authRoutes.post("/register", async (ctx) => {
   ctx.accepts("json");
   const newUser = ctx.request.body as User; // Type Assertion qui
 
@@ -65,14 +63,19 @@ authRoutes.post("/login", async (ctx) => {
   }
 });
 
-// Middleware per autenticazione basata su sessione
+//logout
+authRoutes.get("/logout", (ctx) => {
+  ctx.session = null;
+  ctx.response.status = 200;
+});
+
+//auth milldleware
 export const authMiddleware = () => async (ctx, next) => {
   const isAuthenticated = ctx.session.authenticated === true;
   if (isAuthenticated) {
     return await next();
   }
   ctx.status = 401;
-  ctx.body = { error: "Unauthorized" };
 };
 
 export { authRoutes };

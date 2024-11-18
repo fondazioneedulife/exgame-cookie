@@ -1,16 +1,16 @@
-import DB from "./db";
 import { User } from "../../api-types";
 import { UserModel } from "./user";
 import { createHmac } from "crypto";
-import { Request, Response } from 'express';
 
+// hash function
 const hash = (password: string):string => {
+  if (!process.env.SECURITY_SALT) {
+    throw new Error("La variabile d'ambiente SECURITY_SALT non è definita.");
+  }  
   return createHmac('sha256', process.env.SECURITY_SALT)
   .update(password)
   .digest('hex');
 }
-
-
 
 // Login
 export const login = async (email: string, password: string) => {
@@ -27,9 +27,6 @@ export const login = async (email: string, password: string) => {
   if (!isMatch) {
     return null;
   }
-
-  const token = createToken();
-
   return user;
 };
 
@@ -42,6 +39,9 @@ export const registerStudent = async (data: Partial<User>) => {
   }
 
   // Hash della password
+  if (!data.password) {
+    throw new Error("La password non può essere undefined.");
+  }
   const hashedPassword = hash(data.password);
 
   const newStudent = {
@@ -56,17 +56,4 @@ export const registerStudent = async (data: Partial<User>) => {
 
   const student = new UserModel(newStudent);
   return student.save();
-};
-
-
-export const logOff = (req: Request, res: Response) => {
-  // Rimozione del cookie del token
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
-
-  // Risposta al client
-  res.status(200).json({ message: 'Log off effettuato con successo.' });
 };
