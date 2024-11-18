@@ -40,6 +40,8 @@ router.get("/:class", async (ctx) => {
       ctx.body = await getStudentsOfClass(ctx.params.class);
       break;
     case "student":
+		ctx.body = await getStudentsOfClass(ctx.params.class);
+		break;
     default:
       ctx.status = 401;
       ctx.response.body = "utente non autorizzato";

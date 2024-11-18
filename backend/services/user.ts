@@ -151,9 +151,19 @@ export const getAllClasses = async () => {
   return UserModel.find({});
 };
 
-export const getStudentsOfClass = async (theClass: string) => {
-  return UserModel.find({ role: "student", student_class: theClass });
-};
+/**
+ * get students with only:
+ *  - _id
+ *  - first_name
+ *  - last_name
+ */
+
+export const getStudentsOfClass = async(studentClass: string) => {
+  return await UserModel.find(
+     {role: "student", student_class: studentClass}, 
+     { first_name: 1, last_name: 1, _id: 1 }
+   );
+ };
 
 export const getUsersWithoutClass = async () => {
   return UserModel.find({ role: "student", student_class: null });
