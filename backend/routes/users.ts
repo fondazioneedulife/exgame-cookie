@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
-import { isAdmin, getmockLoggedUser } from "../mock/mockLoggedUser";
+import { getmockLoggedUser } from "../mock/mockLoggedUser";
+import { isAdmin } from "../services/roleCheck";
 import { editHandler } from "./handlers/editHanndler";
 import { viewHandler } from "./handlers/viewHandler";
 import {
@@ -28,7 +29,7 @@ const isAdminMiddleware = async (ctx, next) => {
 };
 
 // All routes
-router.get("/", isAdminMiddleware , async (ctx) => {
+router.get("/", isAdminMiddleware, async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
@@ -106,7 +107,7 @@ router.put("/assign-class/:id", async (ctx) => {
       ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "teacher":
-        ctx.body = await assignClass(ctx.params.id, currentClass);
+      ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "student":
     default:
