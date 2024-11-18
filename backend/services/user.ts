@@ -39,8 +39,8 @@ export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
   return UserModel.find({ _id: id, student_class: { $in: teacher_classes } });
 };
 
-export const viewForStudent = async (id: string) => {
-  return UserModel.findById(id);
+export const viewForStudent = async (id: string, student_class: string | undefined) => {
+  return UserModel.find({ _id: id, student_class: student_class});
 };
 
 //---------------ADD USER------------------------

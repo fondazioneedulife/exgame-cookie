@@ -22,7 +22,10 @@ export const viewHandler = async (ctx) => {
       }
       break;
     case "student":
-      user = await viewForStudent(ctx.params.id);
+      user = await viewForStudent(ctx.params.id, loggedUser.student_class);
+      if (!user && user.length === 0) {
+        user = "nessun tuo compagno di classe ha questo id";
+      }
       break;
   }
   if (!user) {
