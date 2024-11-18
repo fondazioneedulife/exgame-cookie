@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Layout } from "./components/Layout";
 import { Login } from "./routes/Login";
+import { Signup } from "./routes/Signup";
 import { Root } from "./routes/Root";
 import { StudentGuard } from "./routes/student/StudentGuard";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
@@ -46,6 +47,7 @@ function App() {
 
           {/* Login */}
           <Route path="login" element={<Login />} />
+          <Route path="sign-up" element={<Signup />} />
         </Route>
       </Routes>
     </BrowserRouter>
