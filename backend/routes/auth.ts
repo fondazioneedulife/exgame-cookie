@@ -1,58 +1,78 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
-import { login, registerStudent } from "../services/auth";
-import { findByEmailAndPassword } from "../services/auth";
+import { login, registerStudent, logOff } from "../services/auth";
 
 const authRoutes = new Router({
   prefix: "/auth",
 });
 
+authRoutes.post('/logoff', logOff);
+
 // Register student
-authRoutes.post("/sign-up/student", async (ctx) => {
+authRoutes.post("/register/student", async (ctx) => {
   ctx.accepts("json");
   const newUser = ctx.request.body as User; // Type Assertion qui
-  const result = await registerStudent(newUser);
-  ctx.body = result;
+
+  if (!newUser.email || !newUser.password) {
+    ctx.status = 400;
+    ctx.body = { error: "Email and password are required" };
+    return;
+  }
+
+  try {
+    const result = await registerStudent(newUser);
+    ctx.status = 201;
+    ctx.body = { message: "User registered successfully", user: result };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: "An error occurred during registration" };
+  }
 });
 
-export { authRoutes };
-
+// Login
 authRoutes.post("/login", async (ctx) => {
-  // Accetta solo JSON
   ctx.accepts("json");
-  
-  // 1- Prendo email e password dal ctx.body (inviati dall'API)
-  const { email, password } = ctx.request.body as any;
-  
-  // 2- Controllo se email e password sono stati forniti
+
+  const { email, password } = ctx.request.body as { email: string; password: string };
+
   if (!email || !password) {
     ctx.status = 400;
     ctx.body = { error: "Email and password are required" };
     return;
   }
 
-  // 3 - Verifico che l'utente esista e che la password sia corretta
-  const user = await findByEmailAndPassword(email, password);
-  
-  if (!user) {
-    // Se l'utente non esiste, ritorna un 401
-    ctx.status = 401;
-    ctx.body = { error: "Invalid email or password" };
-    return;
+  try {
+    const user = await login(email, password);
+    if (!user) {
+      ctx.status = 401;
+      ctx.body = { error: "Invalid email or password" };
+      return;
+    }
+
+    // Autentica la sessione
+    ctx.session.authenticated = true;
+    ctx.session.user = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    };
+
+    ctx.status = 200;
+    ctx.body = { message: "Login successful", user };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: "An error occurred during login" };
   }
-  // 4 - Se l'utente esiste, setto la sessione come autenticata
-  ctx.session.authenticated = true;
-  ctx.body = { user };
-  ctx.status = 200;
 });
 
-
+// Middleware per autenticazione basata su sessione
 export const authMiddleware = () => async (ctx, next) => {
   const isAuthenticated = ctx.session.authenticated === true;
   if (isAuthenticated) {
     return await next();
   }
   ctx.status = 401;
+  ctx.body = { error: "Unauthorized" };
 };
 
-export default Router;
+export { authRoutes };

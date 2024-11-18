@@ -1,5 +1,6 @@
-import { Role, User, User as UserModel } from "../../api-types";
+import { Role, User} from "../../api-types";
 import DB from "./db";
+
 const userSchema = new DB.Schema<User>({
   first_name: String,
   last_name: String,
@@ -10,7 +11,7 @@ const userSchema = new DB.Schema<User>({
   role: String,
 });
 
-const UserModel = DB.model("user", userSchema);
+export const UserModel = DB.model("user", userSchema);
 
 export const index = async () => {
   return UserModel.find({});
