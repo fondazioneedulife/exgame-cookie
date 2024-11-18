@@ -10,6 +10,7 @@ export const editHandler = async (ctx) => {
 
     switch(loggedUser.role){
         case "admin":
+            // qui l'admin può modificare tutti gli attributi di tutti e modificare il ruolo assegnado nuovi techer
             userEdit =  await edit(ctx.params.id, ctx.request.body as User)
             break;
         case "teacher":
