@@ -1,4 +1,4 @@
-import { Role, User } from "../../api-types";
+import { Role, User, User as UserModel } from "../../api-types";
 import DB from "./db";
 
 // const DB: User[] = [];
@@ -8,15 +8,16 @@ const timestamp = Date.now();
 const userSchema = new DB.Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
-  role: {type: String , enum:[ "admin", "teacher", "student" ], required: true},
-  created_at: { type: Number, default: timestamp },
-  updated_at: { type: Number, default: timestamp },
-  subject: {type: [String], required: false},
-  classes: {type: [String], required: false},
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+  role: { type: String, enum: ["admin", "teacher", "student"], required: true },
+  image: { type: Buffer, required: false }, // Binary data
+  subjects: { type: [String], required: false },
+  teacher_classes: { type: [String], required: false },
   student_class: { type: String, required: false },
-  image: { type: String, required: false },
+  token: { type: String, required: false, default: null },
 });
 
 const UserModel = DB.model("user", userSchema);
@@ -29,42 +30,103 @@ export const getUsersByRole = async (role: Role) => {
   return UserModel.find({ role });
 };
 
-
 //---------------VIEW BY ID------------------------
 export const viewForAdmin = async (id: string) => {
-  return UserModel.findById(id);
+  let user = await UserModel.findById(id);
+  return user;
 };
 
-export const viewForTeacher = async (id: string, classes: string[]) => {
-  return UserModel.findById({_id: id, class: { $in: classes}});
+export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
+  return UserModel.find({ _id: id, student_class: { $in: teacher_classes } });
 };
 
+export const viewForStudent = async (id: string, student_class: string | undefined) => {
+  return UserModel.find({ _id: id, student_class: student_class});
+};
 
+//---------------ADD USER------------------------
 export const add = async (user: User) => {
   const UserData = new UserModel(user);
+  UserData.role = "student";
   return UserData.save();
 };
 
 //UPDATE
-export const edit = async( id, user: User ) => {
-  
+export const edit = async (id, user: User) => {
   user.updated_at = timestamp;
   const opt = { new: true, runValidators: true };
-  
+
   try {
-
-    const userDocument = await UserModel.findByIdAndUpdate(id, { $set: user }, opt);
+    const userDocument = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: user },
+      opt,
+    );
     return userDocument;
-
   } catch (error) {
-    
-      console.error("Errore durante l'aggiornamento dell'utente:", error);
-      throw new Error(error.message);
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
+  }
+};
+
+export const editYorself = async (id, user: User) => {
+  const allowedUpdates = [
+    "first_name",
+    "second_name",
+    "email",
+    "image",
+    "subject",
+    "teacher_classes",
+  ];
+  const updates = {};
+
+  allowedUpdates.forEach((field) => {
+    if (user[field] !== undefined) {
+      updates[field] = user[field];
+    }
+  });
+
+  console.log(updates);
+  user.updated_at = timestamp;
+  const opt = { new: true, runValidators: true };
+
+  try {
+    const userDocument = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      opt,
+    );
+    return userDocument;
+  } catch (error) {
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
+  }
+};
+
+export const assignClass = async (id, currentClass) => {
+  const user = {} as User;
+  user["student_class"] = currentClass;
+  user["updated_at"] = timestamp;
+
+  const opt = { new: true, runValidators: true };
+
+  try {
+    const userDocument = await UserModel.updateOne(
+      { _id: id, student_class: null },
+      { $set: user },
+      opt,
+    );
+    return {
+      success: true,
+      message: `Assegnazione della classe ${user.student_class} avvenuta correttamente.`,
+    };
+  } catch (error) {
+    console.error("Errore durante l'aggiornamento dell'utente:", error);
+    throw new Error(error.message);
   }
 };
 
 export const remove = async (id: string) => {
-  
   try {
     const userToDelete = await UserModel.findById(id);
 
@@ -78,29 +140,40 @@ export const remove = async (id: string) => {
 
     const result = await UserModel.deleteOne({ _id: id });
     return { success: true, message: "Utente eliminato correttamente", result };
-    
   } catch (error) {
     console.error("Errore durante l'eliminazione dell'utente:", error);
-    return { success: false, message: "Errore durante l'eliminazione dell'utente" };
+    return {
+      success: false,
+      message: "Errore durante l'eliminazione dell'utente",
+    };
   }
 };
-
-export const getUsersWithoutClass = async() => {
-  console.log("getUsersWithoutClass function is running");
-  return UserModel.find({ role: "student", student_class: null });  
-}
-
-export const getMyStudents = async(classes: string[]) => {
-  return UserModel.find({class: { $in: classes}});
-}
 
 //-------------------------------- CLASS ---------------------------------
 
 //READ
-export const getAllClasses = async() => {
+export const getAllClasses = async () => {
   return UserModel.find({});
 };
 
-export const getStudentsOfClass = async(theClass: string) => {
-  return UserModel.find({role: "student", class: theClass});
-};  3
+/**
+ * get students with only:
+ *  - _id
+ *  - first_name
+ *  - last_name
+ */
+
+export const getStudentsOfClass = async (studentClass: string) => {
+  return await UserModel.find(
+    { role: "student", student_class: studentClass },
+    { first_name: 1, last_name: 1, _id: 1 },
+  );
+};
+
+export const getUsersWithoutClass = async () => {
+  return UserModel.find({ role: "student", student_class: null });
+};
+
+export const getMyStudents = async (teacher_classes: string[]) => {
+  return UserModel.find({ student_class: { $in: teacher_classes } });
+};

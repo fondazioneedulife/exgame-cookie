@@ -1,4 +1,6 @@
 import { Table, Typography, Button, Stack, Chip } from "@mui/joy";
+import * as React from "react";
+import Pagination from "@mui/material/Pagination";
 
 export const Exams: React.FC = () => {
   return (
@@ -47,42 +49,7 @@ export const Exams: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          1
-        </Button>
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          2
-        </Button>
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          3
-        </Button>
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          4
-        </Button>
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          5
-        </Button>
-        <Button
-          variant="solid"
-          sx={{ borderRadius: "50%", backgroundColor: "primary" }}
-        >
-          6
-        </Button>
+        <Pagination count={10} variant="outlined" shape="rounded" />
       </Stack>
     </>
   );

@@ -16,6 +16,8 @@ import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Classes } from "./routes/teacher/classes/classes";
 import { EditStudentProfile } from "./routes/student/EditStudentProfile";
+import { ClassStudents } from "./routes/student/subscriptions/StudentsList";
+
 function App() {
   return (
     <BrowserRouter basename="/">
@@ -24,10 +26,9 @@ function App() {
           <Route index element={<Root />} />
 
           {/* Teacher */}
+          <Route path="classes" element={<Classes />}></Route>
+          <Route path="class-students" element={<ClassStudents />}></Route>
           <Route path="teacher" element={<TeacherGuard />}>
-            
-            <Route path="classes" element={<Classes />}></Route>
-          
             <Route index element={<Exams />} />
             <Route path="exam" element={<AddExam />} />
             <Route path="exam/:id" element={<EditExam />} />
