@@ -18,7 +18,7 @@ export const editHandler = async (ctx) => {
                 userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
             }else{
                 ctx.status = 400;
-                ctx.response.body = "non puoi modificare un'altro utente";
+                userEdit = "non puoi modificare un'altro utente";
             }
             break;
         case "student":
@@ -26,13 +26,13 @@ export const editHandler = async (ctx) => {
                 userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
             }else{
                 ctx.status = 400;
-                ctx.response.body = "non puoi modificare un'altro utente";
+                userEdit = "non puoi modificare un'altro utente";
             }
             break;
 
         default:
             ctx.status = 401;
-            ctx.response.body = "utente non autorizzato";
+            userEdit = "utente non autorizzato";
             break;
     }
 
