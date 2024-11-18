@@ -64,7 +64,7 @@ router.get("/my-students", async (ctx) => {
     case "admin":
       ctx.status = 400;
       ctx.response.body = {
-        message: "Non hai nessuno studente assegnato alle tue classi.",
+        message: "Non hai nessuno classe assegnata.",
       };
       break;
 
@@ -81,7 +81,6 @@ router.get("/my-students", async (ctx) => {
       }
       break;
 
-    case "student":
     default:
       ctx.status = 401;
       ctx.response.body = "utente non autorizzato";
@@ -97,6 +96,7 @@ router.post("/", async (ctx) => {
 });
 
 router.put("/assign-class/:id", async (ctx) => {
+  ctx.accepts("json");
   const loggedUser = await getmockLoggedUser();
 
   const currentClass = ctx.request.body.class;
