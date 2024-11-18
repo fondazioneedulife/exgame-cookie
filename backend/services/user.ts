@@ -170,5 +170,5 @@ export const getUsersWithoutClass = async () => {
 };
 
 export const getMyStudents = async (teacher_classes: string[]) => {
-  return UserModel.find({ class: { $in: teacher_classes } });
+  return UserModel.find({ student_class: { $in: teacher_classes } });
 };
