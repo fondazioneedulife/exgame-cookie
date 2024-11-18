@@ -14,10 +14,20 @@ export const editHandler = async (ctx) => {
             userEdit =  await edit(ctx.params.id, ctx.request.body as User)
             break;
         case "teacher":
-            userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
+            if(ctx.params.id == loggedUser._id){
+                userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
+            }else{
+                ctx.status = 400;
+                ctx.response.body = "non puoi modificare un'altro utente";
+            }
             break;
         case "student":
-            userEdit = await editYorself(loggedUser._id, ctx.request.body as User)
+            if(ctx.params.id == loggedUser._id){
+                userEdit =  await editYorself(loggedUser._id, ctx.request.body as User);
+            }else{
+                ctx.status = 400;
+                ctx.response.body = "non puoi modificare un'altro utente";
+            }
             break;
 
         default:
