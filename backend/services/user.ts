@@ -1,5 +1,4 @@
 import { Role, User, User as UserModel } from "../../api-types";
-import { getmockLoggedUser } from "../mock/mockLoggedUser";
 import DB from "./db";
 
 // const DB: User[] = [];
@@ -7,7 +6,9 @@ import DB from "./db";
 const timestamp = Date.now();
 
 const userSchema = new DB.Schema({
-  firstName: { type: String, required: true },
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
@@ -103,24 +104,22 @@ export const editYorself = async (id, user: User) => {
 };
 
 export const assignClass = async (id, currentClass) => {
-  const user = {};
+  const user = {} as User;
   user["student_class"] = currentClass;
   user["updated_at"] = timestamp;
 
   const opt = { new: true, runValidators: true };
 
-  console.log(user)
   try {
     const userDocument = await UserModel.updateOne(
-      { _id: id, student_class: null }, 
+      { _id: id, student_class: null },
       { $set: user },
-      opt
+      opt,
     );
     return {
       success: true,
       message: `Assegnazione della classe ${user.student_class} avvenuta correttamente.`,
     };
-    
   } catch (error) {
     console.error("Errore durante l'aggiornamento dell'utente:", error);
     throw new Error(error.message);
