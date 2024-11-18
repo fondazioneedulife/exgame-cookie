@@ -24,8 +24,8 @@ function App() {
           <Route index element={<Root />} />
 
           {/* Teacher */}
+          <Route path="classes" element={<Classes />}></Route>
           <Route path="teacher" element={<TeacherGuard />}>
-            <Route path="classes" element={<Classes />}></Route>
             <Route index element={<Exams />} />
             <Route path="exam" element={<AddExam />} />
             <Route path="exam/:id" element={<EditExam />} />

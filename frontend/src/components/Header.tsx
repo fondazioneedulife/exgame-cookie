@@ -1,4 +1,5 @@
 import { Avatar, List, ListItem, ListItemButton, Stack } from "@mui/joy";
+import { Link } from "react-router-dom";
 
 export const Header: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ export const Header: React.FC = () => {
         <List role="menubar" orientation="horizontal">
           <ListItem role="none">
             <ListItemButton role="menuitem" component="a">
-              Gestisci gli studenti
+              <Link to="/classes">Gestisci gli studenti</Link>
             </ListItemButton>
           </ListItem>
         </List>

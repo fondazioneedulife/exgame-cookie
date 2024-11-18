@@ -40,8 +40,14 @@ router.get("/:class", async (ctx) => {
       ctx.body = await getStudentsOfClass(ctx.params.class);
       break;
     case "student":
-		ctx.body = await getStudentsOfClass(ctx.params.class);
-		break;
+      if(ctx.params.class == loggedUser.student_class){
+        ctx.body = await getStudentsOfClass(ctx.params.class);
+      }else{
+        ctx.status = 401;
+        ctx.response.body = "Non hai i permessi per visualizzare gli altri studenti";
+      }
+      break;
+      
     default:
       ctx.status = 401;
       ctx.response.body = "utente non autorizzato";
