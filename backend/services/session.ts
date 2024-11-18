@@ -5,8 +5,8 @@ import { getMockLoggedUser } from "../mock/mockLoggedUser";
 const sessionSchema = new DB.Schema({
   exam_id: { type: String, required: true },
   student_class: { type: String, required: true },
-  start_date: { type: Date, required: true },
-  start_time: { type: Date, required: true },
+  start_date: { type: Date, },
+  start_time: { type: Date, },
 });
 
 const sessionModel = DB.model("session", sessionSchema);

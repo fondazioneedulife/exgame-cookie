@@ -6,10 +6,13 @@ import {
   postSubscription,
 } from "../services/subscription";
 import { getMockLoggedUser } from "../mock/mockLoggedUser";
+import { authMiddleware } from "./auth";
 
 const router = new Router({
   prefix: "/subscriptions",
 });
+
+router.use(authMiddleware());
 
 //Get subscriptions by sessions for teacher and student
 router.get("/:sessionId", async (ctx) => {
