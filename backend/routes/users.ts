@@ -28,7 +28,7 @@ const isAdminMiddleware = async (ctx, next) => {
 };
 
 // All routes
-router.get("/", async (ctx) => {
+router.get("/", isAdminMiddleware , async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
