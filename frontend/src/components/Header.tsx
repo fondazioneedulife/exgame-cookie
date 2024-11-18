@@ -26,7 +26,9 @@ export const Header: React.FC = () => {
             </ListItemButton>
           </ListItem>
         </List>
-        <Avatar />
+        <Link to="/student/:id/profile/details">
+          <Avatar />
+        </Link>
       </Stack>
     </Stack>
   );
