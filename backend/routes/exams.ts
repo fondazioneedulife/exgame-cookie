@@ -32,7 +32,7 @@ router.get("/:id", async (ctx) => {
   ctx.body = exam;
 });
 
-// Add a user
+// Add an exam
 router.post("/", async (ctx) => {
   ctx.accepts("json");
   console.log(ctx.body);
@@ -40,16 +40,22 @@ router.post("/", async (ctx) => {
   ctx.response.body = exam;
 });
 
-// // Edit a user
-// router.put("/:id", async (ctx) => {
-//   ctx.accepts("json");
-//   const response = await edit(ctx.params.id, ctx.request.body as User);
-//   ctx.response.body = response;
-// });
+// Edit an exam
+router.put("/:id", async (ctx) => {
+  ctx.accepts("json");
+  const response = await edit(ctx.params.id, ctx.request.body as Exam);
+  ctx.response.body = response;
+  console.log(response);
+});
+
+
+
+
 
 // // Delete a user
-// router.delete("/:id", async (ctx) => {
-//   ctx.body = await remove(ctx.params.id);
-// });
+router.delete("/:id", async (ctx) => {
+  ctx.body = await remove(ctx.params.id);
+  console.log(`exam with id:${ctx.params.id} DELETED.`)
+});
 
 export default router;
