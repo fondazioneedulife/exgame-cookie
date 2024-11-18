@@ -8,10 +8,13 @@ import {
   remove,
   view,
 } from "../services/user";
+import { authMiddleware } from "./auth";
 
 const router = new Router({
   prefix: "/users",
 });
+
+router.use(authMiddleware());
 
 // All routes
 router.get("/", async (ctx) => {
