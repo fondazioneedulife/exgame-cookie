@@ -3,6 +3,7 @@ import classes from "./exam.module.css";
 import { AddExam } from "./examsButtons/AddExam";
 import { ExamRow } from "./ExamRow";
 import Pagination from "@mui/material/Pagination";
+import Box from "@mui/material/Box";
 
 export const Exams: React.FC = () => {
   return (
@@ -28,9 +29,17 @@ export const Exams: React.FC = () => {
           <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
         </tbody>
       </Table>
-      <Stack spacing={2}>
-        <Pagination count={10} variant="outlined" />
-      </Stack>
+      <Box 
+        sx={{ 
+          display: "flex", 
+          justifyContent: "center",
+          marginTop: 2,
+        }}
+      >
+        <Stack spacing={2}>
+          <Pagination count={10} variant="outlined" siblingCount={10} />
+        </Stack>
+      </Box>
     </>
   );
 };
