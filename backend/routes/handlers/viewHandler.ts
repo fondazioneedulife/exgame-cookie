@@ -3,6 +3,7 @@ import {
   viewForAdmin,
   viewForStudent,
   viewForTeacher,
+  viewYourself
 } from "../../services/user";
 
 export const viewHandler = async (ctx) => {
@@ -13,12 +14,17 @@ export const viewHandler = async (ctx) => {
       user = await viewForAdmin(ctx.params.id);
       break;
     case "teacher":
-      const classes = loggedUser.teacher_classes;
-      if (classes && classes.length !== 0) {
-        user = await viewForTeacher(ctx.params.id, classes);
+      
+      if(ctx.params.id == loggedUser._id){
+        user = await viewYourself(ctx.params.id);
       } else {
-        ctx.status = 400;
-        ctx.response.body = { message: "Non hai nessuna classe assegnata" };
+        const classes = loggedUser.teacher_classes;
+        if (classes && classes.length !== 0) {
+          user = await viewForTeacher(ctx.params.id, classes);
+        } else {
+          ctx.status = 400;
+          ctx.response.body = { message: "Utente non presente nella lista delle tue classi" };
+        }
       }
       break;
     case "student":

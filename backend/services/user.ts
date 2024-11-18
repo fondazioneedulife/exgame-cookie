@@ -1,6 +1,7 @@
 import { Role, User, User as UserModel } from "../../api-types";
 import DB from "./db";
 
+
 // const DB: User[] = [];
 
 const timestamp = Date.now();
@@ -37,11 +38,15 @@ export const viewForAdmin = async (id: string) => {
 };
 
 export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
-  return UserModel.find({ _id: id, student_class: { $in: teacher_classes } });
+  return UserModel.find({ _id: id, student_class: { $in: teacher_classes }  });
 };
 
 export const viewForStudent = async (id: string, student_class: string | undefined) => {
   return UserModel.find({ _id: id, student_class: student_class});
+};
+
+export const viewYourself = async (id: string) => {
+  return UserModel.findById({id});
 };
 
 //---------------ADD USER------------------------
