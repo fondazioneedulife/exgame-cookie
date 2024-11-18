@@ -107,12 +107,7 @@ router.put("/assign-class/:id", async (ctx) => {
       ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "teacher":
-      if (ctx.params.id == loggedUser._id) {
-        ctx.body = await assignClass(ctx.params.id, currentClass);
-      } else {
-        ctx.status = 400;
-        ctx.response.body = "non puoi modificare un'altro utente";
-      }
+      ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "student":
     default:
