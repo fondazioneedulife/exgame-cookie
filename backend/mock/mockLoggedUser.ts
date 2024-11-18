@@ -1,6 +1,6 @@
 import { User } from "../../api-types";
 
-export const getmockLoggedUser = async (): Promise<User> => {
+export const getMockLoggedUser = async (): Promise<User> => {
   return {
     _id: "1231241241242342sfdfsd1213",
     first_name: "Alessandro",
@@ -16,7 +16,7 @@ export const getmockLoggedUser = async (): Promise<User> => {
 };
 
 export const isAdmin = async (): Promise<boolean> => {
-  const user = await getmockLoggedUser();
+  const user = await getMockLoggedUser();
   if (user.role == "admin") {
     return true;
   }
@@ -24,7 +24,7 @@ export const isAdmin = async (): Promise<boolean> => {
 };
 
 export const isTeacher = async (): Promise<boolean> => {
-  const user = await getmockLoggedUser();
+  const user = await getMockLoggedUser();
   if (user.role == "teacher") {
     return true;
   }
@@ -32,7 +32,7 @@ export const isTeacher = async (): Promise<boolean> => {
 };
 
 export const isAdminOrTeacher = async (): Promise<boolean> => {
-  const user = await getmockLoggedUser();
+  const user = await getMockLoggedUser();
   if (user.role == "admin" || user.role == "teacher") {
     return true;
   }
@@ -40,7 +40,7 @@ export const isAdminOrTeacher = async (): Promise<boolean> => {
 };
 
 export const isStudent = async (): Promise<boolean> => {
-  const user = await getmockLoggedUser();
+  const user = await getMockLoggedUser();
   if (user.role == "student") {
     return true;
   }
