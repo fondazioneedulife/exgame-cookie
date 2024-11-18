@@ -6,7 +6,7 @@ import { Root } from "./routes/Root";
 import { StudentGuard } from "./routes/student/StudentGuard";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
-import { AddExam } from "./routes/teacher/exams/AddExam";
+import { AddNewExam } from "./routes/teacher/exams/AddNewExam";
 import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
 import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
@@ -23,11 +23,11 @@ function App() {
           <Route index element={<Root />} />
 
           {/* Teacher */}
-          <Route path="teacher" element={<TeacherGuard />}>
-            <Route index element={<Sessions />} />
-            <Route path="exam" element={<AddExam />} />
-            <Route path="exam/:id" element={<EditExam />} />
+            <Route path="teacher" element={<TeacherGuard />}>
+            <Route index element={<Exams />} />
+            <Route path="exam" element={<AddNewExam />} />
             <Route path="exam/:id/sessions" element={<Sessions />} />
+            <Route path="exam/:id" element={<EditExam />} />
             <Route path="subscriptions" element={<Subscriptions />} />
             <Route path="subscriptions/:date" element={<SessionReport />} />
             <Route

@@ -1,6 +1,6 @@
 import { Stack, Table } from "@mui/joy";
 import classes from "./exam.module.css";
-import { AddButton } from "./examsButtons/AddButton";
+import { AddExam } from "./examsButtons/AddExam";
 import { ExamRow } from "./ExamRow";
 import Pagination from "@mui/material/Pagination";
 
@@ -9,7 +9,7 @@ export const Exams: React.FC = () => {
     <>
       <div className={classes.headerLayout}>
         <h1 style={{ padding: 0, margin: 0 }}>Esami</h1>
-        <AddButton></AddButton>
+        <AddExam></AddExam>
       </div>
       <Table aria-label="basic table">
         <thead>
