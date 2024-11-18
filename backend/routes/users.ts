@@ -10,6 +10,7 @@ import {
   remove,
   getUsersWithoutClass,
   assignClass,
+  getMyStudents,
 } from "../services/user";
 
 const router = new Router({
@@ -68,10 +69,10 @@ router.get("/my-students", async (ctx) => {
       break;
 
     case "teacher":
-      const classes = loggedUser.teacher_classes;
+      const classes: string[] | undefined = loggedUser.teacher_classes;
       // TODO: tipo da assegnare
       if (classes && classes.length !== 0) {
-        /*    ctx.body = await getMyStudents(classes); */
+        ctx.body = await getMyStudents(classes);
       } else {
         ctx.status = 400;
         ctx.response.body = {
