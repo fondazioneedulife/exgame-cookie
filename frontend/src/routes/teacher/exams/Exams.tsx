@@ -1,9 +1,8 @@
-import { Table } from "@mui/joy";
-import { EditButton } from "./examsButtons/EditButton";
-import { SessionsButton } from "./examsButtons/SessionsButton";
+import { Stack, Table } from "@mui/joy";
 import classes from "./exam.module.css";
 import { AddButton } from "./examsButtons/AddButton";
-import { ExamRow } from "./examRow";
+import { ExamRow } from "./ExamRow";
+import Pagination from "@mui/material/Pagination";
 
 export const Exams: React.FC = () => {
   return (
@@ -21,15 +20,17 @@ export const Exams: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
-          <ExamRow title="Esame1" studentClass="Pixel"></ExamRow>
- 
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
+          <ExamRow title="Esame1" teacherClasses="Pixel"></ExamRow>
         </tbody>
       </Table>
+      <Stack spacing={2}>
+        <Pagination count={10} variant="outlined" />
+      </Stack>
     </>
   );
 };
