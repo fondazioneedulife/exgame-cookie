@@ -17,11 +17,18 @@ export const Header: React.FC = () => {
         <List role="menubar" orientation="horizontal">
           <ListItem role="none">
             <ListItemButton role="menuitem" component="a">
-              <Link to="/classes">Gestisci gli studenti</Link>
+              <Link
+                to="/classes"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                Gestisci gli studenti
+              </Link>
             </ListItemButton>
           </ListItem>
         </List>
-        <Avatar />
+        <Link to="/student/:id/profile/details">
+          <Avatar />
+        </Link>
       </Stack>
     </Stack>
   );

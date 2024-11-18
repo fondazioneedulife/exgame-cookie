@@ -5,8 +5,7 @@ import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import Pagination from "@mui/material/Pagination/Pagination";
 import { Link } from "react-router-dom";
-
-export const Classes: React.FC = () => {
+export const ClassStudents: React.FC = () => {
   return (
     <>
       <>
@@ -14,7 +13,7 @@ export const Classes: React.FC = () => {
           <thead>
             <tr>
               <th style={{ width: "100%" }}>
-                <Typography level="h1">Le mie classi</Typography>
+                <Typography level="h1">Studenti della classe Cookie</Typography>
               </th>
             </tr>
           </thead>
@@ -29,37 +28,19 @@ export const Classes: React.FC = () => {
                 style={{ paddingTop: "1%" }}
               >
                 <td style={{ width: "60%" }}>
-                  <Typography level="h3">cookie</Typography>
+                  <Typography level="h3">Nome cognome</Typography>
                 </td>
                 <Button style={{ padding: "0 11% 0 11%" }}>
                   <Link
-                    to="/class-students"
+                    to="/student/:id/profile/details"
                     style={{ color: "white", textDecoration: "none" }}
                   >
-                    Visualizza studenti
+                    Visualizza profilo
                   </Link>
                 </Button>
               </Stack>
             </tr>
-            <hr />
 
-            <tr>
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{
-                  justifyContent: "space-between",
-                }}
-                style={{ paddingTop: "1%" }}
-              >
-                <td style={{ width: "60%" }}>
-                  <Typography level="h3">cookie</Typography>
-                </td>
-                <Button style={{ padding: "0 11% 0 11%" }}>
-                  Visualizza studenti
-                </Button>
-              </Stack>
-            </tr>
             <hr />
           </tbody>
         </Table>

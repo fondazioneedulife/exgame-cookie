@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Avatar, Box, Card, CardContent, Typography } from '@mui/joy';
+import { Link } from 'react-router-dom';
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
 
 
-export const UserProfile: React.FC = () => {
+export const StudentProfile: React.FC = () => {
     return (
       <Card>
         <CardContent>
@@ -25,7 +26,7 @@ export const UserProfile: React.FC = () => {
           </Box>
 
           <Stack sx={{ justifyContent: "center", alignItems: "flex-end", }}>
-            <Button>Modifica</Button>
+            <Button><Link to="/student/7/profile/details/edit">Modifica</Link></Button>
           </Stack>
 
         </CardContent>
