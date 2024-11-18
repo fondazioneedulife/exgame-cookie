@@ -5,7 +5,7 @@ import Session from "koa-session";
 import { createServer } from "http";
 import Koa from "koa";
 import serveStatic from "koa-static";
-import { userRoutes } from "./routes/users";
+import userRoutes  from "./routes/users";
 import { initSocketIo } from "./io";
 import { authRoutes } from "./routes/auth";
 

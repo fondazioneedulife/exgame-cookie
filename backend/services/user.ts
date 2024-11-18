@@ -1,6 +1,5 @@
-import { Role, User } from "../../api-types";
+import { Role, User, User as UserModel } from "../../api-types";
 import DB from "./db";
-
 const userSchema = new DB.Schema<User>({
   first_name: String,
   last_name: String,
@@ -30,7 +29,7 @@ export const add = async (user: User) => {
   return UserData.save();
 };
 
-export const edit = async (id: string, user: User) => {
+export const edit = async (id, user: User) => {
   const UserDocument = await UserModel.findById(id);
 
   if (!UserDocument) {

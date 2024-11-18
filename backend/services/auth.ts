@@ -6,6 +6,7 @@ const SALT_ROUNDS = 10; // Numero di round per hashing della password
 
 // Definisci lo schema del modello User
 const userSchema = new DB.Schema<User>({
+  _id: String,
   first_name: String,
   last_name: String,
   email: String,
