@@ -5,7 +5,7 @@ import {
   getSubscriptionBySessionForStudent,
   postSubscription,
 } from "../services/subscription";
-import { getmockLoggedUser } from "../mock/mockLoggedUser";
+import { getMockLoggedUser } from "../mock/mockLoggedUser";
 
 const router = new Router({
   prefix: "/subscriptions",
@@ -13,7 +13,7 @@ const router = new Router({
 
 //Get subscriptions by sessions for teacher and student
 router.get("/:sessionId", async (ctx) => {
-  const loggedUser = await getmockLoggedUser();
+  const loggedUser = await getMockLoggedUser();
 
   switch (loggedUser.role) {
     case "teacher":

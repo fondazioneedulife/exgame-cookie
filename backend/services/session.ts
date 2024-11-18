@@ -18,7 +18,9 @@ export const getSessions = async (examId: string) => {
       case "teacher":
         return sessionModel.find({ exam_id: examId });
       case "student":
-        return sessionModel.find({ student_class: loggedUser.student_class });
+        return sessionModel.find({ exam_id: examId }).where({
+          student_class: loggedUser.student_class
+        });
     }
 };
 
