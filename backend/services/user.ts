@@ -46,6 +46,7 @@ export const viewForStudent = async (id: string) => {
 //---------------ADD USER------------------------
 export const add = async (user: User) => {
   const UserData = new UserModel(user);
+  UserData.role = "student";
   return UserData.save();
 };
 
@@ -158,12 +159,12 @@ export const getAllClasses = async () => {
  *  - last_name
  */
 
-export const getStudentsOfClass = async(studentClass: string) => {
+export const getStudentsOfClass = async (studentClass: string) => {
   return await UserModel.find(
-     {role: "student", student_class: studentClass}, 
-     { first_name: 1, last_name: 1, _id: 1 }
-   );
- };
+    { role: "student", student_class: studentClass },
+    { first_name: 1, last_name: 1, _id: 1 },
+  );
+};
 
 export const getUsersWithoutClass = async () => {
   return UserModel.find({ role: "student", student_class: null });
