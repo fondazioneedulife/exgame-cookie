@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
-import { isAdmin, getmockLoggedUser } from "../mock/mockLoggedUser";
+import { getmockLoggedUser } from "../mock/mockLoggedUser";
+import { isAdmin } from "../services/roleCheck";
 import { editHandler } from "./handlers/editHanndler";
 import { viewHandler } from "./handlers/viewHandler";
 import {
@@ -28,7 +29,7 @@ const isAdminMiddleware = async (ctx, next) => {
 };
 
 // All routes
-router.get("/", isAdminMiddleware , async (ctx) => {
+router.get("/", isAdminMiddleware, async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
@@ -64,7 +65,7 @@ router.get("/my-students", async (ctx) => {
     case "admin":
       ctx.status = 400;
       ctx.response.body = {
-        message: "Non hai nessuno studente assegnato alle tue classi.",
+        message: "Non hai nessuno classe assegnata.",
       };
       break;
 
@@ -81,7 +82,6 @@ router.get("/my-students", async (ctx) => {
       }
       break;
 
-    case "student":
     default:
       ctx.status = 401;
       ctx.response.body = "utente non autorizzato";
@@ -97,6 +97,7 @@ router.post("/", async (ctx) => {
 });
 
 router.put("/assign-class/:id", async (ctx) => {
+  ctx.accepts("json");
   const loggedUser = await getmockLoggedUser();
 
   const currentClass = ctx.request.body.class;
@@ -106,12 +107,7 @@ router.put("/assign-class/:id", async (ctx) => {
       ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "teacher":
-      if(ctx.params.id == loggedUser._id){
-        ctx.body = await assignClass(ctx.params.id, currentClass);
-      }else{
-        ctx.status = 400;
-        ctx.response.body = "non puoi modificare un'altro utente";
-      }
+      ctx.body = await assignClass(ctx.params.id, currentClass);
       break;
     case "student":
     default:

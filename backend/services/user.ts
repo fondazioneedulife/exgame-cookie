@@ -1,5 +1,4 @@
 import { Role, User, User as UserModel } from "../../api-types";
-import { getmockLoggedUser } from "../mock/mockLoggedUser";
 import DB from "./db";
 
 // const DB: User[] = [];
@@ -7,7 +6,9 @@ import DB from "./db";
 const timestamp = Date.now();
 
 const userSchema = new DB.Schema({
-  firstName: { type: String, required: true },
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
@@ -39,8 +40,8 @@ export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
   return UserModel.find({ _id: id, student_class: { $in: teacher_classes } });
 };
 
-export const viewForStudent = async (id: string) => {
-  return UserModel.findById(id);
+export const viewForStudent = async (id: string, student_class: string | undefined) => {
+  return UserModel.find({ _id: id, student_class: student_class});
 };
 
 //---------------ADD USER------------------------
@@ -103,19 +104,22 @@ export const editYorself = async (id, user: User) => {
 };
 
 export const assignClass = async (id, currentClass) => {
-  const user = {};
+  const user = {} as User;
   user["student_class"] = currentClass;
   user["updated_at"] = timestamp;
 
   const opt = { new: true, runValidators: true };
 
   try {
-    const userDocument = await UserModel.find(
+    const userDocument = await UserModel.updateOne(
       { _id: id, student_class: null },
       { $set: user },
       opt,
     );
-    return userDocument;
+    return {
+      success: true,
+      message: `Assegnazione della classe ${user.student_class} avvenuta correttamente.`,
+    };
   } catch (error) {
     console.error("Errore durante l'aggiornamento dell'utente:", error);
     throw new Error(error.message);
