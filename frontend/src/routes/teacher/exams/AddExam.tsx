@@ -6,8 +6,7 @@ import Input from '@mui/joy/Input';
 import Autocomplete from '@mui/joy/Autocomplete';
 import classes from './exams.module.css'
 import QuestionComponent from './examComponents/QuestionComponent';
-
-
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 interface Answer {
   text: string;
@@ -33,6 +32,11 @@ const AddExam: React.FC = () => {
     setShowQuestionForm(true); // Mostra il form per l'aggiunta di una nuova domanda
   };
 
+  const handleModifyAnswer = (questionIndex: number, answerIndex: number) => {
+    // Logica per rimuovere o modificare la risposta
+    console.log(`Elimina risposta ${answerIndex} dalla domanda ${questionIndex}`);
+  };
+
   return (
     <>
       <div className={classes.container}>
@@ -44,8 +48,8 @@ const AddExam: React.FC = () => {
               </Button>
             </div>
             <div>
-              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
-                Carica esame
+              <Button size="sm" onClick={() => navigate('/teacher')} style={{background:"green"}}>
+                Salva
               </Button>
             </div>
 
@@ -77,7 +81,6 @@ const AddExam: React.FC = () => {
                   </td>
                 </tr>
               </thead>
-
               <tbody>
                 <tr>
                   <td colSpan={2}>
@@ -91,27 +94,32 @@ const AddExam: React.FC = () => {
                   </td>
                 </tr>
               
-                  <td colSpan={2}>
-                    <ul className={classes.list_questions}>
-                      {questions.map((q, index) => (
-                        <li key={index} className={classes.list_questions_li}>
-                          <strong>{q.questionText || 'Domanda vuota'}</strong>
-                          <ul className={classes.aswer_question}>
-                            {q.answers.map((answer, idx) => (
-                              <li 
-                                key={idx}
-                                style={{ color: answer.isCorrect ? 'green' : 'black' }}
-                              >
+                <td colSpan={2}>
+                  <ul className={classes.list_questions}>
+                    {questions.map((q, index) => (
+                      <li key={index} className={classes.list_questions_li}>
+                        <strong>{q.questionText || 'Domanda vuota'}</strong>
+                        <ul className={classes.aswer_question}>
+                          {q.answers.map((answer, idx) => (
+                            <li 
+                              key={idx}
+                              style={{ color: answer.isCorrect ? 'green' : 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                            >
+                              <span>
                                 {answer.text || 'Risposta vuota'} {answer.isCorrect && '(Corretta)'}
-                              </li>
-                            ))}
-                          </ul>
-                          <Divider/>
-                        </li>
-                      ))}
-                      
-                    </ul>
-                  </td>
+                              </span>
+                              
+                              <Button variant="outlined" size="md" onClick={() => handleModifyAnswer(index, idx)}>
+                                <DeleteRoundedIcon />
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                        <Divider />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
                 
               </tbody>
             </Table>

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import classes from './exams.module.css'
 import { useState } from 'react';
 import SingleExam from './examComponents/SingleExam';
+import Pagination from '@mui/material/Pagination';
+import { Stack } from "@mui/joy";
 
 export const Exams: React.FC = () => {
   const navigate = useNavigate();
@@ -28,20 +30,21 @@ export const Exams: React.FC = () => {
     <>
       <div className={classes.container}>
         <div className={classes.container_box}>
-          <div className={classes.container_table}>
-            <Button variant="outlined" size="sm" onClick={() => navigate('/teacher/exam')}>Aggiungi esame</Button>
-          </div>
 
           <div className={classes.container_table}>
             <Table aria-label="basic table">
-              <thead>
+              <thead >
                 <tr>
-                  <th style={{ width: '40%' }}>Elenco esami</th>
-                  <th>Classe</th>
-                  <th>Azioni</th>
+                  <th style={{ width: '40%', fontSize:"1.5em" }}>Esami</th>
+                  <th></th>
+                  <th> 
+                    <Stack direction="row" spacing={0.5} justifyContent={'flex-end'}>
+                      <Button variant="outlined" size="md" onClick={() => navigate('/teacher/exam')}>Aggiungi esame</Button>
+                    </Stack>
+                  </th>
                 </tr>
               </thead>
-
+              <br />
               <tbody>
                 {/* Mappiamo ogni esame e lo passiamo al componente SingleExam */}
                 {exams.map(exam => (
@@ -56,6 +59,11 @@ export const Exams: React.FC = () => {
                 ))}
               </tbody>
             </Table>
+
+            <div className={classes.pagination}>
+              <Pagination count={10} />
+            </div>
+          
           </div>
         </div>
       </div>

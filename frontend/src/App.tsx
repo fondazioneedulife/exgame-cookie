@@ -8,13 +8,13 @@ import { StudentGuard } from "./routes/student/StudentGuard";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
 import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import AddExam from "./routes/teacher/exams/AddExam";
+import EditExam from "./routes/teacher/exams/EditExam";
 
 function AnimatedRoutes() {
   const location = useLocation();

@@ -19,18 +19,14 @@ const SingleExam: React.FC<SingleExamProps> = ({ id, name, className, date, onDe
       <td>{name}</td>
       <td>{className}</td>
       <td>
-        <Stack direction="row" spacing={0.5}>
+        <Stack direction="row" spacing={0.5} justifyContent={'flex-end'}>
           <Button size="sm" onClick={() => navigate(`/teacher/exam/${id}`)}>
             Modifica
           </Button>
           <Button variant="outlined" size="sm" onClick={() => navigate(`/teacher/subscriptions/${date}`)}>
             Sessioni
           </Button>
-          <Button
-            size="sm"
-            style={{ backgroundColor: '#ab003c' }}
-            onClick={() => onDelete(id)} // Esegui la funzione di eliminazione
-          >
+          <Button size="sm" style={{ backgroundColor: '#ab003c' }}onClick={() => onDelete(id)}>
             <DeleteRoundedIcon />
           </Button>
         </Stack>
