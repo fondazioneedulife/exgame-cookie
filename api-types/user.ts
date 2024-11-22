@@ -28,12 +28,12 @@ export type User = {
   /**
    * Data di registrazione
    */
-  created_at: string;
+  created_at: number;
 
   /**
    * Ultima modifica
    */
-  updated_at: string;
+  updated_at: number;
 
   /**
    * Può assumere i valori:
@@ -56,7 +56,7 @@ export type User = {
   /**
    * Rappresenta le classi assegnate a un docente. E' velorizzata solo per i "role" teacher
    */
-  classes?: string[];
+  teacher_classes?: string[];
 
   /**
    * Rappresenta la classe a cui uno studente appartiene. E' valorizzato solo per i "role" student
