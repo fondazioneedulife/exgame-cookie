@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import { User } from "../../api-types";
 import { login, registerStudent } from "../services/auth";
+import { AuthenticatedContext } from "../types/session";
 
 const router = new Router({
   prefix: "/auth",
@@ -33,7 +34,7 @@ router.post("/register", async (ctx) => {
 /**
  * Login
  */
-router.post("/login", async (ctx) => {
+router.post<unknown, AuthenticatedContext>("/login", async (ctx) => {
   ctx.accepts("json");
 
   const { email, password } = ctx.request.body as { email: string; password: string };
@@ -54,11 +55,9 @@ router.post("/login", async (ctx) => {
 
     // Autentica la sessione
     ctx.session.authenticated = true;
-    ctx.session.user = {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {password: _, ...sessionUser} = user;
+    ctx.session.user = sessionUser;
 
     ctx.status = 200;
     ctx.body = { message: "Login successful", user };
@@ -77,12 +76,15 @@ router.get("/logout", (ctx) => {
   ctx.response.status = 200;
 });
 
-export const authMiddleware = () => async (ctx, next) => {
+export default router;
+
+/**
+ * Auth middleware
+ */
+export const authMiddleware = (): Router.Middleware<unknown, AuthenticatedContext> => async (ctx, next) => {
   const isAuthenticated = ctx.session.authenticated === true;
   if (isAuthenticated) {
     return await next();
   }
   ctx.status = 401;
 };
-
-export default router;

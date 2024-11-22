@@ -28,12 +28,12 @@ export type User = {
   /**
    * Data di registrazione
    */
-  created_at: number;
+  created_at: string;
 
   /**
    * Ultima modifica
    */
-  updated_at: number;
+  updated_at: string;
 
   /**
    * Può assumere i valori:

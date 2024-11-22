@@ -1,21 +1,21 @@
 import { createHmac } from "crypto";
-import { User } from "../../api-types";
-import { UserModel } from "./user";
+import { Role, User } from "../../api-types";
+import { add, UserModel } from "./user";
 
 // hash function
-const hash = (password: string):string => {
+const hash = (password: string): string => {
   if (!process.env.SECURITY_SALT) {
     throw new Error("La variabile d'ambiente SECURITY_SALT non è definita.");
-  }  
-  return createHmac('sha256', process.env.SECURITY_SALT)
+  }
+  return createHmac("sha256", process.env.SECURITY_SALT)
     .update(password)
-    .digest('hex');
-}
+    .digest("hex");
+};
 
 // Login
 export const login = async (email: string, password: string) => {
   // Trova l'utente per email
-  const user = await UserModel.findOne({ email: email });
+  const user = await UserModel.findOne<User>({ email: email });
   if (!user) {
     return null;
   }
@@ -35,7 +35,9 @@ export const registerStudent = async (data: Partial<User>) => {
   // Controllo se l'email esiste già
   const existingUser = await UserModel.findOne({ email: data.email });
   if (existingUser) {
-    throw new Error("Email già registrata. Non è possibile creare un altro utente con la stessa email.");
+    throw new Error(
+      "Email già registrata. Non è possibile creare un altro utente con la stessa email.",
+    );
   }
 
   // Hash della password
@@ -45,15 +47,12 @@ export const registerStudent = async (data: Partial<User>) => {
   const hashedPassword = hash(data.password);
 
   const newStudent = {
-    first_name: data.first_name,
-    last_name: data.last_name,
-    email: data.email,
+    first_name: data.first_name || "",
+    last_name: data.last_name || "",
+    email: data.email || "",
     password: hashedPassword,
-    role: "student",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    role: "student" as Role,
   };
 
-  const student = new UserModel(newStudent);
-  return student.save();
+  return add(newStudent);
 };
