@@ -14,6 +14,7 @@ import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionR
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Sessions } from "./routes/teacher/sessions/Sessions";
+import { NewSession } from "./routes/teacher/sessions/sessionComponents/NewSession";
 
 function App() {
   return (
@@ -23,10 +24,14 @@ function App() {
           <Route index element={<Root />} />
 
           {/* Teacher */}
-            <Route path="teacher" element={<TeacherGuard />}>
+          <Route path="teacher" element={<TeacherGuard />}>
             <Route index element={<Exams />} />
             <Route path="exam" element={<AddNewExam />} />
             <Route path="exam/:id/sessions" element={<Sessions />} />
+            <Route
+              path="exam/:id/sessions/newSession"
+              element={<NewSession />}
+            />
             <Route path="exam/:id" element={<EditExam />} />
             <Route path="subscriptions" element={<Subscriptions />} />
             <Route path="subscriptions/:date" element={<SessionReport />} />
