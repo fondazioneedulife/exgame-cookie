@@ -15,7 +15,7 @@ const hash = (password: string): string => {
 // Login
 export const login = async (email: string, password: string) => {
   // Trova l'utente per email
-  const user = await UserModel.findOne<User>({ email: email });
+  const user = await UserModel.findOne({ email: email });
   if (!user) {
     return null;
   }
@@ -27,7 +27,7 @@ export const login = async (email: string, password: string) => {
   if (!isMatch) {
     return null;
   }
-  return user;
+  return user.toObject<User>();
 };
 
 // Register per student
