@@ -11,8 +11,7 @@ const router = new Router<unknown, AuthenticatedContext>({
 router.use(authMiddleware());
 
 router.get("/:examId", async (ctx) => {
-  console.log(ctx.params.examId);
-  ctx.body = await getSessions(ctx.params.examId);
+  ctx.body = await getSessions(ctx.params.examId, ctx);
 });
 
 router.post("/", async (ctx) => {

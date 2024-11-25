@@ -1,6 +1,5 @@
 import Router from "@koa/router";
 import { Subscription } from "../../api-types";
-import { getMockLoggedUser } from "../mock/mockLoggedUser";
 import {
   getSubscriptionBySessionForStudent,
   getSubscriptionsBySessionForTeacher,
@@ -17,7 +16,7 @@ router.use(authMiddleware());
 
 //Get subscriptions by sessions for teacher and student
 router.get("/:sessionId", async (ctx) => {
-  const loggedUser = await getMockLoggedUser();
+  const loggedUser = ctx.session.user;
 
   switch (loggedUser.role) {
     case "teacher":
@@ -26,7 +25,7 @@ router.get("/:sessionId", async (ctx) => {
       );
       break;
     case "student":
-      ctx.body = await getSubscriptionBySessionForStudent(ctx.params.sessionId);
+      ctx.body = await getSubscriptionBySessionForStudent(ctx.params.sessionId, ctx);
       break;
   }
 });
@@ -36,6 +35,7 @@ router.post("/", async (ctx) => {
   ctx.accepts("json");
   const subscription = await postSubscription(ctx.request.body as Subscription);
   ctx.response.body = subscription;
+  console.log(subscription);
 });
 
 export default router;
