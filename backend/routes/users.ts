@@ -29,6 +29,7 @@ router.get("/role/:role", async (ctx) => {
 
 // Find a user
 router.get("/:id", async (ctx) => {
+  console.log(ctx.session.user);
   const user = await view(ctx.params.id, ctx.session.user);
 
   if (!user) {
@@ -38,13 +39,6 @@ router.get("/:id", async (ctx) => {
   }
 
   ctx.body = user;
-});
-
-// Add a user
-router.post("/", async (ctx) => {
-  ctx.accepts("json");
-  const user = await add(ctx.request.body as User);
-  ctx.response.body = user;
 });
 
 // Edit a user
