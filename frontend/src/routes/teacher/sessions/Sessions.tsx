@@ -4,16 +4,21 @@ import { Pagination, Button } from "@mui/material";
 import { SessionRow } from "./sessionComponents/SessionRow";
 import { SessionsDone } from "./sessionComponents/SessionsDone";
 import Box from "@mui/material/Box";
-import { Navigate } from "react-router";
-
-
+import { useNavigate } from "react-router";
 
 export const Sessions: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className={classes.headerLayout}>
         <h1 style={{ padding: 0, margin: 0 }}>Sessioni di esame: </h1>
-        <Button  variant="outlined"  onClick={() => Navigate('exam/:id/sessions/add')}>Nuova Sessione</Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate("exam/:id/sessions/add")}
+        >
+          Nuova Sessione
+        </Button>
       </div>
       <Table aria-label="basic table">
         <h2>Sessioni da svolgere</h2>
