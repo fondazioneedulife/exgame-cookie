@@ -1,23 +1,20 @@
 import Router from "@koa/router";
 import { Exam } from "../../api-types/exam";
-import {
-  add,
-  index,
-  view,
-  edit,
-  remove,
-} from "../services/exam";
+import { add, edit, index, remove, view } from "../services/exam";
+import { AuthenticatedContext } from "../types/session";
+import { authMiddleware } from "./auth";
 
-const router = new Router({
+const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/exams",
 });
+
+router.use(authMiddleware());
 
 // All exams
 router.get("/", async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
-
 
 // get exam by id
 router.get("/:id", async (ctx) => {
@@ -48,14 +45,10 @@ router.put("/:id", async (ctx) => {
   console.log(response);
 });
 
-
-
-
-
 // // Delete a user
 router.delete("/:id", async (ctx) => {
   ctx.body = await remove(ctx.params.id);
-  console.log(`exam with id:${ctx.params.id} DELETED.`)
+  console.log(`exam with id:${ctx.params.id} DELETED.`);
 });
 
 export default router;

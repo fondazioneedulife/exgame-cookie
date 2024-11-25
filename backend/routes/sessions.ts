@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import { Session } from "../../api-types";
 import { addSession, getSessions } from "../services/session";
+import { AuthenticatedContext } from "../types/session";
 import { authMiddleware } from "./auth";
 
-const router = new Router({
+const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/sessions",
 });
 

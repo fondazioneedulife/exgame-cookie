@@ -1,14 +1,15 @@
 import Router from "@koa/router";
 import { Subscription } from "../../api-types";
+import { getMockLoggedUser } from "../mock/mockLoggedUser";
 import {
-  getSubscriptionsBySessionForTeacher,
   getSubscriptionBySessionForStudent,
+  getSubscriptionsBySessionForTeacher,
   postSubscription,
 } from "../services/subscription";
-import { getMockLoggedUser } from "../mock/mockLoggedUser";
+import { AuthenticatedContext } from "../types/session";
 import { authMiddleware } from "./auth";
 
-const router = new Router({
+const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/subscriptions",
 });
 
@@ -33,7 +34,7 @@ router.get("/:sessionId", async (ctx) => {
 //Add subscription
 router.post("/", async (ctx) => {
   ctx.accepts("json");
-  const subscription = await postSubscription(ctx.request.body as Subscription); 
+  const subscription = await postSubscription(ctx.request.body as Subscription);
   ctx.response.body = subscription;
 });
 
