@@ -38,7 +38,7 @@ export const getUsersByRole = async (role: Role) => {
 };
 
 /**
- * Returns an use by id, if currentUser is provided, applies visibility rules
+ * Returns a user by id, if currentUser is provided, applies visibility rules
  *
  * @param id
  * @param currentUser if provided, applies appropriate logic for current user
@@ -49,17 +49,29 @@ export const view = async (id: string, currentUser?: SessionUser) => {
     case "admin":
       return UserModel.findById(id);
     case "teacher":
-      return UserModel.find({
-        _id: id,
-        student_class: { $in: currentUser.teacher_classes },
-      });
+      if (
+        currentUser.teacher_classes &&
+        currentUser.teacher_classes.length > 0
+      ) {
+        return UserModel.find({
+          _id: id,
+          student_class: { $in: currentUser.teacher_classes },
+        });
+      } else {
+        return []; // Restituisce un risultato vuoto se teacher_classes non è presente o è vuoto
+      }
     case "student":
-      return UserModel.find({
-        _id: id,
-        student_class: currentUser.student_class,
-      });
+      if (currentUser.student_class) {
+        return UserModel.find({
+          _id: id,
+          student_class: currentUser.student_class,
+        });
+      } else {
+        return []; // Restituisce un risultato vuoto se student_class non è presente
+      }
+    default:
+      throw new Error("Unauthorized");
   }
-  return UserModel.findById({ id });
 };
 
 //---------------ADD USER------------------------
