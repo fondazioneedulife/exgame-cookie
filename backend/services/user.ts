@@ -62,15 +62,6 @@ export const view = async (id: string, currentUser?: SessionUser) => {
   return UserModel.findById({ id });
 };
 
-//---------------ADD USER------------------------
-export const add = async (
-  user: Omit<User, "_id" | "created_at" | "updated_at">,
-) => {
-  const UserData = new UserModel(user);
-  UserData.role = "student"; // force student role for new users
-  return UserData.save();
-};
-
 //UPDATE
 export const edit = async (id, user: Partial<User>) => {
   const opt = { new: true, runValidators: true };
