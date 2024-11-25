@@ -17,7 +17,6 @@ const userSchema = new DB.Schema(
     subjects: { type: [String], required: false },
     teacher_classes: { type: [String], required: false },
     student_class: { type: String, required: false },
-    token: { type: String, required: false, default: null },
   },
   {
     timestamps: {
