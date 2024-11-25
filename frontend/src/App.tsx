@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Layout } from "./components/Layout";
+import { config } from "./config";
 import { Login } from "./routes/Login";
 import { Register } from "./routes/Register";
 import { Root } from "./routes/Root";
@@ -23,7 +24,7 @@ import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 
 function App() {
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename={config.APP_BASENAME}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Root />} />
