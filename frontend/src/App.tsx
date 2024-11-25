@@ -9,15 +9,17 @@ import { StudentGuard } from "./routes/student/StudentGuard";
 import { StudentProfile } from "./routes/student/StudentProfile";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
+import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Classes } from "./routes/teacher/classes/Classes";
 import { ClassStudents } from "./routes/teacher/classes/Students";
 import { AddExam } from "./routes/teacher/exams/AddExam";
 import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
+import { Sessions } from "./routes/teacher/sessions/Sessions";
+import { NewSession } from "./routes/teacher/sessions/sessionComponents/NewSession";
 import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
-import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
             <Route path="class-students" element={<ClassStudents />}></Route>
             <Route path="exam" element={<AddExam />} />
             <Route path="exam/:id" element={<EditExam />} />
+            <Route path="exam/:id/sessions" element={<Sessions />} />
+            <Route path="exam/:id/sessions/add" element={<NewSession />} />
             <Route path="subscriptions" element={<Subscriptions />} />
             <Route path="subscriptions/:date" element={<SessionReport />} />
             <Route

@@ -7,8 +7,9 @@ import session from "koa-session";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import authRoutes from "./routes/auth";
-import userRoutes from "./routes/users";
 import examRoutes from "./routes/exams";
+import sessionRoutes from "./routes/sessions";
+import userRoutes from "./routes/users";
 
 const app = new Koa();
 const router = new Router();
@@ -30,6 +31,7 @@ app.use(router.routes()).use(router.allowedMethods());
 app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
 app.use(examRoutes.routes()).use(examRoutes.allowedMethods());
+app.use(sessionRoutes.routes()).use(sessionRoutes.allowedMethods());
 
 httpServer.listen(process.env.PORT, () => {
   console.log(`Server running on ${process.env.HOST}:${process.env.PORT}`);
