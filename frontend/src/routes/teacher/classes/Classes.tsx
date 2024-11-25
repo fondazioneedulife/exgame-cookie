@@ -33,7 +33,7 @@ export const Classes: React.FC = () => {
                 </td>
                 <Button style={{ padding: "0 11% 0 11%" }}>
                   <Link
-                    to="/class-students"
+                    to="/teacher/class-students"
                     style={{ color: "white", textDecoration: "none" }}
                   >
                     Visualizza studenti
@@ -76,4 +76,4 @@ export const Classes: React.FC = () => {
       </>
     </>
   );
-};  
+};
