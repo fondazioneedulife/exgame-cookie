@@ -29,7 +29,6 @@ router.get("/role/:role", async (ctx) => {
 
 // Find a user
 router.get("/:id", async (ctx) => {
-  console.log(ctx.session.user);
   const user = await view(ctx.params.id, ctx.session.user);
 
   if (!user) {
