@@ -1,3 +1,5 @@
+
+import Stack from "@mui/joy/Stack";
 import Table from "@mui/joy/Table";
 import Button from '@mui/joy/Button';
 import { useNavigate } from 'react-router-dom';
@@ -5,7 +7,7 @@ import classes from './exams.module.css'
 import { useState } from 'react';
 import SingleExam from './examComponents/SingleExam';
 import Pagination from '@mui/material/Pagination';
-import { Stack } from "@mui/joy";
+
 
 export const Exams: React.FC = () => {
   const navigate = useNavigate();
