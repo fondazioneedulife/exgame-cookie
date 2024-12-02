@@ -1,7 +1,7 @@
 import DB from "./db";
 import { Subscription } from "../../api-types";
 import {
-  getmockLoggedUser,
+  getMockLoggedUser,
 } from "../mock/mockLoggedUser";
 
 const subscriptionSchema = new DB.Schema({
@@ -34,7 +34,7 @@ export const getSubscriptionsBySessionForTeacher = async (
 export const getSubscriptionBySessionForStudent = async (
   session_id: string,
 ) => {
-  const user = await getmockLoggedUser();
+  const user = await getMockLoggedUser();
 
   return SubscriptionModel.findById({ session_id }).where({
     student_id: user._id,

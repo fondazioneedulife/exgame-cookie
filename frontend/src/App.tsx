@@ -13,6 +13,7 @@ import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
+import { SingleSession } from "./routes/teacher/subscriptions/SingleSession";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               path="subscriptions/:date/:id"
               element={<SubscriptionReport />}
             />
+            <Route path="subscription/:date/:id/questions" element={<SingleSession />} />
           </Route>
 
           {/* Student */}
