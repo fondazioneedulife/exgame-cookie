@@ -48,10 +48,6 @@ router.put("/:id", async (ctx) => {
   console.log(response);
 });
 
-
-
-
-
 // // Delete a user
 router.delete("/:id", async (ctx) => {
   ctx.body = await remove(ctx.params.id);
