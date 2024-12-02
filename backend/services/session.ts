@@ -1,6 +1,5 @@
 import DB from "./db";
 import { Session } from "../../api-types";
-import { getMockLoggedUser } from "../mock/mockLoggedUser";
 
 const sessionSchema = new DB.Schema({
   exam_id: { type: String, required: true },
@@ -11,8 +10,8 @@ const sessionSchema = new DB.Schema({
 
 const sessionModel = DB.model("session", sessionSchema);
 
-export const getSessions = async (examId: string) => {
-    const loggedUser = await getMockLoggedUser();
+export const getSessions = async (examId: string, ctx) => {
+    const loggedUser = ctx.session.user;
 
     switch (loggedUser.role) {
       case "teacher":
