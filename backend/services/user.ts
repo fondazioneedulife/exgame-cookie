@@ -33,7 +33,7 @@ export const index = async () => {
 };
 
 export const getUsersByRole = async (role: Role) => {
-  return UserModel.find({ role });
+  return UserModel.find({ role }).select('first_name last_name email role image');
 };
 
 /**
@@ -55,7 +55,7 @@ export const view = async (id: string, currentUser?: SessionUser) => {
         return UserModel.find({
           _id: id,
           student_class: { $in: currentUser.teacher_classes },
-        });
+        }).select('first_name last_name email role image subjects teacher_classes');
       } else {
         return []; // Restituisce un risultato vuoto se teacher_classes non è presente o è vuoto
       }
@@ -64,7 +64,7 @@ export const view = async (id: string, currentUser?: SessionUser) => {
         return UserModel.find({
           _id: id,
           student_class: currentUser.student_class,
-        });
+        }).select('first_name last_name email role student_class');
       } else {
         return []; // Restituisce un risultato vuoto se student_class non è presente
       }
