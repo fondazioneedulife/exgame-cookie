@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export type Subscription = {
   /**
    * Identificatore univoco della sottoscrizione
@@ -7,12 +9,17 @@ export type Subscription = {
   /**
    * Identificatore dello studente associato alla sottoscrizione
    */
-  student_id: string;
+  student_id: User;
 
   /**
    * Identificatore della sessione associata alla sottoscrizione
    */
   session_id: string;
+
+  /**
+   * Voto dello studente
+   */
+  grade: number;
 
   /**
    * Lista delle domande con le relative risposte fornite dallo studente
@@ -34,3 +41,9 @@ export type Subscription = {
     }[];
   }[];
 };
+
+export type StudentGrade = {
+  first_name: string;
+  last_name: string;
+  grade: number;
+}
