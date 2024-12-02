@@ -40,7 +40,7 @@ export const Exams: React.FC = () => {
   const currentExams = exams.slice(indexOfFirstExam, indexOfLastExam);
 
   // Funzione per cambiare pagina
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 

@@ -1,13 +1,13 @@
 import { CssBaseline, CssVarsProvider } from "@mui/joy";
+import {
+  THEME_ID as MATERIAL_THEME_ID,
+  CssVarsProvider as MaterialCssVarsProvider,
+  extendTheme as materialExtendTheme,
+} from "@mui/material/styles";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import App from "./App.ts"
 import "./index.css";
-import {
-  extendTheme as materialExtendTheme,
-  CssVarsProvider as MaterialCssVarsProvider,
-  THEME_ID as MATERIAL_THEME_ID,
-} from "@mui/material/styles";
 
 const materialTheme = materialExtendTheme();
 
