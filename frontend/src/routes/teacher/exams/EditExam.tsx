@@ -17,7 +17,7 @@ interface Question {
   answers: Answer[];
 }
 
-const EditExam: React.FC = () => {
+export const EditExam: React.FC = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [showQuestionForm, setShowQuestionForm] = useState<boolean>(false);
@@ -124,5 +124,3 @@ const EditExam: React.FC = () => {
     </>
   );
 };
-
-export default EditExam;
