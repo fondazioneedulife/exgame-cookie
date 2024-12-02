@@ -16,14 +16,14 @@ const subscriptionSchema = new DB.Schema({
   ],
 });
 
-const SubscriptionModel = DB.model("subscription", subscriptionSchema);
+const SubscriptionModel = DB.model("subscriptions", subscriptionSchema);
 
 //teacher
 //get all subscriptions for a session
 export const getSubscriptionsBySessionForTeacher = async (
   session_id: string,
 ) => {
-  return SubscriptionModel.findById({ session_id });
+  return SubscriptionModel.find({ session_id });
 };
 
 //student
@@ -34,7 +34,7 @@ export const getSubscriptionBySessionForStudent = async (
 ) => {
   const user = await ctx.session.user;
 
-  return SubscriptionModel.findById({ session_id }).where({
+  return SubscriptionModel.find({ session_id }).where({
     student_id: user._id,
   });
 };
