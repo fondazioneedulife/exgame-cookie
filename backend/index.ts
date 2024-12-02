@@ -17,12 +17,20 @@ const router = new Router();
 const httpServer = createServer(app.callback());
 initSocketIo(httpServer);
 
-app.use(cors()); // TODO: configure for production
+app.use(cors({ credentials: true, origin: "*" })); // TODO: configure for production
 app.use(bodyParser());
 app.use(serveStatic(`./public`, {}));
 
 app.keys = ["secret-ln9mLhYTd/kK(o.-inir"];
-app.use(session({ key: "session" }, app));
+app.use(
+  session(
+    {
+      key: "session",
+      // secure: process.env.NODE_ENV === "production",
+    },
+    app,
+  ),
+);
 
 router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
