@@ -23,6 +23,12 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
+router.get("/me", async (ctx) => {
+  const me = ctx.session.user;
+  console.log(me);
+  ctx.response.body = me;
+});
+
 router.get("/role/:role", async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });

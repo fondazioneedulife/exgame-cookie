@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Role, User } from "../../../../api-types/user";
+import { useFetch } from "../../lib/useFetch";
 
 /**
  * Controllare che l'utente sia autenticato e che sia un teacher
@@ -13,9 +14,10 @@ export const TeacherGuard: React.FC = () => {
     "loading",
   );
   const [role, setRole] = useState<Role | undefined>();
+  const fetch = useFetch();
 
   useEffect(() => {
-    fetch("/users/me")
+    fetch("http://localhost:3000/users/me")
       .then((res) => res.json())
       .then((user: User) => {
         setAuthenticated(Boolean(user));
@@ -24,7 +26,7 @@ export const TeacherGuard: React.FC = () => {
   }, []);
 
   if (authenticated === "loading") {
-    return null;
+    return "LOADING";
   }
 
   if (authenticated) {
