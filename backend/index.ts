@@ -6,11 +6,7 @@ import Koa from "koa";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import userRoutes from "./routes/users";
-<<<<<<< HEAD
-import examRoutes from "./routes/users";
-=======
-import examRoutes from "./routes/exams";
->>>>>>> 0b7bea8 (api-exams)
+import examsRoutes from "./routes/exams";
 
 const app = new Koa();
 const router = new Router();
@@ -35,9 +31,7 @@ router.get("/", (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
-app.use(examRoutes.routes()).use(examRoutes.allowedMethods());
-
-app.use(teacherRoutes.routes()).use(teacherRoutes.allowedMethods());
+app.use(examsRoutes.routes()).use(examsRoutes.allowedMethods());
 
 httpServer.listen(process.env.PORT, () => {
   console.log(`Server running on ${process.env.HOST}:${process.env.PORT}`);

@@ -22,7 +22,7 @@ export const index = async () => {
 
 
 // prendo un esame per id
-export const getExamById = async (_id: string) => {
+export const view = async (_id: string) => {
     return ExamModel.findById(_id);
 };
 
