@@ -2,6 +2,7 @@ import { Button, Checkbox, Input, Typography } from "@mui/joy";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { config } from "../config";
 
 export const Login: React.FC = () => {
@@ -9,6 +10,7 @@ export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -21,7 +23,7 @@ export const Login: React.FC = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${config.API_BASEPATH}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,8 +37,8 @@ export const Login: React.FC = () => {
       }
 
       const data = await response.json();
-      alert("Login effettuato con successo!");
       console.log("Risposta API:", data);
+      navigate("/");
     } catch (error) {
       setError("Credenziali errate o problema con il server.");
       console.error(error);

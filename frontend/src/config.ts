@@ -1,3 +1,4 @@
 export const config = {
-  API_BASEPATH: "http://localhost:3000"
-}
+  APP_BASENAME: "/",
+  API_BASEPATH: "http://localhost:3000",
+};
