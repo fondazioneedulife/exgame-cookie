@@ -15,7 +15,12 @@ const router = new Router();
 const httpServer = createServer(app.callback());
 initSocketIo(httpServer);
 
-app.use(cors()); // TODO: configure for production
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  }),
+); // TODO: configure for production
 app.use(bodyParser());
 app.use(serveStatic(`./public`, {}));
 

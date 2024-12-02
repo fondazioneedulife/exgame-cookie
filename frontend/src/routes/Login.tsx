@@ -1,32 +1,33 @@
-import { Button, Checkbox, Input, Typography } from '@mui/joy';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import React, { useState } from 'react';
-import { config } from '../config';
+import { Button, Checkbox, Input, Typography } from "@mui/joy";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import React, { useState } from "react";
+import { config } from "../config";
 
 export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!email || !password) {
-      setError('Inserisci sia l\'email che la password.');
+      setError("Inserisci sia l'email che la password.");
       return;
     }
 
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch(`${config.API_BASEPATH}/api/login`, {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -34,10 +35,10 @@ export const Login: React.FC = () => {
       }
 
       const data = await response.json();
-      alert('Login effettuato con successo!');
-      console.log('Risposta API:', data);
+      alert("Login effettuato con successo!");
+      console.log("Risposta API:", data);
     } catch (error) {
-      setError('Credenziali errate o problema con il server.');
+      setError("Credenziali errate o problema con il server.");
       console.error(error);
     }
   };
@@ -45,7 +46,7 @@ export const Login: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}
+      style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}
     >
       <Typography level="h2" component="h1" sx={{ mb: 2 }}>
         Login
@@ -71,7 +72,7 @@ export const Login: React.FC = () => {
         <Input
           placeholder="Inserisci la tua password"
           color="neutral"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           size="lg"
