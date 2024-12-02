@@ -1,19 +1,25 @@
 {
   "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite" 
+
   },
+<<<<<<< HEAD
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+=======
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/inter": "^5.1.0",
     "@mui/joy": "^5.0.0-beta.48",
+    "@mui/material": "^6.1.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.27.0",
@@ -33,3 +39,4 @@
     "vite": "^5.4.8"
   }
 }
+>>>>>>> refs/remotes/origin/master

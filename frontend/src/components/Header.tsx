@@ -1,4 +1,5 @@
 import { Avatar, List, ListItem, ListItemButton, Stack } from "@mui/joy";
+import { Link } from "react-router-dom";
 
 export const Header: React.FC = () => {
   return (
@@ -11,16 +12,27 @@ export const Header: React.FC = () => {
         paddingTop: "16px",
       }}
     >
-      <img src="/logo.svg" height={50} />
+      <Link to="/">
+        <img src="/logo.svg" alt="exGame" height={50} />
+      </Link>
       <Stack direction="row" spacing={2}>
         <List role="menubar" orientation="horizontal">
           <ListItem role="none">
-            <ListItemButton role="menuitem" component="a">
-              Gestisci gli studenti
+            <ListItemButton role="<menuitem>" component="a">
+              <Link
+                to="/teacher/classes"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                Gestisci gli studenti
+              </Link>
             </ListItemButton>
           </ListItem>
+          <ListItem role="none">
+            <Link to="/student/:id/profile/details">
+              <Avatar />
+            </Link>
+          </ListItem>
         </List>
-        <Avatar />
       </Stack>
     </Stack>
   );

@@ -11,13 +11,22 @@ Si intende realizzare un'applicazione web per svolgere esami o quiz, simulando l
 
 ## Requisiti funzionali
 
-Gli attori del sistema sono docenti e studenti. I primi fungono da amministratori e i secondi da utenti registrati.
+Gli attori del sistema sono docenti, studenti e admin. I primi fungono da amministratori e i secondi da utenti registrati. Admin è un utente con tutti i diritti di un docente, più la possibilità di gestire tutte le entità del sistema. L'admin può anche registrare nuovi utenti e "promuovere" uno studente al ruolo di docente (questo perché tutti gli utenti che si registrano autonomamente vengono inizialmente inseriti come studenti).
 
 ### User stories
 
+Come Admin voglio:
+
+- Registrare account per studenti e docenti
+- Cambiare il ruolo di un account (es: uno Studente viene "promosso" a Docente)
+
 Come Docente voglio:
 
-- Creare gli account per gli studenti
+- Registrare il mio account
+- Cambiare la password
+- Recuperare la password
+- Creare gli account per gli Studenti
+- Assegnare una classe a uno o più Studenti
 - Registrare gli studenti agli esami, in modo che possano partecipare agli esami che ho preparato per loro
 - Creare nuovi esami e modificarli:
   - aggiungere domande
@@ -33,8 +42,11 @@ Come Docente voglio:
 - Visualizzare i risultati di ogni singolo studente
 - Visualizzare un report dei risultati della classe, per avere una visione di insieme di com'è andata la prova d'esame
 
-Come studente voglio:
+Come Studente voglio:
 
+- Registrare il mio account
+- Cambiare la password
+- Recuperare la password
 - Accedere al sistema
 - Visualizzare gli esami a cui devo partecipare e quelli che ho già sostenuto
 - Partecipare a un esame

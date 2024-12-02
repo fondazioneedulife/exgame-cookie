@@ -18,7 +18,6 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-
 // get exam by id
 router.get("/:id", async (ctx) => {
   const exam = await view(ctx.params.id);
