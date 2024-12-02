@@ -1,62 +1,54 @@
 import Router from "@koa/router";
-import { Role, User } from "../../api-types";
-import {
-  add,
-  edit,
-  getUsersByRole,
-  index,
-  remove,
-  view,
-} from "../services/user";
+import { Exam } from "../../api-types/exam";
+import { add, edit, index, remove, view } from "../services/exam";
 import { AuthenticatedContext } from "../types/session";
 import { authMiddleware } from "./auth";
 
 const router = new Router<unknown, AuthenticatedContext>({
-  prefix: "/users",
+  prefix: "/exams",
 });
 
 router.use(authMiddleware());
 
-// All routes
+// All exams
 router.get("/", async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
 
-router.get("/role/:role", async (ctx) => {
-  ctx.body = await getUsersByRole(ctx.params.role as Role);
-});
-
-// Find a user
+// get exam by id
 router.get("/:id", async (ctx) => {
-  const user = await view(ctx.params.id, ctx.session.user);
+  const exam = await view(ctx.params.id);
 
-  if (!user) {
-    // User not found
+  if (!exam) {
+    // exam not found
     ctx.status = 404;
     return;
   }
 
-  ctx.body = user;
+  ctx.body = exam;
 });
 
-// Add a user
+// Add an exam
 router.post("/", async (ctx) => {
   ctx.accepts("json");
-  const user = await add(ctx.request.body as User);
-  ctx.response.body = user;
+  console.log(ctx.body);
+  const exam = await add(ctx.request.body as Exam);
+  ctx.response.body = exam;
 });
 
-// Edit a user
+// Edit an exam
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
-  const response = await edit(ctx.params.id, ctx.request.body as User);
+  const response = await edit(ctx.params.id, ctx.request.body as Exam);
   ctx.response.body = response;
+  console.log(response);
 });
 
-// Delete a user
+// // Delete a user
 router.delete("/:id", async (ctx) => {
   ctx.body = await remove(ctx.params.id);
+  console.log(`exam with id:${ctx.params.id} DELETED.`);
 });
 
 export default router;

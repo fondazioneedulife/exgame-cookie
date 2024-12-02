@@ -5,15 +5,6 @@ import { Autocomplete, Divider, Table } from '@mui/joy';
 import Input from '@mui/joy/Input';
 import classes from './exams.module.css';
 import QuestionComponent from './examComponents/QuestionComponent';
-<<<<<<< Updated upstream
-
-
-=======
-<<<<<<< Updated upstream
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 interface Answer {
   text: string;
@@ -53,17 +44,8 @@ const AddExam: React.FC = () => {
               </Button>
             </div>
             <div>
-<<<<<<< Updated upstream
-              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
-                Carica esame
-=======
-<<<<<<< Updated upstream
-              <Button size="sm" onClick={() => navigate('/teacher')} style={{background:"green"}}>
-=======
               <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')} style={{ width: '80px' }}>
->>>>>>> Stashed changes
                 Salva
->>>>>>> Stashed changes
               </Button>
             </div>
           </div>
@@ -102,49 +84,15 @@ const AddExam: React.FC = () => {
                   </td>
                 </tr>
               
-<<<<<<< Updated upstream
-                  <td colSpan={2}>
-                    <ul className={classes.list_questions}>
-                      {questions.map((q, index) => (
-                        <li key={index} className={classes.list_questions_li}>
-                          <strong>{q.questionText || 'Domanda vuota'}</strong>
-                          <ul className={classes.aswer_question}>
-                            {q.answers.map((answer, idx) => (
-                              <li 
-                                key={idx}
-                                style={{ color: answer.isCorrect ? 'green' : 'black' }}
-                              >
-=======
                 <td colSpan={2}>
                   <ul className={classes.list_questions}>
                     {questions.map((q, index) => (
                       <li key={index} className={classes.list_questions_li}>
-<<<<<<< Updated upstream
-                        <strong>{q.questionText || 'Domanda vuota'}</strong>
-=======
                         <strong>{index + 1}) {q.questionText || 'Domanda vuota'}</strong> {/* Aggiunto il numero progressivo */}
->>>>>>> Stashed changes
                         <ul className={classes.aswer_question}>
                           {q.answers.map((answer, idx) => (
                             <li 
                               key={idx}
-<<<<<<< Updated upstream
-                              style={{ color: answer.isCorrect ? 'green' : 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-                            >
-                              <span>
->>>>>>> Stashed changes
-                                {answer.text || 'Risposta vuota'} {answer.isCorrect && '(Corretta)'}
-                              </li>
-                            ))}
-                          </ul>
-                          <Divider/>
-                        </li>
-                      ))}
-                      
-                    </ul>
-                  </td>
-                
-=======
                               style={{ color: answer.isCorrect ? 'green' : 'black' }}
                             >
                               {answer.text || 'Risposta vuota'} {answer.isCorrect && '(Corretta)'}
@@ -157,7 +105,6 @@ const AddExam: React.FC = () => {
                   </ul>
                 </td>
 
->>>>>>> Stashed changes
               </tbody>
             </Table>
           </div>
