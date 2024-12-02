@@ -3,10 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .container_box{
     width: 90%;
+    min-height: 550px;
+    border: 1px solid;
 }
 
 .container_table{
@@ -24,6 +27,7 @@
     justify-content: center;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    border: 1px solid;
 }
 
 /* QuestionComponent */

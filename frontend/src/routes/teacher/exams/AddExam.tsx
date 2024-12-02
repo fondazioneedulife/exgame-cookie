@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/joy/Button';
-import { Divider, Table } from '@mui/joy';
+import { Autocomplete, Divider, Table } from '@mui/joy';
 import Input from '@mui/joy/Input';
-import Autocomplete from '@mui/joy/Autocomplete';
-import classes from './exams.module.css'
+import classes from './exams.module.css';
 import QuestionComponent from './examComponents/QuestionComponent';
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 interface Answer {
   text: string;
@@ -22,19 +20,17 @@ const AddExam: React.FC = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [showQuestionForm, setShowQuestionForm] = useState<boolean>(false);
+  const [hideButton, setHideButton] = useState<boolean>(false); // Nuovo stato per nascondere il pulsante
 
   const addQuestionToExam = (newQuestion: Question) => {
     setQuestions([...questions, newQuestion]);
     setShowQuestionForm(false); // Nasconde il form dopo aver aggiunto la domanda
+    setHideButton(false); // Riporta visibile il pulsante dopo aver aggiunto una domanda
   };
 
   const handleAddQuestionClick = () => {
     setShowQuestionForm(true); // Mostra il form per l'aggiunta di una nuova domanda
-  };
-
-  const handleModifyAnswer = (questionIndex: number, answerIndex: number) => {
-    // Logica per rimuovere o modificare la risposta
-    console.log(`Elimina risposta ${answerIndex} dalla domanda ${questionIndex}`);
+    setHideButton(true); // Nasconde il pulsante
   };
 
   return (
@@ -43,20 +39,19 @@ const AddExam: React.FC = () => {
         <div className={classes.container_box}>
           <div className={classes.container_navbar}>
             <div>
-              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')}>
+              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')} style={{ width: '80px' }}>
                 Annulla
               </Button>
             </div>
             <div>
-              <Button size="sm" onClick={() => navigate('/teacher')} style={{background:"green"}}>
+              <Button variant="outlined" size="sm" onClick={() => navigate('/teacher')} style={{ width: '80px' }}>
                 Salva
               </Button>
             </div>
-
           </div>
 
           <div className={classes.container_table}>
-            <Table aria-label="basic table">
+            <Table aria-label="basic table" className={classes.table}>
               <thead>
                 <tr>
                   <th>Esame:</th>
@@ -65,22 +60,17 @@ const AddExam: React.FC = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td>Assegna alla classe:</td>
-                  <td>
-                    <Autocomplete
-                      options={['Cookie', 'Pixel', 'Suse']}
-                      placeholder="Seleziona classe..."
-                      size="sm"
-                    />
-                  </td>
-                </tr>
-                <tr>
                   <td>Tempo massimo di svolgimento:</td>
                   <td>
-                    <Input placeholder="Inserisci tempo limite…" variant="outlined" size="sm" />
+                    <Autocomplete
+                        options={['0:30h', '1:00h', '1:30h', '2:00h', '2:30h']}
+                        placeholder="tempo massimo..."
+                        size="sm"
+                    />                  
                   </td>
                 </tr>
               </thead>
+
               <tbody>
                 <tr>
                   <td colSpan={2}>
@@ -98,33 +88,29 @@ const AddExam: React.FC = () => {
                   <ul className={classes.list_questions}>
                     {questions.map((q, index) => (
                       <li key={index} className={classes.list_questions_li}>
-                        <strong>{q.questionText || 'Domanda vuota'}</strong>
+                        <strong>{index + 1}) {q.questionText || 'Domanda vuota'}</strong> {/* Aggiunto il numero progressivo */}
                         <ul className={classes.aswer_question}>
                           {q.answers.map((answer, idx) => (
                             <li 
                               key={idx}
-                              style={{ color: answer.isCorrect ? 'green' : 'black', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                              style={{ color: answer.isCorrect ? 'green' : 'black' }}
                             >
-                              <span>
-                                {answer.text || 'Risposta vuota'} {answer.isCorrect && '(Corretta)'}
-                              </span>
-                              
-                              <Button variant="outlined" size="md" onClick={() => handleModifyAnswer(index, idx)}>
-                                <DeleteRoundedIcon />
-                              </Button>
+                              {answer.text || 'Risposta vuota'} {answer.isCorrect && '(Corretta)'}
                             </li>
                           ))}
                         </ul>
-                        <Divider />
                       </li>
                     ))}
+                    <Divider />
                   </ul>
                 </td>
-                
+
               </tbody>
             </Table>
+          </div>
 
-            <div className={classes.add_question}>
+          <div className={classes.add_question}>
+            {!hideButton && (
               <Button
                 variant="plain"
                 size="sm"
@@ -133,7 +119,7 @@ const AddExam: React.FC = () => {
               >
                 Aggiungi domanda
               </Button>
-            </div>
+            )}
           </div>
         </div>
       </div>
