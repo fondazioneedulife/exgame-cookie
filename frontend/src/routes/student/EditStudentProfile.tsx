@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Avatar, Box, Card, CardContent, Typography } from "@mui/joy";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import Input from "@mui/joy/Input";
@@ -18,7 +18,7 @@ export const EditStudentProfile: React.FC = () => {
 
     try {
       const response = await fetch(
-        `https://localhost:3000/user/671764dd1b5aa7915d4734d7`,
+        `https://localhost:3000/users/671764dd1b5aa7915d4734d7`,
         {
           method: "PUT",
           headers: {
