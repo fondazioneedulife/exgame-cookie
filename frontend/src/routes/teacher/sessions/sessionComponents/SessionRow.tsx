@@ -1,5 +1,5 @@
 import { Button } from "@mui/joy"
-
+import classes from "../sessions.module.css"
 export const SessionRow: React.FC<{
     teacherClass: string
     date: string
@@ -10,7 +10,10 @@ export const SessionRow: React.FC<{
         <th>{date}</th>
         <th>{teacherClass}</th>
         <th>
-        <Button size="sm">inizia</Button>
+        <div className={classes.buttonContainer}>
+          <Button size="sm">inizia</Button>
+          <Button size="sm">Modifica</Button>
+        </div>
         </th>
       </tr>
     </>
