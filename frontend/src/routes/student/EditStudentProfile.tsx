@@ -8,7 +8,8 @@ import { useFetch } from "../../lib/useFetch";
 import { useEffect, useState } from "react";
 
 export const EditStudentProfile: React.FC = () => {
-  const [first_name, setName] = useState("Mario Rossi");
+  const [first_name, setName] = useState("Mario");
+  const [last_name, setlastName] = useState("Rossi");
   const [email, setEmail] = useState("esempio@esempio.com");
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export const EditStudentProfile: React.FC = () => {
   useEffect(() => {
     const saveData = async () => {
       if (isSaving) {
-        const payload = { first_name, email };
+        const payload = { first_name, last_name, email };
 
         try {
           const response = await fetch(
@@ -83,6 +84,14 @@ export const EditStudentProfile: React.FC = () => {
                 size="sm"
                 value={first_name}
                 onChange={(e) => setName(e.target.value)}
+                variant="outlined"
+              />
+              <label>Cognome</label>
+              <Input
+                color="neutral"
+                size="sm"
+                value={last_name}
+                onChange={(e) => setlastName(e.target.value)}
                 variant="outlined"
               />
             </Stack>
