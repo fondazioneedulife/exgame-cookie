@@ -29,6 +29,7 @@ export const Exams: React.FC = () => {
                     backgroundColor: "green",
                     "&:hover": { backgroundColor: "darkgreen" },
                   }}
+                  onClick={() => navigate("/teacher/exam/1/sessions")}
                 >
                   Sessioni
                 </Button>
