@@ -3,3 +3,7 @@ services:
     image: mongodb/mongodb-community-server
     ports:
       - 27017:27017
+  admin:
+    image: dbgate/dbgate
+    ports:
+      - 27000:3000
