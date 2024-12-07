@@ -10,6 +10,7 @@ import { StudentGuard } from "./routes/student/StudentGuard";
 import { StudentProfile } from "./routes/student/StudentProfile";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
+import { LiveSession } from "./routes/teacher/LiveSession";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Classes } from "./routes/teacher/classes/Classes";
 import { ClassStudents } from "./routes/teacher/classes/Students";
@@ -44,6 +45,7 @@ function App() {
               path="subscriptions/:date/:id"
               element={<SubscriptionReport />}
             />
+            <Route path="live/:sessionId" element={<LiveSession />} />
           </Route>
 
           {/* Student */}

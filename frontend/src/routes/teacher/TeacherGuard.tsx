@@ -1,10 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Role, User } from "../../../../api-types/user";
+import { CurrentUserContext } from "../../components/CurrentUserContext";
 import { config } from "../../config";
 import { useFetch } from "../../lib/useFetch";
-
-export const CurrentUserContext = createContext<User | undefined>(undefined);
 
 /**
  * Controllare che l'utente sia autenticato e che sia un teacher
@@ -39,7 +38,7 @@ export const TeacherGuard: React.FC = () => {
     if (role === "teacher" || role === "admin") {
       return (
         <CurrentUserContext.Provider value={currentUser}>
-          <Outlet />;
+          <Outlet />
         </CurrentUserContext.Provider>
       );
     }
