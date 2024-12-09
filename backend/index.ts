@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth";
 import examRoutes from "./routes/exams";
 import sessionRoutes from "./routes/sessions";
 import userRoutes from "./routes/users";
+import classesRoutes from "./routes/classes";
 import subscriptionsRoutes from "./routes/subscriptions";
 
 const app = new Koa();
@@ -41,6 +42,7 @@ app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
 app.use(examRoutes.routes()).use(examRoutes.allowedMethods());
 app.use(sessionRoutes.routes()).use(sessionRoutes.allowedMethods());
+app.use(classesRoutes.routes()).use(classesRoutes.allowedMethods());
 app.use(subscriptionsRoutes.routes()).use(subscriptionsRoutes.allowedMethods());
 
 httpServer.listen(process.env.PORT, () => {
