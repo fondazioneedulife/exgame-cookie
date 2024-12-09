@@ -33,5 +33,9 @@
   },
   "devDependencies": {
     "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "@mui/x-date-pickers": "^7.23.0",
+    "dayjs": "^1.11.13"
   }
 }
