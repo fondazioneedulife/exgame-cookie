@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Role, User } from "../../../../api-types/user";
+import { config } from "../../config";
+import { useFetch } from "../../lib/useFetch";
+
+export const CurrentUserContext = createContext<User | undefined>(undefined);
 
 /**
  * Controllare che l'utente sia autenticato e che sia un teacher
@@ -13,15 +17,19 @@ export const TeacherGuard: React.FC = () => {
     "loading",
   );
   const [role, setRole] = useState<Role | undefined>();
+  const [currentUser, setCurrentUser] = useState<User>();
+  const fetch = useFetch();
 
   useEffect(() => {
-    fetch("/users/me")
-      .then((res) => res.json())
+    fetch(`${config.API_BASEPATH}/users/me`)
+      .then((res) => res?.json())
       .then((user: User) => {
+        console.log("Authenticated as", user);
         setAuthenticated(Boolean(user));
+        setCurrentUser(user);
         setRole(user.role);
       });
-  }, []);
+  }, [fetch]);
 
   if (authenticated === "loading") {
     return null;
@@ -29,7 +37,11 @@ export const TeacherGuard: React.FC = () => {
 
   if (authenticated) {
     if (role === "teacher" || role === "admin") {
-      return <Outlet />;
+      return (
+        <CurrentUserContext.Provider value={currentUser}>
+          <Outlet />;
+        </CurrentUserContext.Provider>
+      );
     }
   }
 

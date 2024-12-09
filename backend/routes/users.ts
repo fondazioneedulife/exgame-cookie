@@ -20,10 +20,14 @@ const router = new Router<unknown, AuthenticatedContext>({
 
 router.use(authMiddleware());
 
-// All routes
+// All users
 router.get("/", isAdminMiddleware, async (ctx) => {
   const all = await index();
   ctx.response.body = all;
+});
+
+router.get("/me", async (ctx) => {
+  ctx.response.body = ctx.session.user;
 });
 
 router.get("/role/:role", isAdminMiddleware, async (ctx) => {
@@ -49,7 +53,6 @@ router.get("/my-students", async (ctx) => {
 
     case "teacher":
       const classes: string[] | undefined = loggedUser.teacher_classes;
-      // TODO: tipo da assegnare
       if (classes && classes.length !== 0) {
         ctx.body = await getMyStudents(classes);
       } else {
