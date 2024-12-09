@@ -1,8 +1,9 @@
-import { Button, Checkbox, Input, Typography } from "@mui/joy";
+import { Box, Button, Checkbox, Input, Typography } from "@mui/joy";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { config } from "../config";
 
 export const Login: React.FC = () => {
@@ -99,6 +100,15 @@ export const Login: React.FC = () => {
       <Button type="submit" variant="solid" color="primary" fullWidth>
         Login
       </Button>
+      <Box
+        sx={{
+          mt: 2,
+          fontSize: "sm",
+        }}
+      >
+        Non ti sei ancora registrato?{" "}
+        <Link to="/register">Registrati subito</Link>
+      </Box>
     </form>
   );
 };

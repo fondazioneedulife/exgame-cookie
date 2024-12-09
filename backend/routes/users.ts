@@ -17,10 +17,14 @@ const router = new Router<unknown, AuthenticatedContext>({
 
 router.use(authMiddleware());
 
-// All routes
+// All users
 router.get("/", async (ctx) => {
   const all = await index();
   ctx.response.body = all;
+});
+
+router.get("/me", async (ctx) => {
+  ctx.response.body = ctx.session.user;
 });
 
 router.get("/role/:role", async (ctx) => {
