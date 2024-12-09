@@ -36,6 +36,24 @@ export const getUsersByRole = async (role: Role) => {
   return UserModel.find({ role }).select('first_name last_name email role image');
 };
 
+//---------------VIEW BY ID------------------------
+export const viewForAdmin = async (id: string) => {
+  let user = await UserModel.findById(id);
+  return user;
+};
+
+export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
+  return UserModel.find({ _id: id, student_class: { $in: teacher_classes }  });
+};
+
+export const viewForStudent = async (id: string, student_class: string | undefined) => {
+  return UserModel.find({ _id: id, student_class: student_class});
+};
+
+export const viewYourself = async (id: string) => {
+  return UserModel.findById({id});
+};
+
 /**
  * Returns a user by id, if currentUser is provided, applies visibility rules
  *
@@ -82,8 +100,20 @@ export const add = async (
   return UserData.save();
 };
 
-//UPDATE
+//------------------UPDATE------------------------
 export const edit = async (id, user: Partial<User>) => {
+  /**
+   * https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate()
+   * https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+   * NEW = [options.new=false] «Boolean» if true, return the modified document rather than the original
+   *       As an alternative to the new option, you can also use the returnOriginal option. 
+   *       returnOriginal: false is equivalent to new: true. 
+   *       The returnOriginal option exists for consistency with the the MongoDB Node.js driver's findOneAndUpdate(), 
+   *       which has the same option.
+   * 
+   * https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate()
+   * RUNVALIDATORS = [options.runValidators] «Boolean» if true, runs update validators on this command. Update validators validate the update operation against the model's schema
+   */
   const opt = { new: true, runValidators: true };
 
   try {
@@ -205,3 +235,8 @@ export const getUsersWithoutClass = async () => {
 export const getMyStudents = async (teacher_classes: string[]) => {
   return UserModel.find({ student_class: { $in: teacher_classes } });
 };
+
+// export const viewYourself = async (currentUser: SessionUser) => {
+//   const id = currentUser._id
+//   return UserModel.findById({id});
+// };

@@ -12,7 +12,6 @@ router.use(authMiddleware());
 //get all classes / if teacher get your classes
 router.get("/", async (ctx) => {
   const currentUser = ctx.session.user;
-  console.log("User role:", currentUser.role);
 
   switch (currentUser.role) {
     case "admin":
@@ -23,8 +22,8 @@ router.get("/", async (ctx) => {
       break;
     case "student":
     default:
-      ctx.status = 401;
-      ctx.response.body = "unauthorized user";
+      ctx.status = 403;
+      ctx.response.body = "forbidden";
       break;
   }
 });
@@ -43,14 +42,14 @@ router.get("/:class", async (ctx) => {
       if(ctx.params.class == currentUser.student_class){
         ctx.body = await getStudentsOfClass(ctx.params.class);
       }else{
-        ctx.status = 401;
-        ctx.response.body = "You do not have permissions to view other students.";
+        ctx.status = 403;
+        ctx.response.body = "forbidden";
       }
       break;
       
     default:
-      ctx.status = 401;
-      ctx.response.body = "unauthorized user";
+      ctx.status = 403;
+      ctx.response.body = "forbidden";
       break;
   }
 });
