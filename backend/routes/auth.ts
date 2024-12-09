@@ -88,3 +88,23 @@ export const authMiddleware = (): Router.Middleware<unknown, AuthenticatedContex
   }
   ctx.status = 401;
 };
+
+export const isAdminMiddleware = async (ctx, next) => {
+  const is_admin = ctx.session.user.role === 'admin';
+  if (is_admin) {
+    await next();
+  } else {
+    ctx.status = 401;
+    ctx.response.body = "unauthorized user";
+  }
+};
+
+export const isAdminOrTeacherMiddleware = async (ctx, next) => {
+  const is_admin = ctx.session.user.role === 'admin';
+  if (is_admin) {
+    await next();
+  } else {
+    ctx.status = 401;
+    ctx.response.body = "unauthorized user";
+  }
+};

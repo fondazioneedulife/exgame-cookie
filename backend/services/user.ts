@@ -181,7 +181,7 @@ export const remove = async (id: string) => {
 
 //READ
 export const getAllClasses = async () => {
-  return UserModel.find({});
+  return UserModel.distinct('student_class');
 };
 
 /**
