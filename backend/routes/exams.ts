@@ -18,7 +18,6 @@ router.get("/", async (ctx) => {
   ctx.response.body = all;
 });
 
-
 // get exam by id
 router.get("/:id", async (ctx) => {
   const exam = await view(ctx.params.id);
@@ -32,7 +31,7 @@ router.get("/:id", async (ctx) => {
   ctx.body = exam;
 });
 
-// Add an exam
+// Add a user
 router.post("/", async (ctx) => {
   ctx.accepts("json");
   console.log(ctx.body);
@@ -40,7 +39,7 @@ router.post("/", async (ctx) => {
   ctx.response.body = exam;
 });
 
-// Edit an exam
+// // Edit a exam
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
   const response = await edit(ctx.params.id, ctx.request.body as Exam);
