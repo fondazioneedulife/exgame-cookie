@@ -44,6 +44,7 @@ function App() {
               path="subscriptions/:date/:id"
               element={<SubscriptionReport />}
             />
+            <Route path="subscription/:date/:id/questions" element={<SingleSession />} />
           </Route>
 
           {/* Student */}

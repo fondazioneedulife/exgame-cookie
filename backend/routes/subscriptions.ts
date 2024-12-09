@@ -35,7 +35,6 @@ router.post("/", async (ctx) => {
   ctx.accepts("json");
   const subscription = await postSubscription(ctx.request.body as Subscription);
   ctx.response.body = subscription;
-  console.log(subscription);
 });
 
 export default router;
