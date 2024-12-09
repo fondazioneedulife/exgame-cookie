@@ -10,7 +10,6 @@ import { StudentGuard } from "./routes/student/StudentGuard";
 import { StudentProfile } from "./routes/student/StudentProfile";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
-import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Classes } from "./routes/teacher/classes/Classes";
 import { ClassStudents } from "./routes/teacher/classes/Students";
 import { AddExam } from "./routes/teacher/exams/AddExam";
@@ -22,6 +21,7 @@ import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { SingleSession } from "./routes/teacher/subscriptions/SingleSession";
+import { TeacherMainContext } from "./routes/teacher/TeacherMainContext";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
           <Route index element={<Root />} />
 
           {/* Teacher */}
-          <Route path="teacher" element={<TeacherGuard />}>
+          <Route path="teacher" element={<TeacherMainContext />}>
             <Route index element={<Exams />} />
             <Route path="classes" element={<Classes />}></Route>
             <Route path="class-students" element={<ClassStudents />}></Route>
