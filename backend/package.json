@@ -26,6 +26,7 @@
     "@eslint/js": "^9.12.0",
     "@types/koa__cors": "^5.0.0",
     "@types/koa__router": "^12.0.4",
+    "@types/koa-bodyparser": "^4.3.12",
     "@types/node": "^20",
     "eslint": "^9.12.0",
     "globals": "^15.10.0",

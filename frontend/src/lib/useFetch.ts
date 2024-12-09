@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { config } from "../config";
 
@@ -19,24 +20,27 @@ export type AuthenticatedFetchFunction = (
 export const useFetch = (): AuthenticatedFetchFunction => {
   const navigate = useNavigate();
 
-  return (input, init) => {
-    try {
-      const body = init?.body && JSON.stringify(init.body);
-      return fetch(input, {
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body,
-        ...init,
-      }).then((res) => {
-        if (res.status === 401) {
-          return navigate(`${config.APP_BASENAME}login`);
-        }
-        return res;
-      });
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
+  return useCallback(
+    (input, init) => {
+      try {
+        const body = init?.body && JSON.stringify(init.body);
+        return fetch(input, {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body,
+          ...init,
+        }).then((res) => {
+          if (res.status === 401) {
+            return navigate(`${config.APP_BASENAME}login`);
+          }
+          return res;
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    },
+    [navigate],
+  );
 };

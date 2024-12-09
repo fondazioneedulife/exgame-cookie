@@ -42,25 +42,6 @@ export const Classes: React.FC = () => {
               </Stack>
             </tr>
             <hr />
-
-            <tr>
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{
-                  justifyContent: "space-between",
-                }}
-                style={{ paddingTop: "1%" }}
-              >
-                <td style={{ width: "60%" }}>
-                  <Typography level="h3">cookie</Typography>
-                </td>
-                <Button style={{ padding: "0 11% 0 11%" }}>
-                  Visualizza studenti
-                </Button>
-              </Stack>
-            </tr>
-            <hr />
           </tbody>
         </Table>
         <Stack

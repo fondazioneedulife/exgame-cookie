@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
       <Stack direction="row" spacing={2}>
         <List role="menubar" orientation="horizontal">
           <ListItem role="none">
-            <ListItemButton role="<menuitem>" component="a">
+            <ListItemButton role="<menuitem>">
               <Link
                 to="/teacher/classes"
                 style={{ color: "black", textDecoration: "none" }}

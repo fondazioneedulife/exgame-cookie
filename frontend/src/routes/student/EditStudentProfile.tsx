@@ -6,6 +6,7 @@ import Stack from "@mui/joy/Stack";
 import Input from "@mui/joy/Input";
 import { useFetch } from "../../lib/useFetch";
 import { useEffect, useState } from "react";
+import { config } from "../../config";
 
 export const EditStudentProfile: React.FC = () => {
   const [first_name, setName] = useState("Mario");
@@ -15,57 +16,68 @@ export const EditStudentProfile: React.FC = () => {
   const navigate = useNavigate();
   const fetch = useFetch();
 
-  const fetchWithAuth = useFetch();
-
-  React.useEffect(() => {
-    const testFetch = async () => {
-      try {
-        const response = await fetchWithAuth("http://localhost:3000/users");
-        console.log("Test fetch response:", response);
-      } catch (error) {
-        console.error("Test fetch error:", error);
-      }
-    };
-
-    testFetch();
-  }, [fetchWithAuth]);
-
+  // Recupera i dati iniziali dalla chiamata `/me`
   useEffect(() => {
-    const saveData = async () => {
-      if (isSaving) {
-        const payload = { first_name, last_name, email };
-
-        try {
-          const response = await fetch(
-            "http://localhost:3000/users/507f1f77bcf86cd799439011", // Modifica con l'ID giusto
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            },
+    fetch(`${config.API_BASEPATH}/users/me`)
+      .then((res) => {
+        if (!res || !res.ok) {
+          console.error(
+            "Errore durante il recupero del profilo:",
+            res?.statusText || "Errore sconosciuto",
           );
+          return null;
+        }
+        return res.json();
+      })
+      .then((user) => {
+        if (user) {
+          setName(user.first_name || "");
+          setlastName(user.last_name || "");
+          setEmail(user.email || "");
+        }
+      })
+      .catch((error) => {
+        console.error("Errore nella richiesta API:", error);
+      });
+  }, [fetch]);
 
-          if (response.ok) {
-            console.log("Dati salvati con successo");
-            navigate("/student/7/profile/details");
-          } else {
+  // Salvataggio dei dati
+  useEffect(() => {
+    if (isSaving) {
+      const payload = { first_name, last_name, email };
+
+      fetch(`${config.API_BASEPATH}/users/674d7fbb76f97f5f0f108007`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      })
+        .then((response) => {
+          if (!response) {
+            console.error("Redirect effettuato o risposta vuota");
+            return;
+          }
+
+          if (!response.ok) {
             console.error(
               "Errore durante il salvataggio:",
               response.statusText,
             );
+            return;
           }
-        } catch (error) {
-          console.error("Errore nella richiesta API:", error);
-        } finally {
-          setIsSaving(false); // Assicurati che lo stato venga resettato
-        }
-      }
-    };
 
-    saveData();
-  }, [isSaving, first_name, email, navigate, fetch]);
+          return response.json();
+        })
+        .then(() => {
+          console.log("Dati salvati con successo");
+          navigate("/student/7/profile/details");
+        })
+        .catch((error) => {
+          console.error("Errore nella richiesta API:", error);
+        })
+        .finally(() => {
+          setIsSaving(false); // Assicurati che lo stato venga resettato
+        });
+    }
+  }, [fetch, isSaving, first_name, last_name, email, navigate]);
 
   const handleSave = () => {
     setIsSaving(true);
