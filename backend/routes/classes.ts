@@ -24,7 +24,7 @@ router.get("/", async (ctx) => {
     case "student":
     default:
       ctx.status = 401;
-      ctx.response.body = "utente non autorizzato";
+      ctx.response.body = "unauthorized user";
       break;
   }
 });
@@ -36,8 +36,6 @@ router.get("/:class", async (ctx) => {
 
   switch (currentUser.role) {
     case "admin":
-      ctx.body = await getStudentsOfClass(ctx.params.class);
-      break;
     case "teacher":
       ctx.body = await getStudentsOfClass(ctx.params.class);
       break;
@@ -46,13 +44,13 @@ router.get("/:class", async (ctx) => {
         ctx.body = await getStudentsOfClass(ctx.params.class);
       }else{
         ctx.status = 401;
-        ctx.response.body = "Non hai i permessi per visualizzare gli altri studenti";
+        ctx.response.body = "You do not have permissions to view other students.";
       }
       break;
       
     default:
       ctx.status = 401;
-      ctx.response.body = "utente non autorizzato";
+      ctx.response.body = "unauthorized user";
       break;
   }
 });
