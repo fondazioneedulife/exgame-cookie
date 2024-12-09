@@ -3,6 +3,7 @@ import { Role, User } from "../../api-types";
 import {
   add,
   edit,
+  editYorself,
   getUsersByRole,
   index,
   remove,
@@ -16,6 +17,7 @@ const router = new Router<unknown, AuthenticatedContext>({
 });
 
 router.use(authMiddleware());
+
 
 // All routes
 router.get("/", async (ctx) => {
@@ -43,7 +45,29 @@ router.get("/:id", async (ctx) => {
 // Edit a user
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
-  const response = await edit(ctx.params.id, ctx.request.body as User);
+  const loggedUser = ctx.session.user
+  let response;
+  
+  switch (loggedUser.role) {
+    case "admin":
+      console.log('admin')
+      response = await edit(ctx.params.id, ctx.request.body as User);
+      break;
+    case  "student":
+    case "teacher":
+      console.log('teacher')
+      if (ctx.params.id == loggedUser._id) {
+        response = await editYorself(loggedUser._id, ctx.request.body as User);
+      } else {
+        ctx.status = 403;
+        response = "non puoi modificare un'altro utente";
+      }
+      break;  
+    default:    
+      ctx.status = 403;
+      response = "utente non autorizzato";
+      break;
+  }
   ctx.response.body = response;
 });
 

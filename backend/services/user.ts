@@ -85,7 +85,6 @@ export const add = async (
 //UPDATE
 export const edit = async (id, user: Partial<User>) => {
   const opt = { new: true, runValidators: true };
-
   try {
     const userDocument = await UserModel.findByIdAndUpdate(
       id,
@@ -102,7 +101,7 @@ export const edit = async (id, user: Partial<User>) => {
 export const editYorself = async (id, user: Partial<User>) => {
   const allowedUpdates = [
     "first_name",
-    "second_name",
+    "last_name",
     "email",
     "image",
     "subject",
@@ -116,7 +115,6 @@ export const editYorself = async (id, user: Partial<User>) => {
     }
   });
 
-  console.log(updates);
   const opt = { new: true, runValidators: true };
 
   try {
