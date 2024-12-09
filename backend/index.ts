@@ -37,6 +37,8 @@ router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
 });
 
+// router fatti per egffettuare il routing, quindi per smistare le richieste che arrivano alla notra porta 3000,
+// abbiamo fatto un router per ogni sezione dell'app
 app.use(router.routes()).use(router.allowedMethods());
 app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());

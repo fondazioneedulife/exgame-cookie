@@ -7,6 +7,8 @@ const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/classes",
 });
 
+// questo middleware serve a controllare che tu sia loggato prima di mostrarti la pagina
+//se lo tolgo, mostra la pagina ancje se non sono loggato
 router.use(authMiddleware());
 
 //get all classes / if teacher get your classes

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Stack } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+// import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 interface SingleExamProps {
   id: string; // ID dell'esame
@@ -27,7 +27,7 @@ const SingleExam: React.FC<SingleExamProps> = ({ id, name, className, date, onDe
             Sessioni
           </Button>
           <Button size="sm" style={{ backgroundColor: '#ab003c' }}onClick={() => onDelete(id)}>
-            <DeleteRoundedIcon />
+            {/* <DeleteRoundedIcon /> */}
           </Button>
         </Stack>
       </td>
