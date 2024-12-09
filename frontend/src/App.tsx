@@ -13,7 +13,6 @@ import { Subscribe } from "./routes/student/subscriptions/Subscribe";
 import { TeacherGuard } from "./routes/teacher/TeacherGuard";
 import { Classes } from "./routes/teacher/classes/Classes";
 import { ClassStudents } from "./routes/teacher/classes/Students";
-import { AddExam } from "./routes/teacher/exams/AddExam";
 import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
 import { Sessions } from "./routes/teacher/sessions/Sessions";
@@ -21,6 +20,7 @@ import { NewSession } from "./routes/teacher/sessions/sessionComponents/NewSessi
 import { SessionReport } from "./routes/teacher/subscriptions/SessionReport";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
+import AddExam from "./routes/teacher/exams/AddExam";
 
 function App() {
   return (

@@ -28,13 +28,16 @@ export type Exam = {
      * 
      * array delle classi
      */
-    classes: [];
+    classes: string[];
   
     /**
      * tempo massimo per fare l'esame
      */
     max_time: string;
-    domande: [{}];
+
+  
+    /**
+     * Rappresenta la classe a cui uno studente appartiene. E' valorizzato solo per i "role" student
+     */
+    domande: Array<{ question: string; options: string[]; answer: string }>;
   };
-  
-  

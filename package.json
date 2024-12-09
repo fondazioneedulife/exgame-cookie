@@ -32,6 +32,12 @@
     "node": "20.18.0"
   },
   "devDependencies": {
+    "@types/koa-session": "^6.4.5",
     "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "koa-session": "^6.4.0",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.4"
   }
 }

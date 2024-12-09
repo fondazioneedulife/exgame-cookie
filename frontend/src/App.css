@@ -1,0 +1,16 @@
+/* App.css */
+.page-enter {
+    opacity: 0;
+  }
+  .page-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
+  .page-exit {
+    opacity: 0;
+  }
+  .page-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
