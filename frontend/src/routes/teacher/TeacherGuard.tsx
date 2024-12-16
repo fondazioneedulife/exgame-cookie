@@ -17,7 +17,7 @@ export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
   const fetch = useFetch();
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/me")
+    fetch("${config.API_BASEPATH}/users/me")
       .then((res) => res?.json())
       .then((user: User) => {
         setAuthenticated(Boolean(user));

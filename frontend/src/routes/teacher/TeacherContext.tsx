@@ -1,7 +1,7 @@
 import { useState, PropsWithChildren } from "react";
 import { Exam, Session, Subscription } from "../../../../api-types";
 import React from "react";
-import { TTeacherDatasContext } from "../../types";
+import { TTeacherDatasContext } from "../../../types/TTeacherDataContext";
 
 export const DataContext = React.createContext<TTeacherDatasContext>(
   {} as TTeacherDatasContext,
@@ -13,20 +13,20 @@ const useData = (): [Exam[], Session[], Subscription[]] => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
   const getAllExams = async () => {
-    const response = await fetch("http://localhost:3000/exams");
+    const response = await fetch("${config.API_BASEPATH}/exams");
     const result = await response.json();
     setExams(result);
   };
 
   const getAllSessions = async () => {
-    const response = await fetch("http://localhost:3000/sessions/:examId");
+    const response = await fetch("${config.API_BASEPATH}/sessions/:examId");
     const result = await response.json();
     setSessions(result);
   };
 
   const getAllSubscriptions = async () => {
     const response = await fetch(
-      "http://localhost:3000/subscriptions/:sessionId",
+      "${config.API_BASEPATH}/subscriptions/:sessionId",
     );
     const result = await response.json();
     setSubscriptions(result);
