@@ -13,10 +13,7 @@ export const Sessions: React.FC = () => {
     <>
       <div className={classes.headerLayout}>
         <h1 style={{ padding: 0, margin: 0 }}>Sessioni di esame: </h1>
-        <Button
-          variant="outlined"
-          onClick={() => navigate("exam/:id/sessions/add")}
-        >
+        <Button variant="outlined" onClick={() => navigate("add")}>
           Nuova Sessione
         </Button>
       </div>

@@ -10,7 +10,7 @@ export const CurrentUserContext = createContext<User | undefined>(undefined);
  * Controllare che l'utente sia autenticato e che sia un teacher
  * Chiama l'api GET /users/me, che restituisce l'utente loggato, oppure un 401
  */
-export const TeacherGuard: React.FC = () => {
+export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
   console.log("you must be a teacher");
 
   const [authenticated, setAuthenticated] = useState<boolean | "loading">(
@@ -32,7 +32,7 @@ export const TeacherGuard: React.FC = () => {
   }, [fetch]);
 
   if (authenticated === "loading") {
-    return null;
+    return "LOADING";
   }
 
   if (authenticated) {
