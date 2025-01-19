@@ -1,0 +1,102 @@
+/* exams */
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container_box{
+    width: 90%;
+    min-height: 550px;
+    border: 1px solid;
+}
+
+.container_table{
+    margin-top: 2rem;
+}
+
+.container_navbar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.add_question{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid;
+}
+
+/* QuestionComponent */
+.confirm_btn{
+    display: flex;
+    justify-content: center;
+}
+
+.check{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.container_questions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px solid #0B6BCB;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.container_answers{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.answers{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/* addExam */
+
+.list_questions{
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.list_questions_li{
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.list_questions_li:hover{
+    border: 2px solid #E2EFFB;
+}
+
+.aswer_question{
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    width: 90%;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.modify_btn_question{
+    border: 1px solid;
+}

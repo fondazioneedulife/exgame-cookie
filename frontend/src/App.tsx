@@ -12,7 +12,7 @@ import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions"
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
 import { Classes } from "./routes/teacher/classes/Classes";
 import { ClassStudents } from "./routes/teacher/classes/Students";
-import { AddExam } from "./routes/teacher/exams/AddExam";
+import AddExam from "./routes/teacher/exams/AddExam";
 import { EditExam } from "./routes/teacher/exams/EditExam";
 import { Exams } from "./routes/teacher/exams/Exams";
 import { NewSession } from "./routes/teacher/sessions/sessionComponents/NewSession";

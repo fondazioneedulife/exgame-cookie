@@ -7,11 +7,11 @@ import session from "koa-session";
 import serveStatic from "koa-static";
 import { initSocketIo } from "./io";
 import authRoutes from "./routes/auth";
+import classesRoutes from "./routes/classes";
 import examRoutes from "./routes/exams";
 import sessionRoutes from "./routes/sessions";
-import userRoutes from "./routes/users";
-import classesRoutes from "./routes/classes";
 import subscriptionsRoutes from "./routes/subscriptions";
+import userRoutes from "./routes/users";
 
 const app = new Koa();
 const router = new Router();
@@ -37,6 +37,8 @@ router.get("/", (ctx) => {
   ctx.body = "ExGame - school is fun";
 });
 
+// router fatti per egffettuare il routing, quindi per smistare le richieste che arrivano alla notra porta 3000,
+// abbiamo fatto un router per ogni sezione dell'app
 app.use(router.routes()).use(router.allowedMethods());
 app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
