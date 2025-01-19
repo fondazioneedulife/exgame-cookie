@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Role, User } from "../../../../api-types/user";
 import { config } from "../../config";
 import { useFetch } from "../../lib/useFetch";
@@ -11,8 +11,6 @@ export const CurrentUserContext = createContext<User | undefined>(undefined);
  * Chiama l'api GET /users/me, che restituisce l'utente loggato, oppure un 401
  */
 export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
-  console.log("you must be a teacher");
-
   const [authenticated, setAuthenticated] = useState<boolean | "loading">(
     "loading",
   );
@@ -29,7 +27,7 @@ export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
         setCurrentUser(user);
         setRole(user.role);
       });
-  }, [fetch]);
+  }, []);
 
   if (authenticated === "loading") {
     return "LOADING";
@@ -39,11 +37,14 @@ export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
     if (role === "teacher" || role === "admin") {
       return (
         <CurrentUserContext.Provider value={currentUser}>
-          <Outlet />
+          {children}
         </CurrentUserContext.Provider>
       );
     }
   }
 
+  console.log(
+    "You are not authenticated or you don't have teacher rights. Redirecting to login",
+  );
   return <Navigate to="/login" />;
 };

@@ -3,7 +3,7 @@ import Button from "@mui/joy/Button";
 import Input from "@mui/joy/Input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QuestionComponent from "./examComponents/QuestionComponent";
+import { QuestionForm } from "./examComponents/QuestionForm";
 import classes from "./exams.module.css";
 
 interface Answer {
@@ -90,7 +90,7 @@ export const EditExam: React.FC = () => {
                 <td colSpan={2}>
                   {/* Mostra il componente QuestionComponent solo se showQuestionForm è true */}
                   {showQuestionForm && (
-                    <QuestionComponent onAddQuestion={addQuestionToExam} />
+                    <QuestionForm onAddQuestion={addQuestionToExam} />
                   )}
                 </td>
               </tr>

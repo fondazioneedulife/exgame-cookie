@@ -6,15 +6,6 @@
   flex-direction: column;
 }
 
-.container_box {
-  width: 90%;
-  min-height: 550px;
-}
-
-.container_table {
-  margin-top: 2rem;
-}
-
 .container_navbar {
   display: flex;
   justify-content: space-between;
@@ -26,7 +17,6 @@
   justify-content: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  border: 1px solid;
 }
 
 /* QuestionComponent */
@@ -46,9 +36,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 2px solid #0b6bcb;
   padding: 1rem;
-  border-radius: 1rem;
 }
 
 .container_answers {
@@ -86,8 +74,6 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  border: 1px solid;
-  width: 90%;
 }
 
 .pagination {
