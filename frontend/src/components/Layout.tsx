@@ -11,6 +11,7 @@ export const Layout: React.FC = () => {
           "linear-gradient(to bottom,rgb(233, 255, 239),rgb(197, 234, 247))",
         backgroundAttachment: "fixed",
         paddingBottom: 4,
+        minHeight: "100vh",
       }}
     >
       <Header />
