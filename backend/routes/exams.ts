@@ -1,12 +1,6 @@
 import Router from "@koa/router";
 import { Exam } from "../../api-types/exam";
-import {
-  add,
-  index,
-  view,
-  edit,
-  remove,
-} from "../services/exam";
+import { add, edit, index, remove, view } from "../services/exam";
 
 const router = new Router({
   prefix: "/exams",
@@ -31,10 +25,10 @@ router.get("/:id", async (ctx) => {
   ctx.body = exam;
 });
 
-// Add a user
+// Add a exam
 router.post("/", async (ctx) => {
   ctx.accepts("json");
-  console.log(ctx.body);
+  console.log(ctx.request.body);
   const exam = await add(ctx.request.body as Exam);
   ctx.response.body = exam;
 });
@@ -50,7 +44,7 @@ router.put("/:id", async (ctx) => {
 // // Delete a user
 router.delete("/:id", async (ctx) => {
   ctx.body = await remove(ctx.params.id);
-  console.log(`exam with id:${ctx.params.id} DELETED.`)
+  console.log(`exam with id:${ctx.params.id} DELETED.`);
 });
 
 export default router;

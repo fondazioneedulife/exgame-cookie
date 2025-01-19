@@ -1,7 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, Card, Stack, Typography } from "@mui/joy";
 import React from "react";
-import { Question } from "../AddExam";
+import { Question } from "../../../../../../api-types";
 
 export const QuestionView: React.FC<{ question: Question; index: number }> = ({
   question,
@@ -11,7 +11,7 @@ export const QuestionView: React.FC<{ question: Question; index: number }> = ({
     <Card>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Typography>
-          {index + 1}) {question.questionText || "Domanda vuota"}
+          {index + 1}) {question.text || "Domanda vuota"}
         </Typography>
         <Button endDecorator={<EditIcon />} size="sm">
           {/* TODO add edit question functionality  */}
@@ -19,14 +19,14 @@ export const QuestionView: React.FC<{ question: Question; index: number }> = ({
         </Button>
       </Stack>
       <ul>
-        {question.answers.map((answer, i) => (
+        {question.answers.map(({ answer, isCorrect }, i) => (
           <li
             key={i}
             style={{
-              color: answer.isCorrect ? "green" : "black",
+              color: isCorrect ? "green" : "black",
             }}
           >
-            {answer.text || "Risposta vuota"} {answer.isCorrect && "(Corretta)"}
+            {answer || "Risposta vuota"} {isCorrect && "(Corretta)"}
           </li>
         ))}
       </ul>

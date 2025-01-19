@@ -10,27 +10,28 @@ import {
   Stack,
 } from "@mui/joy";
 import React, { ChangeEvent, useState } from "react";
-
-interface Answer {
-  text: string;
-  isCorrect: boolean;
-}
+import { Answer, Question, QuestionType } from "../../../../../../api-types";
 
 interface QuestionComponentProps {
-  onAddQuestion: (question: {
-    questionText: string;
-    answers: Answer[];
-  }) => void;
+  addQuestion: (question: Question) => void;
+  question?: Question;
 }
 
 export const QuestionForm: React.FC<QuestionComponentProps> = ({
-  onAddQuestion,
+  addQuestion: handleSave,
+  question = {
+    text: "",
+    answers: [],
+    questionType: QuestionType.SINGLE_CHOICE,
+  },
 }) => {
-  const [questionText, setQuestionText] = useState<string>("");
+  const [questionState, setQuestionState] = useState<Question>(question);
+  const setQuestionText = (text: string) =>
+    setQuestionState((state) => ({ ...state, text: text }));
   const [answers, setAnswers] = useState<Answer[]>([
-    { text: "", isCorrect: false },
-    { text: "", isCorrect: false },
-    { text: "", isCorrect: false },
+    { answer: "", isCorrect: false },
+    { answer: "", isCorrect: false },
+    { answer: "", isCorrect: false },
   ]);
 
   // Funzione per gestire il cambiamento del testo della domanda
@@ -41,7 +42,7 @@ export const QuestionForm: React.FC<QuestionComponentProps> = ({
   // Funzione per gestire il cambiamento del testo delle risposte
   const handleAnswerChange = (index: number, text: string) => {
     const newAnswers = [...answers];
-    newAnswers[index].text = text;
+    newAnswers[index].answer = text;
     setAnswers(newAnswers);
   };
 
@@ -57,14 +58,14 @@ export const QuestionForm: React.FC<QuestionComponentProps> = ({
   // Funzione per aggiungere una nuova domanda
   const handleAddQuestion = () => {
     // Controllo che la domanda non sia vuota
-    if (questionText.trim() === "") {
+    if (questionState.text.trim() === "") {
       alert("La domanda non può essere vuota!");
       return;
     }
 
     // Controllo che tutte le risposte non siano vuote
     for (const answer of answers) {
-      if (answer.text.trim() === "") {
+      if (answer.answer.trim() === "") {
         alert("Tutte le risposte devono essere compilate!");
         return;
       }
@@ -77,18 +78,18 @@ export const QuestionForm: React.FC<QuestionComponentProps> = ({
     }
 
     // Se tutto è valido, aggiungi la domanda
-    const newQuestion = {
-      questionText,
+    const newQuestion: Question = {
+      ...questionState,
       answers: [...answers],
     };
-    onAddQuestion(newQuestion);
+    handleSave(newQuestion);
 
     // Resetta il form
     setQuestionText("");
     setAnswers([
-      { text: "", isCorrect: false },
-      { text: "", isCorrect: false },
-      { text: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
     ]);
   };
 
@@ -97,16 +98,16 @@ export const QuestionForm: React.FC<QuestionComponentProps> = ({
       <Stack spacing={2}>
         <FormControl>
           <FormLabel>Domanda</FormLabel>
-          <Input value={questionText} onChange={handleQuestionChange} />
+          <Input value={questionState.text} onChange={handleQuestionChange} />
         </FormControl>
         <Stack>
-          <label>Risposte:</label>
-          {answers.map((answer, index) => (
+          <FormLabel>Risposte:</FormLabel>
+          {answers.map(({ answer, isCorrect }, index) => (
             <ul key={index}>
               <Grid container spacing={2} alignItems="center">
                 <Grid sm={10}>
                   <Input
-                    value={answer.text}
+                    value={answer}
                     onChange={(e) => handleAnswerChange(index, e.target.value)}
                     placeholder={`Risposta ${index + 1}`}
                   />
@@ -117,7 +118,7 @@ export const QuestionForm: React.FC<QuestionComponentProps> = ({
                     label="Corretta"
                     color="success"
                     size="sm"
-                    checked={answer.isCorrect}
+                    checked={isCorrect}
                     onChange={() => handleCorrectAnswerSelect(index)}
                   />
                 </Grid>
