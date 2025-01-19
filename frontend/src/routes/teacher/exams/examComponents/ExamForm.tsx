@@ -13,7 +13,7 @@ import Input from "@mui/joy/Input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Exam, Question } from "../../../../../../api-types";
-import { QuestionForm } from "./QuestionForm_";
+import { QuestionForm } from "./QuestionForm";
 import { QuestionView } from "./QuestionView";
 
 type TExamForm = {
