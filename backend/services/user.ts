@@ -33,11 +33,29 @@ export const index = async () => {
 };
 
 export const getUsersByRole = async (role: Role) => {
-  return UserModel.find({ role });
+  return UserModel.find({ role }).select('first_name last_name email role image');
+};
+
+//---------------VIEW BY ID------------------------
+export const viewForAdmin = async (id: string) => {
+  let user = await UserModel.findById(id);
+  return user;
+};
+
+export const viewForTeacher = async (id: string, teacher_classes: string[]) => {
+  return UserModel.find({ _id: id, student_class: { $in: teacher_classes }  });
+};
+
+export const viewForStudent = async (id: string, student_class: string | undefined) => {
+  return UserModel.find({ _id: id, student_class: student_class});
+};
+
+export const viewYourself = async (id: string) => {
+  return UserModel.findById({id});
 };
 
 /**
- * Returns an use by id, if currentUser is provided, applies visibility rules
+ * Returns a user by id, if currentUser is provided, applies visibility rules
  *
  * @param id
  * @param currentUser if provided, applies appropriate logic for current user
@@ -48,17 +66,29 @@ export const view = async (id: string, currentUser?: SessionUser) => {
     case "admin":
       return UserModel.findById(id);
     case "teacher":
-      return UserModel.find({
-        _id: id,
-        student_class: { $in: currentUser.teacher_classes },
-      });
+      if (
+        currentUser.teacher_classes &&
+        currentUser.teacher_classes.length > 0
+      ) {
+        return UserModel.find({
+          _id: id,
+          student_class: { $in: currentUser.teacher_classes },
+        }).select('first_name last_name email role image subjects teacher_classes');
+      } else {
+        return []; // Restituisce un risultato vuoto se teacher_classes non è presente o è vuoto
+      }
     case "student":
-      return UserModel.find({
-        _id: id,
-        student_class: currentUser.student_class,
-      });
+      if (currentUser.student_class) {
+        return UserModel.find({
+          _id: id,
+          student_class: currentUser.student_class,
+        }).select('first_name last_name email role student_class');
+      } else {
+        return []; // Restituisce un risultato vuoto se student_class non è presente
+      }
+    default:
+      throw new Error("Unauthorized");
   }
-  return UserModel.findById({ id });
 };
 
 //---------------ADD USER------------------------
@@ -70,10 +100,21 @@ export const add = async (
   return UserData.save();
 };
 
-//UPDATE
+//------------------UPDATE------------------------
 export const edit = async (id, user: Partial<User>) => {
+  /**
+   * https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate()
+   * https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+   * NEW = [options.new=false] «Boolean» if true, return the modified document rather than the original
+   *       As an alternative to the new option, you can also use the returnOriginal option. 
+   *       returnOriginal: false is equivalent to new: true. 
+   *       The returnOriginal option exists for consistency with the the MongoDB Node.js driver's findOneAndUpdate(), 
+   *       which has the same option.
+   * 
+   * https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate()
+   * RUNVALIDATORS = [options.runValidators] «Boolean» if true, runs update validators on this command. Update validators validate the update operation against the model's schema
+   */
   const opt = { new: true, runValidators: true };
-
   try {
     const userDocument = await UserModel.findByIdAndUpdate(
       id,
@@ -90,7 +131,7 @@ export const edit = async (id, user: Partial<User>) => {
 export const editYorself = async (id, user: Partial<User>) => {
   const allowedUpdates = [
     "first_name",
-    "second_name",
+    "last_name",
     "email",
     "image",
     "subject",
@@ -104,7 +145,6 @@ export const editYorself = async (id, user: Partial<User>) => {
     }
   });
 
-  console.log(updates);
   const opt = { new: true, runValidators: true };
 
   try {
@@ -169,7 +209,7 @@ export const remove = async (id: string) => {
 
 //READ
 export const getAllClasses = async () => {
-  return UserModel.find({});
+  return UserModel.distinct('student_class');
 };
 
 /**
@@ -193,3 +233,8 @@ export const getUsersWithoutClass = async () => {
 export const getMyStudents = async (teacher_classes: string[]) => {
   return UserModel.find({ student_class: { $in: teacher_classes } });
 };
+
+// export const viewYourself = async (currentUser: SessionUser) => {
+//   const id = currentUser._id
+//   return UserModel.findById({id});
+// };

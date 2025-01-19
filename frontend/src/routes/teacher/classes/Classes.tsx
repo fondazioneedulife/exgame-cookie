@@ -33,30 +33,11 @@ export const Classes: React.FC = () => {
                 </td>
                 <Button style={{ padding: "0 11% 0 11%" }}>
                   <Link
-                    to="/class-students"
+                    to="/teacher/class-students"
                     style={{ color: "white", textDecoration: "none" }}
                   >
                     Visualizza studenti
                   </Link>
-                </Button>
-              </Stack>
-            </tr>
-            <hr />
-
-            <tr>
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{
-                  justifyContent: "space-between",
-                }}
-                style={{ paddingTop: "1%" }}
-              >
-                <td style={{ width: "60%" }}>
-                  <Typography level="h3">cookie</Typography>
-                </td>
-                <Button style={{ padding: "0 11% 0 11%" }}>
-                  Visualizza studenti
                 </Button>
               </Stack>
             </tr>
@@ -76,4 +57,4 @@ export const Classes: React.FC = () => {
       </>
     </>
   );
-};  
+};

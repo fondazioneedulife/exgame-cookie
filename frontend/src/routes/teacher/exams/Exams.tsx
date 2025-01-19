@@ -1,7 +1,8 @@
-import Button from "@mui/joy/Button";
-import Stack from "@mui/joy/Stack";
 import Table from "@mui/joy/Table";
+import Stack from "@mui/joy/Stack";
+import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router";
+import { Pagination } from "@mui/material";
 
 export const Exams: React.FC = () => {
   const navigate = useNavigate();
@@ -72,6 +73,16 @@ export const Exams: React.FC = () => {
           </tr>
         </tbody>
       </Table>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Pagination count={10} variant="outlined" shape="rounded" />
+      </Stack>
     </div>
   );
 };
