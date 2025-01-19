@@ -39,7 +39,7 @@ export const TeacherGuard: React.FC<PropsWithChildren> = ({ children }) => {
     if (role === "teacher" || role === "admin") {
       return (
         <CurrentUserContext.Provider value={currentUser}>
-          <Outlet />;
+          <Outlet />
         </CurrentUserContext.Provider>
       );
     }

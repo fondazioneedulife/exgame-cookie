@@ -60,59 +60,57 @@ export const Exams: React.FC = () => {
   };
 
   return (
-    <>
-      <div className={classes.container}>
-        <div className={classes.container_box}>
-          <div className={classes.container_table}>
-            <Table aria-label="basic table">
-              <thead>
-                <tr>
-                  <th style={{ width: "40%", fontSize: "1.5em" }}>Esami</th>
-                  <th></th>
-                  <th>
-                    <Stack
-                      direction="row"
-                      spacing={0.5}
-                      justifyContent={"flex-end"}
+    <div className={classes.container}>
+      <div className={classes.container_box}>
+        <div className={classes.container_table}>
+          <Table aria-label="basic table">
+            <thead>
+              <tr>
+                <th style={{ width: "40%", fontSize: "1.5em" }}>Esami</th>
+                <th></th>
+                <th>
+                  <Stack
+                    direction="row"
+                    spacing={0.5}
+                    justifyContent={"flex-end"}
+                  >
+                    <Button
+                      variant="outlined"
+                      size="md"
+                      onClick={() => navigate("/teacher/exam")}
                     >
-                      <Button
-                        variant="outlined"
-                        size="md"
-                        onClick={() => navigate("/teacher/exam")}
-                      >
-                        Aggiungi esame
-                      </Button>
-                    </Stack>
-                  </th>
-                </tr>
-              </thead>
-              <br />
-              <tbody>
-                {/* Mappiamo ogni esame visibile sulla pagina corrente */}
-                {currentExams.map((exam) => (
-                  <SingleExam
-                    key={exam.id}
-                    id={exam.id}
-                    name={exam.name}
-                    className={exam.className}
-                    date={exam.date}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </tbody>
-            </Table>
+                      Aggiungi esame
+                    </Button>
+                  </Stack>
+                </th>
+              </tr>
+            </thead>
+            <br />
+            <tbody>
+              {/* Mappiamo ogni esame visibile sulla pagina corrente */}
+              {currentExams.map((exam) => (
+                <SingleExam
+                  key={exam.id}
+                  id={exam.id}
+                  name={exam.name}
+                  className={exam.className}
+                  date={exam.date}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </tbody>
+          </Table>
 
-            {/* Componente Pagination dinamico */}
-          </div>
-        </div>
-        <div className={classes.pagination}>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
+          {/* Componente Pagination dinamico */}
         </div>
       </div>
-    </>
+      <div className={classes.pagination}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      </div>
+    </div>
   );
 };
