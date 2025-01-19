@@ -6,7 +6,7 @@ export const TeacherMainContext = () => {
   return (
     <TeacherGuard>
       <TeacherContext>
-        <Outlet></Outlet>
+        <Outlet />
       </TeacherContext>
     </TeacherGuard>
   );
