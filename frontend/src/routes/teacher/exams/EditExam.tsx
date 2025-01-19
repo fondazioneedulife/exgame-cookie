@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Exam } from "../../../../../api-types";
 import { config } from "../../../config";
 import { useFetch } from "../../../lib/useFetch";
@@ -7,6 +7,7 @@ import { ExamForm } from "./examComponents/ExamForm";
 
 export const EditExam: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const fetch = useFetch();
   const [exam, setExam] = useState<Exam>();
 
@@ -21,7 +22,9 @@ export const EditExam: React.FC = () => {
     fetch(`${config.API_BASEPATH}/exams/${id}`, {
       method: "put",
       body: JSON.stringify(exam),
-    });
+    })
+      .then(() => navigate("/teacher"))
+      .catch(console.error);
     console.log("esame salvato", exam);
   };
 

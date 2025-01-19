@@ -8,7 +8,7 @@ export const DataContext = React.createContext<TTeacherDatasContext>(
   {} as TTeacherDatasContext,
 );
 
-const useData = (): [Exam[], Session[], Subscription[]] => {
+const useData = (): [Exam[], Session[], Subscription[], () => void] => {
   const location = useLocation();
   const [exams, setExams] = useState<Exam[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -42,19 +42,24 @@ const useData = (): [Exam[], Session[], Subscription[]] => {
     getAllSubscriptions();
   }, [location.pathname]);
 
-  console.log("location", location.pathname);
+  const reload = () => {
+    getAllExams();
+    getAllSessions();
+    getAllSubscriptions();
+  };
 
-  return [exams, sessions, subscriptions];
+  return [exams, sessions, subscriptions, reload];
 };
 
 export const TeacherContext: React.FC<PropsWithChildren> = ({ children }) => {
-  const [exams, sessions, subscriptions] = useData();
+  const [exams, sessions, subscriptions, reload] = useData();
 
   const value = useMemo(
     () => ({
       exams,
       sessions,
       subscriptions,
+      reload,
     }),
     [exams, sessions, subscriptions],
   );

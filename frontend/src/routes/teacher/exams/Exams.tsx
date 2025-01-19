@@ -2,13 +2,16 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/joy";
 import Pagination from "@mui/material/Pagination";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { config } from "../../../config";
+import { useFetch } from "../../../lib/useFetch";
 import { DataContext } from "../TeacherContext";
 import SingleExam from "./examComponents/SingleExam";
 
 export const Exams: React.FC = () => {
   const navigate = useNavigate();
+  const fetch = useFetch();
 
-  const { exams } = useContext(DataContext);
+  const { exams, reload } = useContext(DataContext);
 
   console.log("exams", exams);
 
@@ -34,13 +37,14 @@ export const Exams: React.FC = () => {
 
   // Funzione per eliminare un esame
   const handleDelete = (id: string) => {
-    // const updatedExams = exams?.filter((exam) => exam.id !== id) || [];
-    // setExams(updatedExams);
-    // // Gestire l'eventualità che l'utente rimanga su una pagina vuota
-    // const newTotalPages = Math.ceil(updatedExams.length / examsPerPage);
-    // if (currentPage > newTotalPages) {
-    //   setCurrentPage(newTotalPages);
-    // }
+    if (window.confirm("Sei sicuro di voler eliminare l'esame?")) {
+      console.log("Elimina esame", id);
+      fetch(`${config.API_BASEPATH}/exams/${id}`, {
+        method: "DELETE",
+      })
+        .then(reload)
+        .catch(console.error);
+    }
   };
 
   return (

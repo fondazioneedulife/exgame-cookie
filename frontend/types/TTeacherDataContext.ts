@@ -1,7 +1,8 @@
-import { Session, Subscription, Exam } from "../../api-types";
+import { Exam, Session, Subscription } from "../../api-types";
 
 export type TTeacherDatasContext = {
-   exams?: Exam[],
-   sessions?: Session[],
-   subscriptions?: Subscription[]
-  };
+  exams?: Exam[];
+  sessions?: Session[];
+  subscriptions?: Subscription[];
+  reload: () => void;
+};
