@@ -13,22 +13,22 @@ import React, { ChangeEvent, useState } from "react";
 import { Answer, Question, QuestionType } from "../../../../../../api-types";
 
 interface QuestionComponentProps {
-  addQuestion: (question: Question) => void;
+  saveQuestion: (question: Question) => void;
   question?: Question;
 }
 
 export const QuestionForm: React.FC<QuestionComponentProps> = ({
-  addQuestion: handleSave,
+  saveQuestion: handleSave,
   question = {
     text: "",
-    answers: [],
     questionType: QuestionType.SINGLE_CHOICE,
-  },
+  }as Question,
 }) => {
   const [questionState, setQuestionState] = useState<Question>(question);
   const setQuestionText = (text: string) =>
     setQuestionState((state) => ({ ...state, text: text }));
-  const [answers, setAnswers] = useState<Answer[]>([
+
+  const [answers, setAnswers] = useState<Answer[]>(question?.answers || [ //se question.answers esiste, mostro il suo valore, quindi le risposte alla domanda scritte in precedenza e che dovrò modificare, altrimenti mostro 3 risposte vuote
     { answer: "", isCorrect: false },
     { answer: "", isCorrect: false },
     { answer: "", isCorrect: false },

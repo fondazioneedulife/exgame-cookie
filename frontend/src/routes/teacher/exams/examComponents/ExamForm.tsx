@@ -37,6 +37,14 @@ export const ExamForm: React.FC<TExamForm> = ({
     setShowQuestionForm(false); // Nasconde il form dopo aver aggiunto la domanda
   };
 
+  const editQuestion = (index: number, newQuestion: Question) => {
+    setQuestions((questions)=> {
+      const newQuestions =[...questions];//newQuestions è la copia dell'array questions
+      newQuestions[index] = newQuestion;//sostituisco la domanda all'indice x(quella che voglio modificare) con la domanda nuova che ho modificato
+      return newQuestions;
+  });
+  }
+
   const toggleQuestionForm = () => {
     setShowQuestionForm(true); // Mostra il form per l'aggiunta di una nuova domanda
   };
@@ -79,13 +87,13 @@ export const ExamForm: React.FC<TExamForm> = ({
         <Typography level="h4">Questionario</Typography>
         <Stack spacing={2}>
           {questions.map((question, index) => (
-            <QuestionView key={index} question={question} index={index} />
+            <QuestionView key={index} question={question} onSave={editQuestion} index={index} />
           ))}
           <Divider />
         </Stack>
 
-        {showQuestionForm ? (
-          <QuestionForm addQuestion={addQuestionToExam} />
+        {showQuestionForm ? ( //se la variabile show question form è true, mostro il form per aggiungere una domanda, altrimenti mostro il bottone "aggiungi domanda" che metterà la variavile precedente a true, mostrando il form
+          <QuestionForm saveQuestion={addQuestionToExam} />
         ) : (
           <Box>
             <Button

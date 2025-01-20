@@ -6,7 +6,7 @@ import { useFetch } from "../../../lib/useFetch";
 import { ExamForm } from "./examComponents/ExamForm";
 
 export const EditExam: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams();//useParams ci permette di accedere ai parametri dell'URL
   const navigate = useNavigate();
   const fetch = useFetch();
   const [exam, setExam] = useState<Exam>();
@@ -28,5 +28,5 @@ export const EditExam: React.FC = () => {
     console.log("esame salvato", exam);
   };
 
-  return exam ? <ExamForm onSave={onSave} exam={exam} /> : "Loading...";
+  return exam ? <ExamForm onSave={onSave} exam={exam} /> : "Loading...";//se la variabile exam esiste, faccio vedere il form, altrimenti la scritta loading
 };
