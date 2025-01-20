@@ -7,19 +7,17 @@ export const SessionsDone: React.FC<{
 }> = ({ teacherClass, date }) => {
   const navigate = useNavigate();
   return (
-    <>
-      <tr>
-        <th>{date}</th>
-        <th>{teacherClass}</th>
-        <th>
-          <Button
-            size="sm"
-            onClick={() => navigate("/teacher/subscriptions/{date}")}
-          >
-            Visualizza
-          </Button>
-        </th>
-      </tr>
-    </>
+    <tr>
+      <th>{date}</th>
+      <th>{teacherClass}</th>
+      <th>
+        <Button
+          size="sm"
+          onClick={() => navigate("/teacher/subscriptions/{date}")}
+        >
+          Visualizza
+        </Button>
+      </th>
+    </tr>
   );
 };

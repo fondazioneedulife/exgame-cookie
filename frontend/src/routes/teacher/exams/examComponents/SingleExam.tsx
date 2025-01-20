@@ -40,7 +40,7 @@ const SingleExam: React.FC<SingleExamProps> = ({
           <Tooltip title="Visualizza le sessioni">
             <IconButton
               size="sm"
-              onClick={() => navigate(`/teacher/subscriptions/${date}`)}
+              onClick={() => navigate(`/teacher/exam/${id}/sessions`)}
             >
               <CalendarMonthIcon fontSize="small" />
             </IconButton>

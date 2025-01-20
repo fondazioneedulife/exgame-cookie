@@ -1,30 +1,48 @@
-import { Stack, Table } from "@mui/joy";
-import classes from "./sessions.module.css";
-import { Pagination, Button } from "@mui/material";
+import { Button, Stack, Table, Typography } from "@mui/joy";
+import { Pagination } from "@mui/material";
+import Box from "@mui/material/Box";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { Session } from "../../../../../api-types";
+import { config } from "../../../config";
+import { useFetch } from "../../../lib/useFetch";
+import { DataContext } from "../TeacherContext";
 import { SessionRow } from "./sessionComponents/SessionRow";
 import { SessionsDone } from "./sessionComponents/SessionsDone";
-import Box from "@mui/material/Box";
-import { useNavigate } from "react-router";
 
 export const Sessions: React.FC = () => {
+  const { id } = useParams();
+  const { exams } = useContext(DataContext);
+  const exam = exams?.find((exam) => exam._id === id);
   const navigate = useNavigate();
+  const fetch = useFetch();
+  const [sessions, setSessions] = useState<Session[]>();
+
+  useEffect(() => {
+    fetch(`${config.API_BASEPATH}/sessions/${id}`)
+      .then((res) => res?.json())
+      .then(setSessions)
+      .catch(console.error);
+  }, [id]);
 
   return (
-    <>
-      <div className={classes.headerLayout}>
-        <h1 style={{ padding: 0, margin: 0 }}>Sessioni di esame: </h1>
-        <Button variant="outlined" onClick={() => navigate("add")}>
-          Nuova Sessione
-        </Button>
-      </div>
+    <Stack>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography level="h2">Sessioni di {exam?.name}: </Typography>
+        <Button onClick={() => navigate("add")}>Nuova Sessione</Button>
+      </Stack>
+
+      <Typography level="h3" sx={{ marginTop: 4 }}>
+        Sessioni da svolgere
+      </Typography>
       <Table aria-label="basic table">
-        <h2>Sessioni da svolgere</h2>
         <tbody>
-          <SessionRow teacherClass="Pixel" date="13 ottobre 2025"></SessionRow>
-          <SessionRow teacherClass="Pixel" date="14 ottobre 2025"></SessionRow>
-          <SessionRow teacherClass="Pixel" date="15 ottobre 2025"></SessionRow>
-          <SessionRow teacherClass="Pixel" date="16 ottobre 2025"></SessionRow>
-          <SessionRow teacherClass="Pixel" date="17 ottobre 2025"></SessionRow>
+          {sessions?.map((session) => (
+            <SessionRow
+              teacherClass={session.student_class}
+              date={session.start_date.toString()}
+            ></SessionRow>
+          ))}
         </tbody>
       </Table>
       <Box
@@ -46,8 +64,10 @@ export const Sessions: React.FC = () => {
         </Stack>
       </Box>
 
+      <Typography level="h3" sx={{ marginTop: 4 }}>
+        Sessioni svolte
+      </Typography>
       <Table aria-label="basic table">
-        <h2>Sessioni svolte</h2>
         <tbody>
           <SessionsDone
             teacherClass="Pixel"
@@ -73,6 +93,6 @@ export const Sessions: React.FC = () => {
           <Pagination count={10} variant="outlined" shape="rounded" />
         </Stack>
       </Box>
-    </>
+    </Stack>
   );
 };
