@@ -31,6 +31,7 @@ export const ExamForm: React.FC<TExamForm> = ({
     initialState.questions || [],
   );
   const [showQuestionForm, setShowQuestionForm] = useState<boolean>(false);
+  const [isEditingQuestion, setIsEditingQuestion] =useState<number | false>(false);
 
   const addQuestionToExam = (newQuestion: Question) => {
     setQuestions([...questions, newQuestion]);
@@ -41,6 +42,13 @@ export const ExamForm: React.FC<TExamForm> = ({
     setQuestions((questions) => {
       const newQuestions = [...questions];
       newQuestions[index] = newQuestion;
+      return newQuestions;
+    });
+  }
+  const deleteQuestion = (index: number) => {
+    setQuestions((questions) => {
+      const newQuestions = [...questions];
+      newQuestions.splice(index, 1);
       return newQuestions;
     });
   }
@@ -87,7 +95,7 @@ export const ExamForm: React.FC<TExamForm> = ({
         <Typography level="h4">Questionario</Typography>
         <Stack spacing={2}>
           {questions.map((question, index) => (
-            <QuestionView key={index} question={question} onSave={editQuestion}  index={index} />
+            <QuestionView key={index} question={question} onSave={editQuestion} onDelete={deleteQuestion}  index={index}  isEditingQuestion={isEditingQuestion} setIsEditingQuestion={setIsEditingQuestion}/>
           ))}
           <Divider />
         </Stack>
@@ -114,7 +122,7 @@ export const ExamForm: React.FC<TExamForm> = ({
           </Button>
         </Grid>
         <Grid>
-          <Button size="md" onClick={saveExam}>
+          <Button size="md" disabled={isEditingQuestion!==false} onClick={saveExam}>
             Salva
           </Button>
         </Grid>

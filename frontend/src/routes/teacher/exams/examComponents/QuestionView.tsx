@@ -3,23 +3,28 @@ import { Button, Card, Stack, Typography } from "@mui/joy";
 import React from "react";
 import { Question } from "../../../../../../api-types";
 import { QuestionForm } from "./QuestionForm";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const QuestionView: React.FC<{ 
   question: Question; 
   index: number; 
   onSave: (index: number, question: Question) => void 
+  onDelete: (index: number) => void
+  isEditingQuestion: number | false;
+  setIsEditingQuestion: (isEditingQuestion:number | false) => void
 }> = ({
   question,
   index,
   onSave,
+  onDelete,
+  isEditingQuestion,
+  setIsEditingQuestion
 }) => {
-  const [editing, setEditing] = React.useState(false);
   const handleSave = (question: Question) => {
     onSave(index, question);
-    setEditing(false);
+    setIsEditingQuestion(false);
   }
-
-  return editing 
+  return isEditingQuestion===index 
   ?  <QuestionForm 
     saveQuestion={ handleSave } 
     question={question} 
@@ -30,10 +35,14 @@ export const QuestionView: React.FC<{
         <Typography>
           {index + 1}) {question.text || "Domanda vuota"}
         </Typography>
-        <Button endDecorator={<EditIcon />} onClick={()=>{setEditing(!editing)}} size="sm" >
-        
-          Modifica
-        </Button>
+        <Stack direction="row" spacing={2} justifyContent={"flex-end"}>
+          <Button disabled={isEditingQuestion !== false} endDecorator={<EditIcon />} onClick={()=>{setIsEditingQuestion(index)}} size="sm" >
+            Modifica
+          </Button>
+          <Button endDecorator={<DeleteIcon />} onClick={()=>{if(window.confirm("Vuoi eliminare la domanda?")){onDelete(index)}}} size="sm" >
+            Elimina
+          </Button>
+        </Stack>
       </Stack>
       <ul>
         {question.answers.map(({ answer, isCorrect }, i) => (
