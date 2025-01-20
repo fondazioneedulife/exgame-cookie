@@ -31,7 +31,9 @@ export const ExamForm: React.FC<TExamForm> = ({
     initialState.questions || [],
   );
   const [showQuestionForm, setShowQuestionForm] = useState<boolean>(false);
-  const [isEditingQuestion, setIsEditingQuestion] =useState<number | false>(false);
+  const [isEditingQuestion, setIsEditingQuestion] = useState<number | false>(
+    false,
+  );
 
   const addQuestionToExam = (newQuestion: Question) => {
     setQuestions([...questions, newQuestion]);
@@ -40,18 +42,18 @@ export const ExamForm: React.FC<TExamForm> = ({
 
   const editQuestion = (index: number, newQuestion: Question) => {
     setQuestions((questions) => {
-      const newQuestions = [...questions];
-      newQuestions[index] = newQuestion;
+      const newQuestions = [...questions]; //newQuestions è la copia dell'array questions
+      newQuestions[index] = newQuestion; //sostituisco la domanda all'indice x(quella che voglio modificare) con la domanda nuova che ho modificato
       return newQuestions;
     });
-  }
+  };
   const deleteQuestion = (index: number) => {
     setQuestions((questions) => {
       const newQuestions = [...questions];
       newQuestions.splice(index, 1);
       return newQuestions;
     });
-  }
+  };
 
   const toggleQuestionForm = () => {
     setShowQuestionForm(true); // Mostra il form per l'aggiunta di una nuova domanda
@@ -95,12 +97,20 @@ export const ExamForm: React.FC<TExamForm> = ({
         <Typography level="h4">Questionario</Typography>
         <Stack spacing={2}>
           {questions.map((question, index) => (
-            <QuestionView key={index} question={question} onSave={editQuestion} onDelete={deleteQuestion}  index={index}  isEditingQuestion={isEditingQuestion} setIsEditingQuestion={setIsEditingQuestion}/>
+            <QuestionView
+              key={index}
+              question={question}
+              onSave={editQuestion}
+              onDelete={deleteQuestion}
+              index={index}
+              isEditingQuestion={isEditingQuestion}
+              setIsEditingQuestion={setIsEditingQuestion}
+            />
           ))}
           <Divider />
         </Stack>
 
-        {showQuestionForm ? (
+        {showQuestionForm ? ( //se la variabile show question form è true, mostro il form per aggiungere una domanda, altrimenti mostro il bottone "aggiungi domanda" che metterà la variavile precedente a true, mostrando il form
           <QuestionForm saveQuestion={addQuestionToExam} />
         ) : (
           <Box>
@@ -122,7 +132,11 @@ export const ExamForm: React.FC<TExamForm> = ({
           </Button>
         </Grid>
         <Grid>
-          <Button size="md" disabled={isEditingQuestion!==false} onClick={saveExam}>
+          <Button
+            size="md"
+            disabled={isEditingQuestion !== false}
+            onClick={saveExam}
+          >
             Salva
           </Button>
         </Grid>
