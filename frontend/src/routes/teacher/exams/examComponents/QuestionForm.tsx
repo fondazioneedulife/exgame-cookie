@@ -13,22 +13,22 @@ import React, { ChangeEvent, useState } from "react";
 import { Answer, Question, QuestionType } from "../../../../../../api-types";
 
 interface QuestionComponentProps {
-  addQuestion: (question: Question) => void;
+  saveQuestion: (question: Question) => void;
   question?: Question;
 }
 
 export const QuestionForm: React.FC<QuestionComponentProps> = ({
-  addQuestion: handleSave,
+  saveQuestion: handleSave,
   question = {
     text: "",
-    answers: [],
     questionType: QuestionType.SINGLE_CHOICE,
-  },
+  }as Question,
 }) => {
   const [questionState, setQuestionState] = useState<Question>(question);
   const setQuestionText = (text: string) =>
     setQuestionState((state) => ({ ...state, text: text }));
-  const [answers, setAnswers] = useState<Answer[]>([
+
+  const [answers, setAnswers] = useState<Answer[]>(question?.answers || [
     { answer: "", isCorrect: false },
     { answer: "", isCorrect: false },
     { answer: "", isCorrect: false },
