@@ -9,12 +9,11 @@ import { Link } from "react-router-dom";
 export const ClassStudents: React.FC = () => {
   return (
     <>
+      <Typography level="h2">Studenti della classe Cookie</Typography>
       <Table aria-label="basic table">
         <thead>
           <tr>
-            <th style={{ width: "100%" }}>
-              <Typography level="h1">Studenti della classe Cookie</Typography>
-            </th>
+            <th style={{ width: "100%" }}></th>
           </tr>
         </thead>
         <tbody>
