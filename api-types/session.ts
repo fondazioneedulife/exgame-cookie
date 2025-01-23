@@ -17,11 +17,11 @@ export type Session = {
     /**
      * Data programmata per l'esame
      */
-    start_date: Date;
+    start_date: string;
   
     /**
      * Ora di inizio dell'esame
      */
-    start_time: Date;
+    start_time: string;
 
   };
