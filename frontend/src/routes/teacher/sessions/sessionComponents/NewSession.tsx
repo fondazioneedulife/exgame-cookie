@@ -13,7 +13,6 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { DataContext } from "../../TeacherContext";
@@ -35,7 +34,6 @@ export const NewSession = () => {
       student_class: "",
       start_date: "",
       start_time: "",
-
   });
   const fetch = useFetch();
   useEffect(() => {
@@ -54,45 +52,48 @@ export const NewSession = () => {
   const save=()=>{
     fetch(`${config.API_BASEPATH}/sessions`, {
       method: "POST",
-      body: JSON.stringify(exam),
-    })
-  }
-
-
-
+      body: JSON.stringify(formState),
+     // }).then(() => navigate("/teacher/exams/"+id+"/sessions"));
+    }).then(() => navigate(`/teacher/exam/${id}/sessions`));  }
 
   const options = studentClasses.map((studentClass) => {
     return (
       <Option value={studentClass}>
-        <div>{studentClass}</div>
+        {studentClass}
       </Option>
     );
   });
 
+  console.log(formState);
+  
   return (
     <Stack spacing={2}>
       <Typography level="h2">Nuova sessione di {exam?.name}</Typography>
       <FormControl>
         <FormLabel>Assegna alla classe:</FormLabel>
-        <Select placeholder="Seleziona la classe">{options}</Select>
+        <Select placeholder="Seleziona la classe" value={formState.student_class} onChange={(_e, new_value) => {
+          //setFormState((formState) => ({ ...formState, student_class: e.target.value || ""}))
+          setFormState({
+            ...formState,
+            student_class: new_value || "",
+          });
+
+        }}>{options}</Select>
       </FormControl>
       <FormControl>
         <FormLabel>Data della sessione:</FormLabel>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker"]}>
             <DatePicker label="Basic date picker" value= {dayjs(formState.start_date)} onChange={(value) => {
-
               setFormState((formState) => ({ ...formState, start_date: value?.toString() || "" }));
             }} />
-          </DemoContainer>
         </LocalizationProvider>{" "}
       </FormControl>
       <FormControl>
         <FormLabel>Ora di inizio:</FormLabel>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["TimePicker"]}>
-            <TimePicker label="Basic time picker" />
-          </DemoContainer>
+            <TimePicker label="Basic time picker" value={dayjs(formState.start_time)} onChange={(value) => {
+              setFormState((formState) => ({ ...formState, start_time: value?.toString() || "" }));
+            }}/>
         </LocalizationProvider>
       </FormControl>
       <Stack direction="row" justifyContent="flex-end" spacing={2}>
