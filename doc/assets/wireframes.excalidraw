@@ -14963,8 +14963,8 @@
     },
     {
       "type": "text",
-      "version": 765,
-      "versionNonce": 158206876,
+      "version": 783,
+      "versionNonce": 2097397599,
       "isDeleted": false,
       "id": "TG3L0dOrkGPZB4AfNrqGD",
       "fillStyle": "solid",
@@ -14973,12 +14973,12 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 1494.0793185259404,
-      "y": 923.3728227271098,
+      "x": 1495.9614865074716,
+      "y": 923.1708721646704,
       "strokeColor": "#e03131",
       "backgroundColor": "transparent",
-      "width": 23.062850952148438,
-      "height": 12.201228027179752,
+      "width": 21.760876697745836,
+      "height": 11.512428329499546,
       "seed": 1358953371,
       "groupIds": [
         "L4wYjTB8OMnRcS34XXIqM",
@@ -14987,10 +14987,10 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1737279490084,
+      "updated": 1737619434383,
       "link": null,
       "locked": false,
-      "fontSize": 9.760982421743801,
+      "fontSize": 9.209942663599637,
       "fontFamily": 1,
       "text": "inizia",
       "textAlign": "left",
@@ -15002,23 +15002,23 @@
     },
     {
       "type": "rectangle",
-      "version": 447,
-      "versionNonce": 352259108,
+      "version": 485,
+      "versionNonce": 1053555953,
       "isDeleted": false,
-      "id": "r_KmD6VgJ6Pn4xfH8heSb",
+      "id": "2EFveZ-bpOt1__BiW0t0Y",
       "fillStyle": "solid",
       "strokeWidth": 1,
       "strokeStyle": "solid",
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 1480.7038480410133,
+      "x": 1483.3411055926947,
       "y": 919.7955202531992,
       "strokeColor": "#e03131",
       "backgroundColor": "transparent",
-      "width": 46.715730077753165,
-      "height": 19.355832975000396,
-      "seed": 1548996667,
+      "width": 44.07847252607177,
+      "height": 19.1438290471423,
+      "seed": 579300991,
       "groupIds": [
         "L4wYjTB8OMnRcS34XXIqM",
         "XqBx7ze69R5cQdNrShVmF"
@@ -15027,8 +15027,8 @@
       "roundness": {
         "type": 3
       },
-      "boundElements": [],
-      "updated": 1737279490084,
+      "boundElements": null,
+      "updated": 1737619445857,
       "link": null,
       "locked": false
     },
@@ -24348,6 +24348,82 @@
           622.0901635747153
         ]
       ]
+    },
+    {
+      "type": "rectangle",
+      "version": 1248,
+      "versionNonce": 1668265471,
+      "isDeleted": false,
+      "id": "r_KmD6VgJ6Pn4xfH8heSb",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 1432.1225894578374,
+      "y": 919.7955202531992,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "width": 45.62168473488521,
+      "height": 20,
+      "seed": 1548996667,
+      "groupIds": [
+        "L4wYjTB8OMnRcS34XXIqM",
+        "XqBx7ze69R5cQdNrShVmF"
+      ],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "TM7_RlYWHE_TXZfJtLwu0"
+        }
+      ],
+      "updated": 1737619483934,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "TM7_RlYWHE_TXZfJtLwu0",
+      "type": "text",
+      "x": 1442.0811826797722,
+      "y": 924.8702787692808,
+      "width": 25.704498291015625,
+      "height": 9.85048296783681,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "L4wYjTB8OMnRcS34XXIqM",
+        "XqBx7ze69R5cQdNrShVmF"
+      ],
+      "frameId": null,
+      "roundness": null,
+      "seed": 135621791,
+      "version": 888,
+      "versionNonce": 2099682847,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1737619483934,
+      "link": null,
+      "locked": false,
+      "text": "iscritti",
+      "fontSize": 7.880386374269448,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 6,
+      "containerId": "r_KmD6VgJ6Pn4xfH8heSb",
+      "originalText": "iscritti",
+      "lineHeight": 1.25
     }
   ],
   "appState": {
