@@ -9,7 +9,7 @@ import { config } from "../../../config";
 import { useFetch } from "../../../lib/useFetch";
 export const Classes: React.FC = () => {
   const [classes, setClasses] = React.useState<string[]>([]);
-  const [allClasses, setAllClasses] = React.useState<string[]>([])
+  const [allClasses, setAllClasses] = React.useState<string[]>([]);
 
   const fetch = useFetch();
 
@@ -19,15 +19,14 @@ export const Classes: React.FC = () => {
       .then(setClasses)
       .catch(console.error);
   }, []);
-  
+
   const handleDeleteClass = (teacherClass: string) => {
     fetch(`${config.API_BASEPATH}/classes/get-all-names`)
-    .then((res) => res?.json())
-    .then(setAllClasses)
-    .catch(console.error);
+      .then((res) => res?.json())
+      .then(setAllClasses)
+      .catch(console.error);
 
-    console.log(allClasses)
-
+    console.log(allClasses);
 
     fetch(`${config.API_BASEPATH}/classes/${teacherClass}`, {
       method: "DELETE",
@@ -45,8 +44,9 @@ export const Classes: React.FC = () => {
         <thead>
           <tr>
             <th colSpan={2}>Classe</th>
-            <th colSpan={3}
-            style={{ textAlign: "center" }}>Azioni</th>
+            <th colSpan={3} style={{ textAlign: "center" }}>
+              Azioni
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -55,9 +55,7 @@ export const Classes: React.FC = () => {
               <td colSpan={2}>
                 <Typography level="h3">{teacherClass}</Typography>
               </td>
-              <td
-              style={{ textAlign: "center" }}
-              colSpan={3} >
+              <td style={{ textAlign: "center" }} colSpan={3}>
                 <Button
                   style={{ marginRight: "5%" }}
                   component={Link}
@@ -67,10 +65,7 @@ export const Classes: React.FC = () => {
                 </Button>
                 <Button
                   style={{ marginRight: "5%" }}
-<<<<<<< HEAD
-=======
                   onClick={() => handleDeleteClass(teacherClass)}
->>>>>>> Talhaimran03/users-3
                 >
                   elimina classe
                 </Button>
