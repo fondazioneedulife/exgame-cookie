@@ -8,8 +8,7 @@ import { Root } from "./routes/Root";
 // import { EditStudentProfile } from "./routes/student/EditStudentProfile";
 import { StudentGuard } from "./routes/student/StudentGuard";
 // import { StudentProfile } from "./routes/student/StudentProfile";
-import { UserProfile } from "./routes/user/UserProfile";
-import { EditUserProfile } from "./routes/user/EditUserProfile";
+import { LiveExam } from "./routes/liveExam/LiveExam";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
 import { Classes } from "./routes/teacher/classes/Classes";
@@ -24,6 +23,8 @@ import { SingleSession } from "./routes/teacher/subscriptions/SingleSession";
 import { SubscriptionReport } from "./routes/teacher/subscriptions/SubscriptionReport";
 import { Subscriptions } from "./routes/teacher/subscriptions/Subscriptions";
 import { TeacherMainContext } from "./routes/teacher/TeacherMainContext";
+import { EditUserProfile } from "./routes/user/EditUserProfile";
+import { UserProfile } from "./routes/user/UserProfile";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Root />} />
+
+          <Route path="exam" element={<LiveExam />} />
 
           {/* Teacher */}
           <Route path="teacher" element={<TeacherMainContext />}>
