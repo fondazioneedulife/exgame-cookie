@@ -2,9 +2,13 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { config } from "../config";
 
+type ExtendedRequestInit = Omit<RequestInit, "body"> & {
+  body?: any;
+};
+
 export type AuthenticatedFetchFunction = (
   input: RequestInfo | URL,
-  init?: RequestInit,
+  init?: ExtendedRequestInit,
 ) => Promise<void | Response>;
 
 /**
@@ -23,7 +27,11 @@ export const useFetch = (): AuthenticatedFetchFunction => {
   return useCallback(
     (input, init) => {
       try {
-        const body = init?.body && JSON.stringify(init.body);
+        // check if the body is an object and stringify it
+        const body =
+          init?.body && typeof init.body === "object"
+            ? JSON.stringify(init.body)
+            : (init?.body as BodyInit);
         return fetch(input, {
           credentials: "include",
           headers: {
@@ -38,7 +46,7 @@ export const useFetch = (): AuthenticatedFetchFunction => {
           return res;
         });
       } catch (e) {
-        return Promise.reject(e);
+        return Promise.reject(e as Error);
       }
     },
     [navigate],
