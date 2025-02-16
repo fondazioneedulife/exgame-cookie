@@ -1,7 +1,24 @@
 import { Avatar, List, ListItem, ListItemButton, Stack } from "@mui/joy";
 import { Link } from "react-router-dom";
+import { User } from "../../../api-types";
+import { useEffect, useState } from "react";
+import { useFetch } from "../lib/useFetch";
+import { config } from "../config";
 
 export const Header: React.FC = () => {
+
+  // user data
+  const [currentUser, setCurrentUser] = useState<User>();
+  const fetch = useFetch();
+
+  useEffect(() => {
+    fetch(`${config.API_BASEPATH}/users/me`)
+      .then((res) => res?.json())
+      .then((user: User) => {
+        setCurrentUser(user);
+      });
+  }, [fetch]);
+  
   return (
     <Stack
       direction="row"
@@ -23,12 +40,15 @@ export const Header: React.FC = () => {
                 to="/teacher/classes"
                 style={{ color: "black", textDecoration: "none" }}
               >
-                Gestisci gli studenti
+                Gestisci le classi
               </Link>
             </ListItemButton>
           </ListItem>
           <ListItem role="none">
-            <Link to="/student/:id/profile/details">
+            {/* <Link to={`/student/${currentUser?._id}/profile/details`}>
+              <Avatar />
+            </Link> */}
+            <Link to={`/user/${currentUser?._id}/profile/details`}>
               <Avatar />
             </Link>
           </ListItem>

@@ -9,78 +9,53 @@ import { useEffect, useState } from "react";
 import { config } from "../../config";
 
 export const EditStudentProfile: React.FC = () => {
+  const [idutente, setIdutente] = useState("");
   const [first_name, setName] = useState("Mario");
   const [last_name, setlastName] = useState("Rossi");
   const [email, setEmail] = useState("esempio@esempio.com");
   const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const fetch = useFetch();
 
-  // Recupera i dati iniziali dalla chiamata `/me`
   useEffect(() => {
-    fetch(`${config.API_BASEPATH}/users/me`)
-      .then((res) => {
-        if (!res || !res.ok) {
-          console.error(
-            "Errore durante il recupero del profilo:",
-            res?.statusText || "Errore sconosciuto",
-          );
-          return null;
-        }
-        return res.json();
-      })
-      .then((user) => {
-        if (user) {
-          setName(user.first_name || "");
-          setlastName(user.last_name || "");
-          setEmail(user.email || "");
-        }
-      })
-      .catch((error) => {
-        console.error("Errore nella richiesta API:", error);
-      });
-  }, [fetch]);
+    const fetchData = async () => {
+      const response = await fetch(`${config.API_BASEPATH}/users/me`);
+      if (response.ok) {
+        const result = await response.json();
+        setName(result.first_name);
+        setlastName(result.last_name);
+        setEmail(result.email);
+        setIdutente(result._id);
+      } else {
+        setError(true);
+      }
+    };
+    fetchData();
+  }, []);
 
-  // Salvataggio dei dati
-  useEffect(() => {
-    if (isSaving) {
-      const payload = { first_name, last_name, email };
-
-      fetch(`${config.API_BASEPATH}/users/674d7fbb76f97f5f0f108007`, {
-        method: "PUT",
-        body: JSON.stringify(payload),
-      })
-        .then((response) => {
-          if (!response) {
-            console.error("Redirect effettuato o risposta vuota");
-            return;
-          }
-
-          if (!response.ok) {
-            console.error(
-              "Errore durante il salvataggio:",
-              response.statusText,
-            );
-            return;
-          }
-
-          return response.json();
-        })
-        .then(() => {
-          console.log("Dati salvati con successo");
-          navigate("/student/7/profile/details");
-        })
-        .catch((error) => {
-          console.error("Errore nella richiesta API:", error);
-        })
-        .finally(() => {
-          setIsSaving(false); // Assicurati che lo stato venga resettato
-        });
-    }
-  }, [fetch, isSaving, first_name, last_name, email, navigate]);
-
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
+    try {
+      const response = await fetch(`${config.API_BASEPATH}/users/${idutente}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ first_name, last_name, email }),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        setIsSaving(false);
+        navigate("/student/:id/profile/details");
+      } else {
+        setError(true);
+        setIsSaving(false);
+      }
+    } catch (error) {
+      setError(true);
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -132,7 +107,9 @@ export const EditStudentProfile: React.FC = () => {
         </Box>
 
         <Stack sx={{ justifyContent: "center", alignItems: "flex-end", mt: 4 }}>
-          <Button onClick={handleSave}>Salva</Button>
+          <Button onClick={handleSave} disabled={isSaving}>
+            {isSaving ? "Salvando..." : "Salva"}
+          </Button>
         </Stack>
       </CardContent>
     </Card>

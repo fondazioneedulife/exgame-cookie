@@ -5,9 +5,11 @@ import { config } from "./config";
 import { Login } from "./routes/Login";
 import { Register } from "./routes/Register";
 import { Root } from "./routes/Root";
-import { EditStudentProfile } from "./routes/student/EditStudentProfile";
+// import { EditStudentProfile } from "./routes/student/EditStudentProfile";
 import { StudentGuard } from "./routes/student/StudentGuard";
-import { StudentProfile } from "./routes/student/StudentProfile";
+// import { StudentProfile } from "./routes/student/StudentProfile";
+import { UserProfile } from "./routes/user/UserProfile";
+import { EditUserProfile } from "./routes/user/EditUserProfile";
 import { MySubscriptions } from "./routes/student/subscriptions/MySubscriptions";
 import { Subscribe } from "./routes/student/subscriptions/Subscribe";
 import { Classes } from "./routes/teacher/classes/Classes";
@@ -57,14 +59,23 @@ function App() {
           <Route path="student" element={<StudentGuard />}>
             <Route index element={<MySubscriptions />} />
             <Route path="subscribe/:id" element={<Subscribe />} />
-            <Route path=":id/profile/details" element={<StudentProfile />} />
+            {/* <Route path=":id/profile/details" element={<StudentProfile />} />
             <Route
               path=":id/profile/details/edit"
               element={<EditStudentProfile />}
-            />
+            /> */}
             <Route
               path="subscriptions/:date/:id"
               element={<SubscriptionReport />}
+            />
+          </Route>
+
+          {/* user */}
+          <Route path="user">
+            <Route path=":id/profile/details" element={<UserProfile />} />
+            <Route
+              path=":id/profile/details/edit"
+              element={<EditUserProfile />}
             />
           </Route>
 

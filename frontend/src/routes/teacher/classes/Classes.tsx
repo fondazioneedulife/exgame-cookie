@@ -7,9 +7,10 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { config } from "../../../config";
 import { useFetch } from "../../../lib/useFetch";
-
 export const Classes: React.FC = () => {
   const [classes, setClasses] = React.useState<string[]>([]);
+  const [allClasses, setAllClasses] = React.useState<string[]>([])
+
   const fetch = useFetch();
 
   React.useEffect(() => {
@@ -18,6 +19,22 @@ export const Classes: React.FC = () => {
       .then(setClasses)
       .catch(console.error);
   }, []);
+  
+  const handleDeleteClass = (teacherClass: string) => {
+    fetch(`${config.API_BASEPATH}/classes/get-all-names`)
+    .then((res) => res?.json())
+    .then(setAllClasses)
+    .catch(console.error);
+
+    console.log(allClasses)
+
+
+    fetch(`${config.API_BASEPATH}/classes/${teacherClass}`, {
+      method: "DELETE",
+    })
+      .then((res) => res?.json())
+      .catch(console.error);
+  };
 
   return (
     <>
@@ -50,6 +67,10 @@ export const Classes: React.FC = () => {
                 </Button>
                 <Button
                   style={{ marginRight: "5%" }}
+<<<<<<< HEAD
+=======
+                  onClick={() => handleDeleteClass(teacherClass)}
+>>>>>>> Talhaimran03/users-3
                 >
                   elimina classe
                 </Button>

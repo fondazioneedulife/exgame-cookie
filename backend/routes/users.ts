@@ -13,7 +13,7 @@ import {
 
 } from "../services/user";
 import { AuthenticatedContext } from "../types/session";
-import { authMiddleware, isAdminMiddleware, isAdminOrTeacherMiddleware} from "./auth";
+import { authMiddleware, isAdminMiddleware, isAdminOrTeacherMiddleware } from "./auth";
 
 const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/users",
@@ -53,7 +53,7 @@ router.get("/my-students", async (ctx) => {
       break;
 
     case "teacher":
-      const classes: string[] | undefined = loggedUser.teacher_classes;
+      { const classes: string[] | undefined = loggedUser?.teacher_classes ?? undefined;
       if (classes && classes.length !== 0) {
         ctx.body = await getMyStudents(classes);
       } else {
@@ -62,8 +62,8 @@ router.get("/my-students", async (ctx) => {
           message: "You have no students assigned to your classes",
         };
       }
-      break;
-    
+      break; }
+
     case "student":
     default:
       ctx.status = 403;
@@ -91,23 +91,25 @@ router.put("/:id", async (ctx) => {
   ctx.accepts("json");
   const loggedUser = ctx.session.user
   let response;
-  
+
   switch (loggedUser.role) {
     case "admin":
       console.log('admin')
       response = await edit(ctx.params.id, ctx.request.body as User);
+      ctx.session.user = response;
       break;
-    case  "student":
+    case "student":
     case "teacher":
       console.log('teacher')
       if (ctx.params.id == loggedUser._id) {
         response = await editYorself(loggedUser._id, ctx.request.body as User);
+        ctx.session.user = response;
       } else {
         ctx.status = 403;
         response = "non puoi modificare un'altro utente";
       }
-      break;  
-    default:    
+      break;
+    default:
       ctx.status = 403;
       response = "utente non autorizzato";
       break;

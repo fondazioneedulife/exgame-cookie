@@ -8,7 +8,7 @@ import { config } from "../../config";
 import { User } from "../../../../api-types/user";
 import { useFetch } from "../../lib/useFetch";
 
-export const StudentProfile: React.FC = () => {
+export const UserProfile: React.FC = () => {
   // user data
   const [currentUser, setCurrentUser] = useState<User>();
   const fetch = useFetch();
@@ -40,18 +40,25 @@ export const StudentProfile: React.FC = () => {
               component="h5"
               style={{ marginBottom: "1rem", marginTop: "1rem" }}
             >
-              {currentUser?.role}
+              Ruolo: {currentUser?.role}
             </Typography>
             {currentUser?.role === "student" && (
               <Typography component="h5" style={{ marginBottom: "1rem" }}>
-                {currentUser?.student_class}
+                Classe: {currentUser?.student_class}
+              </Typography>
+            )}
+            {currentUser?.role === "teacher" && 
+              currentUser?.teacher_classes &&
+              currentUser?.teacher_classes?.length > 0 && (
+              <Typography component="h5" style={{ marginBottom: "1rem" }}>
+                Classi: {currentUser?.teacher_classes.join(", ")}
               </Typography>
             )}
             {currentUser?.role === "teacher" &&
               currentUser?.subjects &&
               currentUser?.subjects?.length > 0 && (
                 <Typography component="h5">
-                  {currentUser?.subjects.join(", ")}
+                  Materie: {currentUser?.subjects.join(", ")}
                 </Typography>
               )}
           </Box>
@@ -60,7 +67,7 @@ export const StudentProfile: React.FC = () => {
         <Stack sx={{ justifyContent: "center", alignItems: "flex-end" }}>
           <Button>
             <Link
-              to={`/student/${currentUser?._id}/profile/details/edit`}
+              to={`/user/${currentUser?._id}/profile/details/edit`}
               style={{ color: "white", textDecoration: "none" }}
             >
               Modifica
