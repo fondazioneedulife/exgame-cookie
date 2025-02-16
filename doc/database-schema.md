@@ -32,7 +32,7 @@
     "updated_at"?: ISODate("2024-01-01T14:30:00Z"),
     "role": "teacher",
     "subjects"?: ["Node_JS", "Testing", "React"],
-    "teacher_classes"?: ["Cookie", "Suse"],
+    "teacher_classes"?: [ObjectId("1"), ObjectId("2")],
 }
 ```
 
@@ -49,8 +49,19 @@
     "created_at": ISODate("2024-01-01T14:30:00Z"),
     "updated_at"?: ISODate("2024-01-01T14:30:00Z"),
     "role": "student",
-    "student_class"?: "Cookie"
+    "student_class"?: ObjectId("1")
 }
+```
+
+## Classes
+
+```ts
+[
+  {
+    _id: ObjectId("1"),
+    name: "Cookie",
+  },
+];
 ```
 
 ## Exams
@@ -63,7 +74,7 @@
     created_at: ISODate("2024-01-20T10:00:00Z"),
     updated_at: ISODate("2024-01-20T10:00:00Z"),
     created_by: ObjectId(""), //id del docente che fa l'esame
-    classes: [], //array delle classi per cui viene fatto l'esame
+    classes: [ObjectId("1")], //array delle classi per cui viene fatto l'esame
     max_time: 90,
     questions: [
       {
@@ -90,16 +101,17 @@
 ```
 
 ## Sessions
+
 ```ts
 [
   {
     _id: ObjectId(""),
     exam_id: ObjectId(""),
-    student_class: "",
+    student_class: ObjectId("1"),
     start_date: ISODate("2024-01-20T10:00:00Z"),
-    start_time: ISODate("2024-01-20T10:00:00Z")
-  }
-]
+    start_time: ISODate("2024-01-20T10:00:00Z"),
+  },
+];
 ```
 
 ## Subscriptions

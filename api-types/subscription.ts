@@ -46,4 +46,4 @@ export type StudentGrade = {
   first_name: string;
   last_name: string;
   grade: number;
-}
+};

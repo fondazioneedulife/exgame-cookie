@@ -22,7 +22,7 @@ const router = new Router<unknown, AuthenticatedContext>({
 router.use(authMiddleware());
 
 // All users
-router.get("/", isAdminMiddleware, async (ctx) => {
+router.get("/", isAdminMiddleware(), async (ctx) => {
   const all = await index();
   ctx.response.body = all;
 });
@@ -31,12 +31,12 @@ router.get("/me", async (ctx) => {
   ctx.response.body = ctx.session.user;
 });
 
-router.get("/role/:role", isAdminMiddleware, async (ctx) => {
+router.get("/role/:role", isAdminMiddleware(), async (ctx) => {
   ctx.body = await getUsersByRole(ctx.params.role as Role);
 });
 
 // Find all students without a class
-router.get("/students-without-class", isAdminOrTeacherMiddleware, async (ctx) => {
+router.get("/students-without-class", isAdminOrTeacherMiddleware(), async (ctx) => {
   ctx.body = await getUsersWithoutClass();
 });
 
