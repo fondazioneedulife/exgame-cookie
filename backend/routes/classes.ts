@@ -19,10 +19,6 @@ const router = new Router<unknown, AuthenticatedContext>({
 //se lo tolgo, mostra la pagina ancje se non sono loggato
 router.use(authMiddleware());
 
-router.get("/getName/:id", async (ctx) => {
-  ctx.body = await getNameOfClass(ctx.params.id);
-});
-
 // aggiunge una nuova classe ---> funziona!!
 router.post("/", isAdminOrTeacherMiddleware(), async (ctx) => {
   ctx.accepts("json");

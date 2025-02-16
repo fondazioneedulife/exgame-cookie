@@ -1,12 +1,12 @@
-import * as React from "react";
 import { Avatar, Box, Card, CardContent, Typography } from "@mui/joy";
-import { useNavigate } from "react-router-dom";
 import Button from "@mui/joy/Button";
-import Stack from "@mui/joy/Stack";
 import Input from "@mui/joy/Input";
-import { useFetch } from "../../lib/useFetch";
+import Stack from "@mui/joy/Stack";
+import * as React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { config } from "../../config";
+import { useFetch } from "../../lib/useFetch";
 
 export const EditStudentProfile: React.FC = () => {
   const [idutente, setIdutente] = useState("");
@@ -21,8 +21,8 @@ export const EditStudentProfile: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${config.API_BASEPATH}/users/me`);
-      if (response.ok) {
-        const result = await response.json();
+      if (response?.ok) {
+        const result = await response?.json();
         setName(result.first_name);
         setlastName(result.last_name);
         setEmail(result.email);
@@ -39,13 +39,10 @@ export const EditStudentProfile: React.FC = () => {
     try {
       const response = await fetch(`${config.API_BASEPATH}/users/${idutente}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ first_name, last_name, email }),
+        body: { first_name, last_name, email },
       });
-      if (response.ok) {
-        const result = await response.json();
+      if (response?.ok) {
+        // const result = await response?.json();
         setIsSaving(false);
         navigate("/student/:id/profile/details");
       } else {

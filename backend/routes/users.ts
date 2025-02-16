@@ -1,19 +1,21 @@
 import Router from "@koa/router";
 import { Role, User } from "../../api-types";
 import {
-  add,
   edit,
   editYorself,
+  getMyStudents,
   getUsersByRole,
+  getUsersWithoutClass,
   index,
   remove,
   view,
-  getUsersWithoutClass,
-  getMyStudents
-
 } from "../services/user";
 import { AuthenticatedContext } from "../types/session";
-import { authMiddleware, isAdminMiddleware, isAdminOrTeacherMiddleware } from "./auth";
+import {
+  authMiddleware,
+  isAdminMiddleware,
+  isAdminOrTeacherMiddleware,
+} from "./auth";
 
 const router = new Router<unknown, AuthenticatedContext>({
   prefix: "/users",
@@ -36,9 +38,13 @@ router.get("/role/:role", isAdminMiddleware(), async (ctx) => {
 });
 
 // Find all students without a class
-router.get("/students-without-class", isAdminOrTeacherMiddleware(), async (ctx) => {
-  ctx.body = await getUsersWithoutClass();
-});
+router.get(
+  "/students-without-class",
+  isAdminOrTeacherMiddleware(),
+  async (ctx) => {
+    ctx.body = await getUsersWithoutClass();
+  },
+);
 
 //find all the students in the classes taught by a teacher.
 router.get("/my-students", async (ctx) => {
@@ -52,8 +58,9 @@ router.get("/my-students", async (ctx) => {
       };
       break;
 
-    case "teacher":
-      { const classes: string[] | undefined = loggedUser?.teacher_classes ?? undefined;
+    case "teacher": {
+      const classes: string[] | undefined =
+        loggedUser?.teacher_classes ?? undefined;
       if (classes && classes.length !== 0) {
         ctx.body = await getMyStudents(classes);
       } else {
@@ -62,7 +69,8 @@ router.get("/my-students", async (ctx) => {
           message: "You have no students assigned to your classes",
         };
       }
-      break; }
+      break;
+    }
 
     case "student":
     default:
@@ -71,7 +79,6 @@ router.get("/my-students", async (ctx) => {
       break;
   }
 });
-
 
 // Find a user
 router.get("/:id", async (ctx) => {
@@ -89,18 +96,18 @@ router.get("/:id", async (ctx) => {
 // Edit a user
 router.put("/:id", async (ctx) => {
   ctx.accepts("json");
-  const loggedUser = ctx.session.user
+  const loggedUser = ctx.session.user;
   let response;
 
   switch (loggedUser.role) {
     case "admin":
-      console.log('admin')
+      console.log("admin");
       response = await edit(ctx.params.id, ctx.request.body as User);
       ctx.session.user = response;
       break;
     case "student":
     case "teacher":
-      console.log('teacher')
+      console.log("teacher");
       if (ctx.params.id == loggedUser._id) {
         response = await editYorself(loggedUser._id, ctx.request.body as User);
         ctx.session.user = response;
