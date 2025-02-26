@@ -86,7 +86,7 @@ export const ExamForm: React.FC<TExamForm> = ({
             options={["", "0:30h", "1:00h", "1:30h", "2:00h", "2:30h"]}
             placeholder="Inserisci il tempo massimo di svolgimento"
             value={exam.max_time}
-            onChange={(e, newValue) =>
+            onChange={(_e, newValue) =>
               setExam((exam) => ({ ...exam, max_time: newValue || "" }))
             }
           />
