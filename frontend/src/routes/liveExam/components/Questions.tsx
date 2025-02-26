@@ -6,22 +6,18 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/joy";
-import { useState } from "react";
+import { useContext } from "react";
 import { Answer } from "../../../../../api-types/socketIo-types";
+import { QuestionContext } from "../QuestionContext";
 import { useSocketIoContext } from "../SocketContext";
 
 export const Questions: React.FC = () => {
   const { socketIo } = useSocketIoContext();
-  const [state, setState] = useState({
-    domanda1: "",
-    domanda2: "",
-    domanda3: "",
-    domanda4: "",
-  });
+  const { questions, setQuestions } = useContext(QuestionContext);
 
   const handleResponse =
     (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setState({ ...state, [key]: e.target.value });
+      setQuestions({ ...questions, [key]: e.target.value });
       socketIo.current?.emit("response", {
         questionId: key,
         answer: e.target.value,
@@ -37,7 +33,7 @@ export const Questions: React.FC = () => {
           Domanda 1. Di che colore era il cavallo bianco di Napoleone?
         </FormLabel>
         <RadioGroup
-          value={state.domanda1}
+          value={questions.domanda1}
           onChange={handleResponse("domanda1")}
         >
           <Radio value="bianco" label="bianco" />
@@ -52,7 +48,7 @@ export const Questions: React.FC = () => {
       <FormControl>
         <FormLabel>Domanda 2. Quanti erano i sette nani?</FormLabel>
         <RadioGroup
-          value={state.domanda2}
+          value={questions.domanda2}
           onChange={handleResponse("domanda2")}
         >
           <Radio value="3" label="3" />
@@ -69,7 +65,7 @@ export const Questions: React.FC = () => {
           Domanda 3. Qual è la differenza tra una tigre e un leopardo?
         </FormLabel>
         <RadioGroup
-          value={state.domanda3}
+          value={questions.domanda3}
           onChange={handleResponse("domanda3")}
         >
           <Radio
@@ -95,7 +91,7 @@ export const Questions: React.FC = () => {
           Domanda 4. Qual è l'animale più potente del mondo?
         </FormLabel>
         <RadioGroup
-          value={state.domanda4}
+          value={questions.domanda4}
           onChange={handleResponse("domanda4")}
         >
           <Radio value="L'elefante" label="L'elefante" />

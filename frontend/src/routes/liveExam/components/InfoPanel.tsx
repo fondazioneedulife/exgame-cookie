@@ -11,14 +11,16 @@ import {
   Stack,
   Typography,
 } from "@mui/joy";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { User } from "../../../../../api-types/socketIo-types";
+import { QuestionContext } from "../QuestionContext";
 import { useSocketIoContext } from "../SocketContext";
 
 export const InfoPanel: React.FC = () => {
   const { socketIo } = useSocketIoContext();
   const [users, setUsers] = useState<User[]>([]);
   const [totalMessages, setTotalMessages] = useState(0);
+  const { questions } = useContext(QuestionContext);
 
   useEffect(() => {
     socketIo.current?.on("users", setUsers);
@@ -66,6 +68,18 @@ export const InfoPanel: React.FC = () => {
       </Box>
       <Box>
         <Typography>Messaggi inviati: {totalMessages}</Typography>
+      </Box>
+      <Box>
+        <Typography>Domande risposte:</Typography>
+        <List>
+          {Object.entries(questions).map(([question, answer]) => (
+            <ListItem key={question}>
+              <Typography>
+                {question}: {answer}
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
       </Box>
     </Stack>
   );

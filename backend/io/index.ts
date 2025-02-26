@@ -59,7 +59,7 @@ export const initSocketIo = (httpServer) => {
         },
         text,
       });
-      // keep only the last 100 messages
+      // keep only the last 50 messages
       if (messages.length > messageLimit) {
         messages.splice(0, messages.length - messageLimit);
       }
